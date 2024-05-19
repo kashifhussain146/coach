@@ -140,8 +140,9 @@
                                         <label for="exampleInputEmail1">Task Status</label>
                                         <select name="status" class="form-control select2" id="status">
                                             <option value="PREVIEW">New Task</option>
-                                            <option value="ASSIGNED">Pending</option>
-                                            <option value="COMPLETED">Completed</option>
+                                            <option value="ACCEPTED">Accepted Task</option>
+                                            <option value="ASSIGNED">Pending Task</option>
+                                            <option value="COMPLETED">Completed Task</option>
                        
                                         </select>
                                     </div>
@@ -183,6 +184,7 @@
                                         <th>Score</th>
                                         <th>Actual Length</th>
                                         <th>Words Written</th>
+                                        <th>Status</th>
                                         <th width="250px">Action</th>
                                     </tr>
                                 </thead>
@@ -259,9 +261,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
-    <script type="text/javascript"
-        src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.10/js/dataTables.checkboxes.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.10/js/dataTables.checkboxes.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -419,6 +420,10 @@
                 {
                     data: 'words_written',
                     name: 'words_written'
+                },
+                {
+                    data: 'status',
+                    name: 'status'
                 },
                 {
                     data: 'action',

@@ -127,7 +127,7 @@
                   @elseif($item->freelancers->first()->status == \App\Models\Proposals::STATUS_ASSIGNED)
 
                   <li>
-                    <a href="{{route('tasks-edit',['id'=>$item->id])}}" class="top-text-block">
+                    <a href="{{route('tasks-start-work',['task'=>$item->id])}}" class="top-text-block">
                       <div class="top-text-heading">New  task  assigned <br /> Task ID : <b> {{$item->unique_group_id}} </b> </div>
                       <div class="top-text-light">Task Deadline : {{ date('d/m/Y H:i',strtotime($item->deadline_date_time))}} </div>
                     </a> 
@@ -154,7 +154,7 @@
           @if(!empty($authUser->profile_image))
           <img src="{{asset('backend/images/'.$authUser->profile_image)}}" alt="user" class="rounded-circle" width="30" height="30">
           @else
-          <img src="https://www.awesomegreece.com/wp-content/uploads/2018/10/default-user-image.png" alt="user" class="rounded-circle" width="30" height="30">
+          <img src="#" alt="user" class="rounded-circle" width="30" height="30">
           @endif
 
             <span class="m-l-5 font-medium d-none d-sm-inline-block"> {{ $authUser->firstname }} <i class="mdi mdi-chevron-down"></i></span>
@@ -168,7 +168,7 @@
                 @if(!empty($authUser->profile_image))
                 <img src="{{asset('backend/images/'.$authUser->profile_image)}}" alt="user" class="rounded-circle" width="30" height="30">
                 @else
-                <img src="https://www.awesomegreece.com/wp-content/uploads/2018/10/default-user-image.png" alt="user" class="rounded-circle" width="30" height="30">
+                <img src="#" alt="user" class="rounded-circle" width="30" height="30">
                 @endif
                 </div>
                 <div class="m-l-10">

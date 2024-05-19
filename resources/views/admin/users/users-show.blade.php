@@ -88,7 +88,7 @@
                                 <tr>
                                     <th>Profile Image</th>
                                     <td>
-                                        <img src="{{ $user->profile_image ? asset($user->profile_image) : 'https://www.awesomegreece.com/wp-content/uploads/2018/10/default-user-image.png' }}"
+                                        <img src="{{ $user->profile_image ? asset($user->profile_image) : '#' }}"
                                             style="height: 73px; width: 73px;" />
                                     </td>
                                 </tr>

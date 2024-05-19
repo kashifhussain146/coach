@@ -69,7 +69,7 @@
                                     </div>
 
                                     <div class="col-2">
-                                        <img src="https://www.awesomegreece.com/wp-content/uploads/2018/10/default-user-image.png"
+                                        <img src="#"
                                             id="file" style="height: 73px;width: 73px;" />
                                     </div>
                                 </div>

@@ -11,7 +11,9 @@ use DB;
 use App\Models\Admins;
 use App\Models\Proposals;
 use App\Models\ModulesData;
-use Autj;
+use Auth;
+use App\Imports\TaskDetailsImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TasksController extends Controller
 {
@@ -67,9 +69,9 @@ class TasksController extends Controller
             $tasks = $tasks->whereDate('start_date_time','>=',$startDate)
                            ->whereDate('start_date_time','<=',$endDate);
         }
-
+        $status = $request->status;
         if($request->status!=''){
-            $status = $request->status;
+           
             $tasks =    $tasks->whereHas('freelancers',function($query) use ($status){
                             $query->where('user_id',Auth()->guard('admin')->user()->id)->whereIn('status',[$status]);
                         });
@@ -78,43 +80,50 @@ class TasksController extends Controller
         $tasks = $tasks->get();
        
         return DataTables::of($tasks)
-                        ->addColumn('action', function($row) {
+                        ->addColumn('action', function($row) use ($status){
 
                             $actions = "";
 
                             $authUser = Auth()->guard('admin')->user();
 
-                            if(Auth()->user()->can('Edit Tasks')){
+                            if(Auth()->user()->can('Edit Tasks') && Auth()->guard('admin')->user()->hasRole('Admin')){
 
-                                $haveRecords = $row->freelancers()->where( function($query) use ($authUser){
-                                                if($authUser->roles()->first()->name == 'Free Lancer'){
-                                                    $query->where('user_id',$authUser->id);
-                                                }
-                                })->whereIn('status',[Proposals::STATUS_ASSIGNED])->count();
+                            //     $haveRecords = $row->freelancers()->where( function($query) use ($authUser){
+                            //                         if($authUser->roles()->first()->name == 'Free Lancer'){
+                            //                             $query->where('user_id',$authUser->id);
+                            //                         }
+                            //                     });
+
+                            //     if($authUser->roles()->first()->name == 'Free Lancer'){
+                            //         $haveRecords =  $haveRecords     
+                            //                             ->whereIn('status',[Proposals::STATUS_ASSIGNED,Proposals::STATUS_PREVIEW]);
+                            //     }
+                            //     $haveRecords =  $haveRecords->count();
+
                                 
-                                if($haveRecords > 0) {
-                                    $actions .= "<a href=\"" . route('tasks-edit', ['id' => $row->id]) . "\" class=\"btn btn-xs btn-warning btn-flat info-btn\"><i class=\"fa fa-pencil\"></i> Edit</a>&nbsp;&nbsp;";
-                                }
+                            //     if($haveRecords > 0) {
+                                     $actions .= "<a href=\"" . route('tasks-edit', ['id' => $row->id]) . "\" class=\"btn btn-xs btn-warning btn-flat info-btn\"><i class=\"fa fa-pencil\"></i> Edit</a>&nbsp;&nbsp;";
+                            //     }
                             }
 
+                            $actions .= "<a href=\"" . route('tasks-view', ['id' => $row->id]) . "\" class=\"btn btn-xs btn-primary btn-flat info-btn\"><i class=\"fa fa-eye\"></i> View </a>&nbsp;&nbsp;";
+
                             if(Auth()->user()->can('Edit Tasks')){
-                                    $actions .= "<a href=\"" . route('tasks-view', ['id' => $row->id]) . "\" class=\"btn btn-xs btn-primary btn-flat info-btn\"><i class=\"fa fa-eye\"></i> View </a>&nbsp;&nbsp;";                                    
                                     if($authUser->roles()->first()->name == 'Free Lancer' && $row->freelancers()->where('user_id',$authUser->id)->whereIn('status',[Proposals::STATUS_PREVIEW])->count() > 0 ){
                                         $actions .= "<a href=\"" . route('status-update',['id'=>$row->freelancers()->where('user_id',$authUser->id)->first()->id,'status'=>\App\Models\Proposals::STATUS_ACCEPTED]) . "\" class=\"btn-xs btn btn-success \"> I can do it </a>&nbsp;&nbsp;";
                                         $actions .= "<a href=\"" . route('status-update',['id'=>$row->freelancers()->where('user_id',$authUser->id)->first()->id,'status'=>\App\Models\Proposals::STATUS_REJECTED]) . "\" class=\"btn-xs btn btn-danger \"> I can't do it </a>&nbsp;&nbsp;";
                                     }
                             }
 
+                            if(Auth()->guard('admin')->user()->hasRole('Free Lancer') && $status == 'ASSIGNED'){
+                                $actions .= "<a href=\"" . route('tasks-start-work',['task'=>$row->id]) . "\" class=\"btn-xs btn btn-warning \"> <i class='fa fa-edit'></i> Start work </a>&nbsp;&nbsp;";                                
+                            }
+
+
                             if(Auth()->user()->can('Assign Tasks')){
                                 
-                                // $assignTaskcount = $row->freelancers()->where('status',Proposals::STATUS_ASSIGNED)->count();
-                                $haveRecords = $row->freelancers()->whereIn('status',[Proposals::STATUS_ACCEPTED,Proposals::STATUS_ASSIGNED])->count();
-
-                                // if($assignTaskcount==0 && $haveRecords) {
-                                //     $actions .= "<a data-id='".$row->id."' data-url='".route('status-assign',$row->id)."' class=\"assignModal btn btn-xs btn-primary btn-flat info-btn\" data-toggle='modal' data-target='#viewDetail'><i class=\"fa fa-eye\" ></i> Assign To </a>";
-                                // }
-                                
-                                if($haveRecords){
+                                $haveRecords = $row->freelancers()->where('role',30)->whereIn('status',[Proposals::STATUS_ACCEPTED,Proposals::STATUS_ASSIGNED])->count();
+                                if($haveRecords > 0) { 
                                     $actions .= "<a data-created_by='".$row->created_by."' data-id='".$row->id."' data-url='".route('status-assign',$row->id)."' class=\"assignModal btn btn-xs btn-primary btn-flat info-btn\" data-toggle='modal' data-target='#viewDetail'><i class=\"fa fa-eye\" ></i> Assign To </a>";
                                 }
 
@@ -142,9 +151,21 @@ class TasksController extends Controller
                         })
                         ->addColumn('createdBy', function($row) {
 
-                            $user = $row->freelancers->pluck('user_id')->toArray();
+                            $createdBy = [];
 
-                            $employees = Admins::whereIn('id',$user)->where('status','active')->pluck('name')->toArray();
+                            $freelancers = $row->freelancers->where('role',30)->pluck('user_id')->toArray();
+                            $employes = $row->freelancers->where('role',26)->pluck('user_id')->toArray();
+
+                            if(count($freelancers) > 0){
+                                array_push($createdBy, ...$freelancers);
+                            }
+
+                            if(count($employes) > 0){
+                                array_push($createdBy, ...$employes);
+                            }
+                            
+
+                            $employees = Admins::whereIn('id',$createdBy)->where('status','active')->pluck('name')->toArray();
                             return $employees = implode(',',$employees);
                             //return (isset($row->createdBy))?$row->createdBy->name.' '.$row->createdBy->last_name:"N/A";
                         })
@@ -223,6 +244,8 @@ class TasksController extends Controller
             $courses = ModulesData::where('module_id',37)->firstOrCreate(['title' => $request->input('course_id'),'module_id'=>37]);
             $courseCode = ModulesData::where('module_id',21)->firstOrCreate(['title' => $request->input('course_code_id'),'module_id'=>21]);
 
+
+            $data['unique_group_id'] = $request->unique_group_id_1.$request->unique_group_id_2.$request->unique_group_id_3.$request->unique_group_id_4.$request->unique_group_id_5.date('His');
             $data['college_id'] = $colleges->id;
             $data['subject_id'] =$subjects->id;
             $data['course_id']  =$courses->id;
@@ -276,32 +299,36 @@ class TasksController extends Controller
 
             }
 
-           if( count($request->freelancers) > 0  ){
+            if(isset($request->freelancers)){
+                if( count($request->freelancers) > 0  ){
 
-                $freeLancers = Admins::whereHas('roles',function($query){
-                                        $query->where('name','Free Lancer');
-                                    })->where('status','active')
-                                    ->pluck('id')
-                                    ->map(function($item) use ($task) {
-                                        return ['user_id' => $item, 'task_id' => $task->id,'status'=>'PREVIEW'];
-                                    })->toArray();
+                    $freeLancers = Admins::whereIn('id',$request->freelancers)->whereHas('roles',function($query){
+                                            $query->where('name','Free Lancer');
+                                        })->where('status','active')
+                                        ->pluck('id')
+                                        ->map(function($item) use ($task) {
+                                            return ['user_id' => $item, 'task_id' => $task->id,'role'=> 30,'status'=>'PREVIEW'];
+                                        })->toArray();
+    
+                    Proposals::insert($freeLancers);
+               }
+            }
 
-                Proposals::insert($freeLancers);
-           }
 
+            if(isset($request->employees)){
+                if( count($request->employees) > 0  ){
 
-        if( count($request->employees) > 0  ){
+                    $employees = Admins::whereIn('id',$request->employees)->whereHas('roles',function($query){
+                                            $query->where('name','Employee');
+                                        })->where('status','active')
+                                        ->pluck('id')
+                                        ->map(function($item) use ($task) {
+                                            return ['user_id' => $item, 'task_id' => $task->id,'role'=> 26,'status'=>'ASSIGNED'];
+                                        })->toArray();
 
-            $employees = Admins::whereHas('roles',function($query){
-                                    $query->where('name','Employee');
-                                })->where('status','active')
-                                ->pluck('id')
-                                ->map(function($item) use ($task) {
-                                    return ['user_id' => $item, 'task_id' => $task->id,'status'=>'ASSIGNED'];
-                                })->toArray();
-
-            Proposals::insert($employees);
-       }
+                    Proposals::insert($employees);
+            }
+        }
 
 
 
@@ -480,6 +507,7 @@ class TasksController extends Controller
         $courses = ModulesData::where('module_id',37)->firstOrCreate(['title' => $request->input('course_id'),'module_id'=>37]);
         $courseCode = ModulesData::where('module_id',21)->firstOrCreate(['title' => $request->input('course_code_id'),'module_id'=>21]);
         
+        $data['unique_group_id'] = $request->unique_group_id_1.$request->unique_group_id_2.$request->unique_group_id_3.$request->unique_group_id_4.$request->unique_group_id_5.date('His');
         $data['college_id'] = $colleges->id;
         $data['subject_id'] =$subjects->id;
         $data['course_id']  =$courses->id;
@@ -497,106 +525,113 @@ class TasksController extends Controller
 
         $taskID = $task->id;
 
-        if( count($request->freelancers) > 0  ){
+        if(isset($request->freelancers)){
+            if( count($request->freelancers) > 0  ){
 
-            $freelancers = Admins::select('id')->whereHas('roles', function($query) {
-                                        $query->where('name', 'Free Lancer');
-                                    })
-                                    ->where('status','active')
-                                    ->pluck('id')
-                                    ->toArray();
+                $freelancers = Admins::select('id')->whereHas('roles', function($query) {
+                                            $query->where('name', 'Free Lancer');
+                                        })
+                                        ->where('status','active')
+                                        ->pluck('id')
+                                        ->toArray();
 
 
-           // Get existing proposals for the task
-            $existingProposals = Proposals::where('task_id', $taskID)->whereIn('user_id',$freelancers)->get();
-            
-            // Create a map of existing proposals indexed by user_id
-            $existingProposalsMap = [];
-            $existingIDS= [];
+            // Get existing proposals for the task
+                $existingProposals = Proposals::where('task_id', $taskID)->whereIn('user_id',$freelancers)->get();
+                
+                // Create a map of existing proposals indexed by user_id
+                $existingProposalsMap = [];
+                $existingIDS= [];
 
-            foreach ($existingProposals as $proposal) {
-                $existingProposalsMap[$proposal->user_id] = $proposal;
-                $existingIDS[] = $proposal->user_id;
-            }
-
-            // Process selected freelancers
-            $proposalsToInsert = [];
-            foreach ($request->freelancers as $freelancerID) {
-                // If the proposal for the freelancer exists and has a different status, skip updating
-                if (isset($existingProposalsMap[$freelancerID])) {
-                    $proposalsToInsert[] = [
-                        'user_id' => $freelancerID,
-                        'task_id' => $taskID,
-                        'status' => $existingProposalsMap[$freelancerID]->status
-                    ];
-                }else{
-                    $proposalsToInsert[] = [
-                        'user_id' => $freelancerID,
-                        'task_id' => $taskID,
-                        'status' => 'PREVIEW'
-                    ];
+                foreach ($existingProposals as $proposal) {
+                    $existingProposalsMap[$proposal->user_id] = $proposal;
+                    $existingIDS[] = $proposal->user_id;
                 }
 
+                // Process selected freelancers
+                $proposalsToInsert = [];
+                foreach ($request->freelancers as $freelancerID) {
+                    // If the proposal for the freelancer exists and has a different status, skip updating
+                    if (isset($existingProposalsMap[$freelancerID])) {
+                        $proposalsToInsert[] = [
+                            'user_id' => $freelancerID,
+                            'task_id' => $taskID,
+                            'role'=> 30,
+                            'status' => $existingProposalsMap[$freelancerID]->status
+                        ];
+                    }else{
+                        $proposalsToInsert[] = [
+                            'user_id' => $freelancerID,
+                            'task_id' => $taskID,
+                            'role'=> 30,
+                            'status' => 'PREVIEW'
+                        ];
+                    }
 
-            }
 
-            // Delete existing proposals for unchecked freelancers           
-            Proposals::where('task_id', $taskID)->whereIn('user_id', $existingIDS)->delete();
-            // Insert new proposals
-            Proposals::insert($proposalsToInsert);
+                }
 
-       }
+                // Delete existing proposals for unchecked freelancers           
+                Proposals::where('task_id', $taskID)->whereIn('user_id', $existingIDS)->delete();
+                // Insert new proposals
+                Proposals::insert($proposalsToInsert);
+
+        }
+    }
 
      
+    if(isset($request->employees)){
+            if( count($request->employees) > 0  ){
 
-    if( count($request->employees) > 0  ){
-
-            $employees = Admins::select('id')->whereHas('roles', function($query) {
-                                    $query->where('name', 'Employee');
-                                })
-                                ->where('status','active')
-                                ->pluck('id')
-                                ->toArray();
+                    $employees = Admins::select('id')->whereHas('roles', function($query) {
+                                            $query->where('name', 'Employee');
+                                        })
+                                        ->where('status','active')
+                                        ->pluck('id')
+                                        ->toArray();
 
 
-           // Get existing proposals for the task
-            $existingProposals = Proposals::where('task_id', $taskID)->whereIn('user_id',$employees)->get();
-            
-            // Create a map of existing proposals indexed by user_id
-            $existingProposalsMap = [];
-            $existingIDS= [];
+                // Get existing proposals for the task
+                    $existingProposals = Proposals::where('task_id', $taskID)->whereIn('user_id',$employees)->get();
+                    
+                    // Create a map of existing proposals indexed by user_id
+                    $existingProposalsMap = [];
+                    $existingIDS= [];
 
-            foreach ($existingProposals as $proposal) {
-                $existingProposalsMap[$proposal->user_id] = $proposal;
-                $existingIDS[] = $proposal->user_id;
-            }
+                    foreach ($existingProposals as $proposal) {
+                        $existingProposalsMap[$proposal->user_id] = $proposal;
+                        $existingIDS[] = $proposal->user_id;
+                    }
 
-            // Process selected employees
-            $proposalsToInsert = [];
-            foreach ($request->employees as $freelancerID) {
-                // If the proposal for the freelancer exists and has a different status, skip updating
-                if (isset($existingProposalsMap[$freelancerID])) {
-                    $proposalsToInsert[] = [
-                        'user_id' => $freelancerID,
-                        'task_id' => $taskID,
-                        'status' => $existingProposalsMap[$freelancerID]->status
-                    ];
-                }else{
-                    $proposalsToInsert[] = [
-                        'user_id' => $freelancerID,
-                        'task_id' => $taskID,
-                        'status' => 'PREVIEW'
-                    ];
+                    // Process selected employees
+                    $proposalsToInsert = [];
+                    foreach ($request->employees as $freelancerID) {
+                        // If the proposal for the freelancer exists and has a different status, skip updating
+                        if (isset($existingProposalsMap[$freelancerID])) {
+                            $proposalsToInsert[] = [
+                                'user_id' => $freelancerID,
+                                'task_id' => $taskID,
+                                'role'=> 26,
+                                'status' => $existingProposalsMap[$freelancerID]->status
+                            ];
+                        }else{
+                            $proposalsToInsert[] = [
+                                'user_id' => $freelancerID,
+                                'task_id' => $taskID,
+                                'role'=> 26,
+                                'status' => 'PREVIEW'
+                            ];
+                        }
+
+
+                    }
+
+                    // Delete existing proposals for unchecked employees           
+                    Proposals::where('task_id', $taskID)->whereIn('user_id', $existingIDS)->delete();
+                    // Insert new proposals
+                    Proposals::insert($proposalsToInsert);
                 }
-
-
-            }
-
-            // Delete existing proposals for unchecked employees           
-            Proposals::where('task_id', $taskID)->whereIn('user_id', $existingIDS)->delete();
-            // Insert new proposals
-            Proposals::insert($proposalsToInsert);
-        }
+    }
 
         DB::commit();
         return response()->json(['success'=>'Task updated successfully','route'=>route('tasks-list')]);
@@ -692,6 +727,86 @@ class TasksController extends Controller
   
         return response()->json($freelancers);
 
+    }
+
+
+
+    public function startWork(Request $request,Task $task){
+        $title = 'Start Work';
+
+        Proposals::where(['task_id'=>$task->id,'user_id'=>Auth()->guard('admin')->user()->id,'status'=>Proposals::STATUS_ASSIGNED])->update(['is_read'=>1]);
+
+        return view('admin.tasks.start-work',compact(
+            'task',
+            'title'
+        ));
+    }
+
+
+
+    public function updateStartWork(Request $request, $id){
+
+        $task = Task::findOrFail($id);
+        $request->validate([
+            'start_date_time' => 'required|date',
+            'end_date_time' => 'required|date',
+            'answers_file' => ($task->input_type=='file')?'required':'nullable', // Example for essay_upload
+        ],
+        [
+            'questions_file.mimes'=>'Please enter a valid file extension eg..csv,pdf,docx'
+        ]);
+        
+        try{
+
+        DB::beginTransaction();
+
+        $data = $request->except('_token');
+        
+        
+        
+        
+       
+
+        
+        if($task->input_type=='file' && $request->hasFile('answers_file') && $request->file('answers_file')->isValid()){               
+                $task->details()->delete();
+                // Import the CSV file
+                Excel::import(new TaskDetailsImport($task->id), $request->file('answers_file'));
+
+        }elseif($task->input_type=='multiple'){
+            
+                $task->details()->delete();
+
+                foreach ($request->questions as $k=>$row) {
+                    TaskDetail::create([
+                        'task_id' => $task->id,
+                        'questions' => mb_convert_encoding($row, 'UTF-8', 'auto') ,
+                        'answers' =>mb_convert_encoding($request->answers[$k], 'UTF-8', 'auto'),
+                    ]);
+                }
+
+        }
+
+        if($request->hasFile('answers_file')){
+            $answers_file = 'answers_'.time().'.'.$request->answers_file->extension();
+            $request->answers_file->move(public_path('/uploads/answers'), $answers_file);
+            $answers_file = "/uploads/answers/".$answers_file;
+            $data['answers_file'] = $answers_file;            
+        }
+
+        $task->update($data);
+
+
+        Proposals::where(['user_id'=>Auth()->guard('admin')->user()->id,'task_id'=>$task->id])->update(['status'=>Proposals::STATUS_COMPLETED]);
+
+        DB::commit();
+
+        return redirect()->route('tasks-list')->withSuccess('Task work completed successfully');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return redirect()->back()->withError($e->getMessage());
+        }
     }
 
 

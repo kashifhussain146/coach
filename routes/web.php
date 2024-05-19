@@ -125,6 +125,10 @@ Route::group(['middleware' => ['auth:admin']], function() {
         Route::get('/tasks/update/status/{id}/{status}', [TasksController::class,'statusUpdate'])->name('status-update')->middleware(['can:Edit Tasks']);
         Route::post('/tasks/assign/status/{id}', [TasksController::class,'statusAssigned'])->name('status-assign')->middleware(['can:Edit Tasks']);
 
+        Route::get('/tasks/start-work/{task}', [TasksController::class,'startWork'])->name('tasks-start-work')->middleware(['can:Edit Tasks']);
+        Route::post('/tasks/update/start-work/{id}', [TasksController::class,'updateStartWork'])->name('update-start-work')->middleware(['can:Edit Tasks']);
+
+
         Route::get('/tasks/roles', [TasksController::class,'rolesTasks'])->name('get.roles.tasks');
         
         Route::get('/tasks/ajax/freelancers', [TasksController::class,'getFreelancers'])->name('get-freelancers')->middleware(['can:Edit Tasks']);
@@ -150,6 +154,16 @@ Route::group(['middleware' => ['auth:admin']], function() {
                 'Content-Disposition' => 'attachment; filename=answers-sample.csv',
             ]);
         })->name('answers-tasks-sample');
+
+
+        Route::get('/tasks/questions-answers-sample/download', function () {
+            $sampleData = "Question,Answer,\nSample Question 1,Sample Answers 1";
+            
+            return Response::make($sampleData, 200, [
+                'Content-Type' => 'text/csv',
+                'Content-Disposition' => 'attachment; filename=questions-sample.csv',
+            ]);
+        })->name('questions-answers-sample-download');
 
 
     });

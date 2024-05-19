@@ -13,7 +13,7 @@ class Proposals extends Model
      * @var array
      */
 	 protected $table = 'proposals';
-    protected $fillable = ['task_id', 'user_id', 'status'];
+    protected $fillable = ['task_id', 'user_id', 'role', 'status'];
 
     // Define the statuses as constants
     const STATUS_PENDING = 'PENDING';
@@ -21,7 +21,8 @@ class Proposals extends Model
     const STATUS_ACCEPTED = 'ACCEPTED';
     const STATUS_REJECTED = 'REJECTED';
     const STATUS_PREVIEW = 'PREVIEW';
-    
+    const STATUS_COMPLETED = 'COMPLETED';
+
     public function scopeStatus($query,$status){
         return  $query->where('status',$status);
     }
@@ -43,6 +44,6 @@ class Proposals extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(Admins::class, 'user_id', 'id');
     }
 }

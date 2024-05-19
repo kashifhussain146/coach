@@ -6,6 +6,28 @@
 @section('inlinecss')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
+<style>
+    .typeahead {
+        width: 100% !important;
+        position: unset !important;
+    }
+
+    #FreeLancerDiv .select2-container {
+        width: 100% !important;
+    }
+
+    .select2-selection__choice__display {
+        color: black !important;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            color: black;
+            padding-left: 29px;
+            padding-right: 11px;
+        }
+</style>
+
 @stop
 
 @section('breadcrum')
@@ -125,9 +147,46 @@
                                 <input type="text" name="course_code_id" id="course_code_id" class="form-control" value="{{ $task->courseCode->title }}" />
                             </div>
 
+                            @php 
+
+                                    $unique_group_id_1 = "";
+                                    $unique_group_id_2 = "";
+                                    $unique_group_id_3 = "";
+                                    $unique_group_id_4 = "";
+                                    $unique_group_id_5 = "";
+
+                                $unique_group_id = explode('_',$task->unique_group_id);
+                                if(isset($unique_group_id)){
+                                    $unique_group_id_1 = $unique_group_id[0];
+                                    $unique_group_id_2 = $unique_group_id[1];
+                                    $unique_group_id_3 = $unique_group_id[2];
+                                    $unique_group_id_4 = $unique_group_id[3];
+                                    $unique_group_id_5 = str_replace('_','-',$unique_group_id[4].'-'.$unique_group_id[5].'-'.$unique_group_id[6]);
+                                    
+                                }
+                            @endphp
                             <div class="form-group">
-                                <label for="course_code">Task Group ID:  <span class="text-danger">*</span> </label>
-                                <input type="text" name="unique_group_id" required id="unique_group_id" class="form-control" value="{{ $task->unique_group_id }}" />
+                                <label for="course_code">Task Group ID: <span class="text-danger">*</span> </label>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <input type="text" name="unique_group_id_1" readonly id="unique_group_id_1" value="{{$unique_group_id_1}}_"  class="form-control" />
+                                    </div>-
+                                    <div class="col-md-1">
+                                        <input type="text" name="unique_group_id_2" readonly id="unique_group_id_2" value="{{$unique_group_id_2}}_"  class="form-control" />
+                                    </div>-
+                                    <div class="col-md-3">
+                                        <input type="text" name="unique_group_id_3"  id="unique_group_id_3" value="{{$unique_group_id_3}}" required class="form-control" />
+                                    </div>-
+
+                                    <div class="col-md-1">
+                                        <input type="text" name="unique_group_id_4" readonly id="unique_group_id_4"  value="_{{$unique_group_id_4}}_"  class="form-control" />
+                                    </div>-
+                                    <div class="col-md-2">
+                                        <input type="text" name="unique_group_id_5" readonly id="unique_group_id_5" value="{{ date('d_m_Y',strtotime( $unique_group_id_5))}}"   class="form-control" />
+                                    </div>
+
+                                </div>
+
                             </div>
 
                             <div class="form-group">
@@ -571,9 +630,9 @@
                     required: "Please select a college",
                     digits: true
                 },
-                unique_group_id:{
-                    required: "Please enter an Task group ID",
-                    digits: true
+                 unique_group_id_3:{
+                    required: true,
+                    maxlength: 5,
                 },
                 subject_id: {
                     required: "Please enter a subject",
@@ -754,7 +813,14 @@
         $('#course_id').typeahead({
             source: {!! json_encode($courses) !!},
             minLength: 1,
-            items: 10 // Number of items to show in the dropdown
+            items: 10, // Number of items to show in the dropdown
+            afterSelect: function(item) {
+                $("#unique_group_id_2").val(item.substring(0, 3)+'_');
+            }
+        });
+
+        $(document).on('blur','#course_id',function(){
+            $("#unique_group_id_2").val(this.value.substring(0, 3)+'_');
         });
 
 

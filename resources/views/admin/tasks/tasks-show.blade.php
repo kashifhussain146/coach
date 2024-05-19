@@ -61,6 +61,13 @@
                             <p>{{ $task->actual_length }}</p>
                         </div>
 
+
+                        <div class="form-group">
+                            <label>Unique Group ID:</label>
+                            <p>{{ $task->unique_group_id }}</p>
+                        </div>
+
+
                         <div class="form-group">
                             <label>Number of Words Written:</label>
                             <p>{{ $task->words_written }}</p>

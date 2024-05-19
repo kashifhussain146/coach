@@ -74,7 +74,7 @@
                                             <img id="profile_image_select" src="{{ asset('' . $user->profile_image) }}"
                                                 style="width:100px">
                                         @else
-                                            <img src="https://www.awesomegreece.com/wp-content/uploads/2018/10/default-user-image.png"
+                                            <img src="#"
                                                 id="file" style="height: 73px;width: 73px;" />
                                         @endif
                                     </div>

@@ -19,6 +19,12 @@
         .select2-selection__choice__display {
             color: black !important;
         }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            color: black;
+            padding-left: 29px;
+            padding-right: 11px;
+        }
     </style>
 @stop
 
@@ -143,8 +149,26 @@
 
                             <div class="form-group">
                                 <label for="course_code">Task Group ID: <span class="text-danger">*</span> </label>
-                                <input type="text" name="unique_group_id" id="unique_group_id" required
-                                    class="form-control" />
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <input type="text" name="unique_group_id_1" readonly id="unique_group_id_1" value="COC_"  class="form-control" />
+                                    </div>-
+                                    <div class="col-md-1">
+                                        <input type="text" name="unique_group_id_2" readonly id="unique_group_id_2"  class="form-control" />
+                                    </div>-
+                                    <div class="col-md-3">
+                                        <input type="text" name="unique_group_id_3"  id="unique_group_id_3" required class="form-control" />
+                                    </div>-
+
+                                    <div class="col-md-1">
+                                        <input type="text" name="unique_group_id_4" readonly id="unique_group_id_4" value="_{{rand(1,10)}}_"  class="form-control" />
+                                    </div>-
+                                    <div class="col-md-2">
+                                        <input type="text" name="unique_group_id_5" readonly id="unique_group_id_5" value="{{date('d_m_Y')}}"   class="form-control" />
+                                    </div>
+
+                                </div>
+
                             </div>
 
 
@@ -411,6 +435,10 @@
                 course_id: {
                     required: true
                 },
+                unique_group_id_3:{
+                    required: true,
+                    maxlength: 5,
+                },
                 course_code_id: {
                     required: true
                 },
@@ -627,9 +655,15 @@
         $('#course_id').typeahead({
             source: {!! json_encode($courses) !!},
             minLength: 1,
-            items: 10 // Number of items to show in the dropdown
+            items: 10, // Number of items to show in the dropdown
+            afterSelect: function(item) {
+                $("#unique_group_id_2").val(item.substring(0, 3)+'_');
+            }
         });
 
+        $(document).on('blur','#course_id',function(){
+            $("#unique_group_id_2").val(this.value.substring(0, 3)+'_');
+        });
 
         // Set up typeahead
         $('#course_code_id').typeahead({
