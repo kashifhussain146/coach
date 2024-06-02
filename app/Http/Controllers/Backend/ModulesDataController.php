@@ -64,7 +64,7 @@ class ModulesDataController extends Controller
             'title.required' => 'Title is required.',
         ]);
 
-
+        $route  = Modules::find($request->module_id);
         $check = ModulesData::where('module_id',4)->where('title',$request->title)->where('category',$request->category)->count();
         if($check > 0){
                 \Session::flash('error','There is already exists expert name of category ! Please try another one');
@@ -80,6 +80,7 @@ class ModulesDataController extends Controller
         $data->category = $request->category;
 
         $data->module_id = $request->module_id;
+        $data->model_name = $route->model_name;
 
         if (null!==($request->category_ids)) {
             $modules_id = [];
@@ -170,7 +171,7 @@ class ModulesDataController extends Controller
 
         $request->session()->flash('message.added', 'success');
         $request->session()->flash('message.content', $request->module_term.' has been successfully Created!');
-        $route  = Modules::find($request->module_id);
+        
         if($route->is_route){
             return redirect(route($route->route_name,['module'=>$route->slug,'id'=>$data->id]));            
         }

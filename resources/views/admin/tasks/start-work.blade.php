@@ -69,6 +69,17 @@
                             
                         @endif
 
+                        @if (session()->has('success'))
+                            <div class="alert alert-success">
+                                {{ session()->get('success') }}
+                            </div>
+                        @endif
+                        @if (session()->has('error'))
+                            <div class="alert alert-danger">
+                                {{ session()->get('error') }}
+                            </div>
+                        @endif
+
                         <form id="submitForm" enctype="multipart/form-data" method="post"
                             action="{{ route('update-start-work', $task->id) }}">
                             {{ csrf_field() }}
@@ -175,12 +186,13 @@
 
 
                                 <div class="form-group col-md-12">
+                                    <p class="text-danger text-bold"> Note : Before upload answer file please check the sample file</p> 
                                     <label for="answers_file">Upload Answers File:</label>
                                     <input class="form-control" type="file" id="answers_file" name="answers_file">
                                     @error('answers_file')
                                     <span class="text-danger">{{ $message}}</span>
                                     @enderror
-                                    <p class="text-danger text-bold"> Note : Before upload answer file please check the sample file</p> 
+                                   
                                     <a href="{{ route('questions-answers-sample-download') }}" class="">Download  Sample</a>
                                 </div>
                             @else
@@ -212,11 +224,26 @@
 
 
 
+                        <div class="col-md-12">
 
-                            <button type="submit" id="submitButton" class="btn btn-primary float-right"
-                                data-loading-text="<i class='fa fa-spinner fa-spin '></i> Sending..."
-                                data-rest-text="Update">Update</button>
+                            @if($task->start_date_time=="")
+                                <button type="submit" id="submitButton" class="btn btn-warning "
+                                    data-loading-text="<i class='fa fa-spinner fa-spin '></i> Sending..."
+                                    data-rest-text="Update">Start Task
+                                </button>
+                            @endif
+
+                            @if($task->start_date_time!="")
+                            <button type="submit" id="CompletedButton" class="btn btn-success "
+                            data-loading-text="<i class='fa fa-spinner fa-spin '></i> Sending..."
+                            data-rest-text="Update">Completed</button>
+                            @endif
+                        </div>
+
+
                     </div>
+
+                    <input type="hidden" name="draft_type" id="draft_type" value="1"/>
                     </form>
                 </div>
 
@@ -243,7 +270,14 @@
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script>
-       
+        
+
+        $("#submitButton").on('click', function(){
+            $("#draft_type").val(2);
+            setTimeout(() => {
+                $("#submitForm").submit();
+            }, 1000);
+        });
 
 
         $('.summernote').summernote({
@@ -276,18 +310,21 @@
         // Add validation rules and messages
         $("#submitForm").validate({
             rules: {
-                answers_file: {
-                    extension: "csv",
-                    // filesize: 1224000
-                },
                 start_date_time: {
                     required: true,
                     date: true
                 },
+                @if($task->start_date_time!="")
                 end_date_time: {
                     required: true,
                     date: true
+                },
+                answers_file:{
+                    required: true,
+                    extension: "csv",
+                    // filesize: 1224000
                 }
+                @endif
             },
             messages: {
                 start_date_time: {
@@ -301,73 +338,40 @@
 
             },
             errorPlacement: function(error, element) {
-                if (element.attr("type") === "file") {
-                    error.insertAfter(element.closest(".form-group").find("label"));
-                } else {
-                    error.insertAfter(element);
-                }
+                // if (element.attr("type") === "file") {
+                //     error.insertAfter(element.closest(".form-group").find("label"));
+                // } else {
+                //     error.insertAfter(element);
+                // }
+                error.insertAfter(element);
             },
             submitHandler: function(form) {
-
+                event.preventDefault();
 
                 $('.summernote').each(function() {
                     const code = $(this).summernote('code');
                     $(this).val(code);
                 });
+               
+                
+                if($("#draft_type").val() == 1){
 
-                // // Serialize form data
-                // var formData = new FormData(form);
-                // var $this = $('#submitButton');
-                // // Submit the form via Ajax
-                // $.ajax({
-                //     url: $(form).attr("action"),
-                //     type: $(form).attr("method"),
-                //     data: formData,
-                //     cache: false,
-                //     contentType: false,
-                //     processData: false,
-                //     beforeSend: function() {
-                //         // Disable the submit button or show a loading spinner if needed
-                //         $("#submitButton").prop("disabled", true);
-                //         // Add loading text if you have a loading indicator
-                //         $("#submitButton").html("<i class='fa fa-spinner fa-spin'></i> Sending...");
-                //     },
-                //     success: function(response) {
-                //         // Handle the success response
-                //         if (response.success) {
-                //             successMsg('Update Tasks', response.success, response.route);
-                //             // Reset the form or perform any other actions
-                //             form.reset();
-                //         } else {
-                //             $.each(response.errors, function(fieldName, field) {
-                //                 $.each(field, function(index, msg) {
-                //                     $('#' + fieldName).addClass(
-                //                         'is-invalid state-invalid');
-                //                     errorDiv = $('#' + fieldName).parent('div');
-                //                     errorDiv.append(
-                //                         '<div class="invalid-feedback">' + msg +
-                //                         '</div>');
-                //                 });
-                //             });
-                //             errorMsg('Update Tasks', response.success);
-                //         }
-                //         buttonLoading('reset', $this);
-                //     },
-                //     error: function(error) {
-                //         // Handle the error response
-                //         console.error(error.responseJSON);
-                //         buttonLoading('reset', $this);
-                //         errorMsg('Update Tasks', response.message);
-                //     },
-                //     complete: function() {
-                //         // Enable the submit button or hide the loading spinner if needed
-                //         $("#submitButton").prop("disabled", false);
-                //         // Restore the original text if you added loading text
-                //         $("#submitButton").html("Update");
-                //         buttonLoading('reset', $this);
-                //     }
-                // });
-                form.submit();
+                    Swal.fire({
+                    title: 'Task',
+                    text: 'Are you sure you want to complete this task ?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ok !'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    })
+                }else{
+                    form.submit();
+                }
+
+                
             }
         });
 

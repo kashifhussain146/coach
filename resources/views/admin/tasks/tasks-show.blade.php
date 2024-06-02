@@ -89,6 +89,12 @@
                             <p>{{ $task->comments }}</p>
                         </div>
 
+                        @if($task->status == 'COMPLETED')
+                        <div class="form-group">
+                            <label>Action :</label>
+                            <button type="button" class="btn btn-success">Publish to Solution Library</button>
+                        </div>
+                        @endif
 
                         <div class="form-group">
                             <label>Question file:</label>
@@ -133,7 +139,7 @@
                         
                             @foreach ($task->details as $item)
                             <tr>
-                                <td>{!!$item->questions!!}</td>
+                                <td>{{$item->questions}}</td>
                                 <td>{!!$item->answers!!}</td>
                             </tr>
                             @endforeach

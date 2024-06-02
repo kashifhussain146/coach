@@ -1119,6 +1119,40 @@
                 @endcan
 
 
+
+                
+                @can('Blogs Management Module')
+                <li class="nav-item {{ in_array(\Request::route()->getName(), ['tasks-create','tasks-list','tasks-edit']) ? " menu-open" : ""}}">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-circle"></i>
+                        <p>
+                            Blogs 
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @can('Module_Add_blogs')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.modules.data.add', ['module' => 'blogs']) }}"
+                                class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Blogs</p>
+                            </a>
+                        </li>
+                        @endcan
+
+                        @can('Module_List_blogs')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.modules.data', ['module' => 'blogs']) }}"
+                                class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>List Blogs</p>
+                            </a>
+                        </li>
+                        @endcan
+                    </ul>
+                </li>
+                @endcan
              
                 @can('Tasks Management')
                 <li class="nav-item {{ in_array(\Request::route()->getName(), ['tasks-create','tasks-list','tasks-edit']) ? " menu-open" : ""}}">

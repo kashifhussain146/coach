@@ -8,6 +8,22 @@ use App\Models\ModulesData;
 use App\Models\Contact_us;
 use Illuminate\Support\Facades\DB;
 use App\Models\Task;
+use Illuminate\Support\Facades\File;
+
+function getModelsInNamespace($namespace)
+{
+    $models = [];
+    $files = File::allFiles(app_path('Models'));
+
+    foreach ($files as $file) {
+        $modelClass = $namespace . '\\' . $file->getFilenameWithoutExtension();
+        if (class_exists($modelClass)) {
+            $models[$modelClass] = $modelClass;
+        }
+    }
+
+    return $models;
+}
 
 if (! function_exists('removeTags')) {
     /**

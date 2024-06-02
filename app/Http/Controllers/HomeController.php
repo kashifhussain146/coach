@@ -177,7 +177,7 @@ class HomeController extends Controller
                                 ->values();
         //dd($questions);
 
-        $subjectsCategory = SubjectCategory::TopicsData()->get();
+        $subjectsCategory = SubjectCategory::TopicsData()->Activated()->get();
         return view('solutions-library.index',compact('courseCode','subject_category_id','topic_id','subjectcategory','topics','questions','subjectsCategory'));
     }
 
@@ -221,5 +221,36 @@ class HomeController extends Controller
 
     public function login(Request $request){
         return response()->json(['status'=>true]);
+    }
+
+
+    public function blogs(Request $request){
+
+        $blogs = ModulesData::whereHas('modelable')
+                            ->where('module_id',15);
+
+        
+        $category = null;
+        $search = '';
+
+        if($request->category!=""){
+            
+           $category = SubjectCategory::find($request->category);
+
+           $blogs = $blogs->where('category',$request->category);
+
+        }
+
+        if($request->search!=""){
+            $search = $request->search;
+            $blogs = $blogs->where('title','like','%'.$request->search.'%');
+        }
+
+        $blogs = $blogs->latest()->paginate(10)->withQueryString();
+        // dd($blogs);
+        $subjectsCategory = SubjectCategory::whereHas('blogs')->withCount('blogs')->Activated()->orderBy('category_name')->get();
+        // dd($subjectsCategory)
+
+        return view('blog',compact('blogs','subjectsCategory','category','search'));
     }
 }

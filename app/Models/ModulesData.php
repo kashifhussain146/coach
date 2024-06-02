@@ -3,11 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ModulesData extends Model
 {
+    use HasFactory;
     protected $table = 'modules_data';
-    protected $fillable = ['id','module_id','title'];
+    protected $fillable = ['id','module_id','title','model_name'];
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at'=>'datetime',
+    ];
     public function results()
     {
         return $this->hasMany('App\Models\ModulesData','category');
@@ -22,5 +27,11 @@ class ModulesData extends Model
     {
         return $this->results()->count();
     }
+
+    public function modelable()
+    {
+        return $this->morphTo(__FUNCTION__, 'model_name', 'category');
+    }
+    
 
 }

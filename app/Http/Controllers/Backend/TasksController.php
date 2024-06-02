@@ -87,32 +87,15 @@ class TasksController extends Controller
                             $authUser = Auth()->guard('admin')->user();
 
                             if(Auth()->user()->can('Edit Tasks') && Auth()->guard('admin')->user()->hasRole('Admin')){
-
-                            //     $haveRecords = $row->freelancers()->where( function($query) use ($authUser){
-                            //                         if($authUser->roles()->first()->name == 'Free Lancer'){
-                            //                             $query->where('user_id',$authUser->id);
-                            //                         }
-                            //                     });
-
-                            //     if($authUser->roles()->first()->name == 'Free Lancer'){
-                            //         $haveRecords =  $haveRecords     
-                            //                             ->whereIn('status',[Proposals::STATUS_ASSIGNED,Proposals::STATUS_PREVIEW]);
-                            //     }
-                            //     $haveRecords =  $haveRecords->count();
-
-                                
-                            //     if($haveRecords > 0) {
-                                     $actions .= "<a href=\"" . route('tasks-edit', ['id' => $row->id]) . "\" class=\"btn btn-xs btn-warning btn-flat info-btn\"><i class=\"fa fa-pencil\"></i> Edit</a>&nbsp;&nbsp;";
-                            //     }
+                                $actions .= "<a href=\"" . route('tasks-edit', ['id' => $row->id]) . "\" class=\"btn btn-xs btn-warning btn-flat info-btn\"><i class=\"fa fa-pencil\"></i> Edit</a>&nbsp;&nbsp;";
                             }
 
                             $actions .= "<a href=\"" . route('tasks-view', ['id' => $row->id]) . "\" class=\"btn btn-xs btn-primary btn-flat info-btn\"><i class=\"fa fa-eye\"></i> View </a>&nbsp;&nbsp;";
 
-                            if(Auth()->user()->can('Edit Tasks')){
-                                    if($authUser->roles()->first()->name == 'Free Lancer' && $row->freelancers()->where('user_id',$authUser->id)->whereIn('status',[Proposals::STATUS_PREVIEW])->count() > 0 ){
-                                        $actions .= "<a href=\"" . route('status-update',['id'=>$row->freelancers()->where('user_id',$authUser->id)->first()->id,'status'=>\App\Models\Proposals::STATUS_ACCEPTED]) . "\" class=\"btn-xs btn btn-success \"> I can do it </a>&nbsp;&nbsp;";
-                                        $actions .= "<a href=\"" . route('status-update',['id'=>$row->freelancers()->where('user_id',$authUser->id)->first()->id,'status'=>\App\Models\Proposals::STATUS_REJECTED]) . "\" class=\"btn-xs btn btn-danger \"> I can't do it </a>&nbsp;&nbsp;";
-                                    }
+
+                            if($authUser->roles()->first()->name == 'Free Lancer' && $row->freelancers()->where('user_id',$authUser->id)->whereIn('status',[Proposals::STATUS_PREVIEW])->count() > 0 ){
+                                $actions .= "<a href=\"" . route('status-update',['id'=>$row->freelancers()->where('user_id',$authUser->id)->first()->id,'status'=>\App\Models\Proposals::STATUS_ACCEPTED]) . "\" class=\"btn-xs btn btn-success \"> I can do it </a>&nbsp;&nbsp;";
+                                $actions .= "<a href=\"" . route('status-update',['id'=>$row->freelancers()->where('user_id',$authUser->id)->first()->id,'status'=>\App\Models\Proposals::STATUS_REJECTED]) . "\" class=\"btn-xs btn btn-danger \"> I can't do it </a>&nbsp;&nbsp;";
                             }
 
                             if(Auth()->guard('admin')->user()->hasRole('Free Lancer') && $status == 'ASSIGNED'){
@@ -123,7 +106,7 @@ class TasksController extends Controller
                             if(Auth()->user()->can('Assign Tasks')){
                                 
                                 $haveRecords = $row->freelancers()->where('role',30)->whereIn('status',[Proposals::STATUS_ACCEPTED,Proposals::STATUS_ASSIGNED])->count();
-                                if($haveRecords > 0) { 
+                                if($haveRecords > 0) {
                                     $actions .= "<a data-created_by='".$row->created_by."' data-id='".$row->id."' data-url='".route('status-assign',$row->id)."' class=\"assignModal btn btn-xs btn-primary btn-flat info-btn\" data-toggle='modal' data-target='#viewDetail'><i class=\"fa fa-eye\" ></i> Assign To </a>";
                                 }
 
@@ -134,6 +117,9 @@ class TasksController extends Controller
                         ->addColumn('college', function($row) {
                             return ($row->college)?$row->college->title:"N/A";
                         })
+                        // ->addColumn('status', function($row) {
+                        //     return $row->status;
+                        // })
                         ->addColumn('subject', function($row) {
                             return ($row->subject)?$row->subject->title:"N/A";
                         })
@@ -673,6 +659,10 @@ class TasksController extends Controller
             $proposals = Proposals::find($id);
             $proposals->status = $status;
             $proposals->save();
+
+            $proposals->task->status = $status;
+            $proposals->task->save();
+
             DB::commit();
 
             return redirect()->back()->with('success','Task status update successfully');
@@ -691,6 +681,7 @@ class TasksController extends Controller
 
             $task = Task::find($id);
             $task->created_by = $request->user_id;
+            $task->status = Task::STATUS_ASSIGNED;
             $task->save();
 
             Proposals::where(['task_id'=>$id,'status'=>Proposals::STATUS_ASSIGNED])->update(['status'=>Proposals::STATUS_ACCEPTED]);
@@ -749,8 +740,8 @@ class TasksController extends Controller
         $task = Task::findOrFail($id);
         $request->validate([
             'start_date_time' => 'required|date',
-            'end_date_time' => 'required|date',
-            'answers_file' => ($task->input_type=='file')?'required':'nullable', // Example for essay_upload
+            // 'end_date_time' => 'required|date',
+            //'answers_file' => ($task->input_type=='file')?'required':'nullable', // Example for essay_upload
         ],
         [
             'questions_file.mimes'=>'Please enter a valid file extension eg..csv,pdf,docx'
@@ -761,47 +752,54 @@ class TasksController extends Controller
         DB::beginTransaction();
 
         $data = $request->except('_token');
-        
-        
-        
-        
-       
-
-        
-        if($task->input_type=='file' && $request->hasFile('answers_file') && $request->file('answers_file')->isValid()){               
-                $task->details()->delete();
-                // Import the CSV file
-                Excel::import(new TaskDetailsImport($task->id), $request->file('answers_file'));
-
-        }elseif($task->input_type=='multiple'){
+        $message = 'Task started successfully Now you can add questions';
+        $route = route('tasks-start-work',$id);
+        if($request->draft_type == 1 ){
             
-                $task->details()->delete();
+            $route = route('tasks-list');
 
-                foreach ($request->questions as $k=>$row) {
-                    TaskDetail::create([
-                        'task_id' => $task->id,
-                        'questions' => mb_convert_encoding($row, 'UTF-8', 'auto') ,
-                        'answers' =>mb_convert_encoding($request->answers[$k], 'UTF-8', 'auto'),
-                    ]);
-                }
+            $message = 'Task completed successfully';
+            
+            if($task->input_type=='file' && $request->hasFile('answers_file') && $request->file('answers_file')->isValid()){               
+                    $task->details()->delete();
+                    // Import the CSV file
+                    Excel::import(new TaskDetailsImport($task->id), $request->file('answers_file'));
 
-        }
+            }elseif($task->input_type=='multiple'){
+                
+                    $task->details()->delete();
 
-        if($request->hasFile('answers_file')){
-            $answers_file = 'answers_'.time().'.'.$request->answers_file->extension();
-            $request->answers_file->move(public_path('/uploads/answers'), $answers_file);
-            $answers_file = "/uploads/answers/".$answers_file;
-            $data['answers_file'] = $answers_file;            
+                    foreach ($request->questions as $k=>$row) {
+                        TaskDetail::create([
+                            'task_id' => $task->id,
+                            'questions' => mb_convert_encoding($row, 'UTF-8', 'auto') ,
+                            'answers' =>mb_convert_encoding($request->answers[$k], 'UTF-8', 'auto'),
+                        ]);
+                    }
+
+            }
+
+            if($request->hasFile('answers_file')){
+                $answers_file = 'answers_'.time().'.'.$request->answers_file->extension();
+                $request->answers_file->move(public_path('/uploads/answers'), $answers_file);
+                $answers_file = "/uploads/answers/".$answers_file;
+                $data['answers_file'] = $answers_file;            
+            }
+
+            $task->status = Task::STATUS_COMPLETED;
+
+            Proposals::where(['user_id'=>Auth()->guard('admin')->user()->id,'task_id'=>$task->id])->update(['status'=>Proposals::STATUS_COMPLETED]);
+
         }
 
         $task->update($data);
 
 
-        Proposals::where(['user_id'=>Auth()->guard('admin')->user()->id,'task_id'=>$task->id])->update(['status'=>Proposals::STATUS_COMPLETED]);
+        
 
         DB::commit();
 
-        return redirect()->route('tasks-list')->withSuccess('Task work completed successfully');
+        return redirect()->to($route)->withSuccess($message);
         }
         catch(\Exception $e){
             DB::rollback();

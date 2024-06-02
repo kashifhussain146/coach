@@ -13,6 +13,14 @@ class Task extends Model
 {
     use HasFactory;
 
+    const STATUS_PREVIEW = 'PREVIEW';
+    const STATUS_ACCEPTED = 'ACCEPTED';
+    const STATUS_REJECTED = 'REJECTED';
+    const STATUS_PENDING = 'PENDING';
+    const STATUS_ASSIGNED = 'ASSIGNED';
+    const STATUS_COMPLETED = 'COMPLETED';
+    const STATUS_RETIRE = 'RETIRE';
+    
     protected $fillable = [
         'start_date_time',
         'end_date_time',

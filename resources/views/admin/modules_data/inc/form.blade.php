@@ -26,7 +26,7 @@
   @endif
 
 
-  @if($module->category)
+  @if($module->category && $module->is_custom ==0 )
   <div class="col-md-12">
     <div class="form-group">
        {!! Form::label('category', $module->term.' Category', ['class' => 'font-weight-bold']) !!}
@@ -34,6 +34,20 @@
        {!! APFrmErrHelp::showErrors($errors, 'category') !!}
     </div>
  </div>
+ @else
+
+ @php
+  $model = $module->model_name;
+  $categories = $model::Activated()->pluck('category_name','id')->toArray();
+ @endphp
+ <div class="col-md-12">
+    <div class="form-group">
+      {!! Form::label('category', $module->term.' Category', ['class' => ' font-weight-bold']) !!}
+      {!! Form::select('category', [''=>'Select Category']+$categories, old('category'), array('class'=>'select2 form-control', 'id'=>'category', 'required'=>'required')) !!}
+      {!! APFrmErrHelp::showErrors($errors, 'category') !!}
+    </div>
+</div>
+
  @endif
 
 

@@ -242,6 +242,9 @@
                                 </li>
                                 <li class=""><a href="{{ route('take.my.online.class') }}">Take My Online
                                         Class</a></li>
+
+                                <li class=""><a href="{{route('blogs')}}">Blogs</a></li>
+
                                 <li class=""><a href="{{ route('solutions.library') }}">Solution Library</a>
                                 </li>
                                 <li class="dropdown"><a href="#">Services</a>
@@ -254,8 +257,9 @@
                                 </li>
                                 <li class=""><a href="#">Get a Quote</a></li>
 
+
                                 <!-- <ul>
-                                <!--    <li><a href="page-courses.html">Courses List</a></li>-->
+                                    <li><a href="page-courses.html">Courses List</a></li>-->
                                 <!--    <li><a href="page-course-details.html">Course Details</a></li>-->
                                 <!--</ul> -->
 

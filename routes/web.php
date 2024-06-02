@@ -41,6 +41,8 @@ use App\Http\Controllers\Backend\EmailTemplatesController;
 Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/blogs', [HomeController::class, 'blogs'])->name('blogs');
+
 
 Route::get('/solutions-library', [HomeController::class, 'solutionsLibrary'])->name('solutions.library');
 Route::get('/take-my-online-class', [HomeController::class, 'takeMyOnlineClass'])->name('take.my.online.class');

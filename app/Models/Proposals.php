@@ -16,12 +16,13 @@ class Proposals extends Model
     protected $fillable = ['task_id', 'user_id', 'role', 'status'];
 
     // Define the statuses as constants
-    const STATUS_PENDING = 'PENDING';
-    const STATUS_ASSIGNED = 'ASSIGNED';
+    const STATUS_PREVIEW = 'PREVIEW';
     const STATUS_ACCEPTED = 'ACCEPTED';
     const STATUS_REJECTED = 'REJECTED';
-    const STATUS_PREVIEW = 'PREVIEW';
+    const STATUS_PENDING = 'PENDING';
+    const STATUS_ASSIGNED = 'ASSIGNED';
     const STATUS_COMPLETED = 'COMPLETED';
+    const STATUS_RETIRE = 'RETIRE';
 
     public function scopeStatus($query,$status){
         return  $query->where('status',$status);

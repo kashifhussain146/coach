@@ -3,8 +3,13 @@
 /public/build
 /public/hot
 /public/storage
+/public/images
+/public/uploads
 /storage/app/public
 /storage/framework/views
+/storage/logs
+/stubs
+*.zip
 /storage/framework/sessions
 /storage/framework/cache
 /storage/framework/testing

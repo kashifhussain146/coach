@@ -85,7 +85,7 @@
 
                      
 
-                     <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $data->created_at)}}</td>
+                     <td>{{ ($data->created_at) ? $data->created_at->format('d/m/Y H:i:s A'): "N/A"}}</td>
 
                      <td><a class="waves-effect btn-sm status waves-light" onclick="update_status({{$data->id}});" href="javascript:void(0);" id="sts_{{$data->id}}">@if($data->status=='active')<span class="btn btn-success">{{$data->status}}</span>@else <span class="btn btn-warning">{{$data->status}}</span> @endif </a></td>
 
