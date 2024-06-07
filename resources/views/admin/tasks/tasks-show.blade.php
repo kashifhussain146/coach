@@ -54,7 +54,7 @@
                             <p>{{ $task->task_type }}</p>
                         </div>
 
-                       
+
 
                         <div class="form-group">
                             <label>Actual Length (Assignment):</label>
@@ -89,33 +89,39 @@
                             <p>{{ $task->comments }}</p>
                         </div>
 
-                        @if($task->status == 'COMPLETED')
-                        <div class="form-group">
-                            <label>Action :</label>
-                            <button type="button" class="btn btn-success">Publish to Solution Library</button>
-                        </div>
+                        @if ($task->status == 'COMPLETED')
+                            <div class="form-group">
+                                <label>Action :</label>
+                                <form id="publishSolutionLibrary" action="{{ route('task-publish', ['task' => $task->id]) }}"
+                                    method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn-sm btn btn-success">Publish to Solution
+                                        Library</button>
+                                </form>
+
+                            </div>
                         @endif
 
                         <div class="form-group">
                             <label>Question file:</label>
 
-                            &nbsp;<a target="_blank" download href="{{asset(''.$task->questions_file)}}">
+                            &nbsp;<a target="_blank" download href="{{ asset('' . $task->questions_file) }}">
                                 <i class="fa fa-download"></i>
                             </a> &nbsp;&nbsp;
-                            <a target="_blank" href="{{asset(''.$task->questions_file)}}">
+                            <a target="_blank" href="{{ asset('' . $task->questions_file) }}">
                                 <i class="fa fa-eye"></i>
                             </a>
                         </div>
 
 
-                        @if($task->answers_file!='')
+                        @if ($task->answers_file != '')
                             <div class="form-group">
                                 <label>Answers file:</label>
 
-                                &nbsp;<a target="_blank" href="{{asset(''.$task->answers_file)}}">
+                                &nbsp;<a target="_blank" href="{{ asset('' . $task->answers_file) }}">
                                     <i class="fa fa-download"></i>
                                 </a> &nbsp;&nbsp;
-                                <a target="_blank" href="{{asset(''.$task->answers_file)}}">
+                                <a target="_blank" href="{{ asset('' . $task->answers_file) }}">
                                     <i class="fa fa-eye"></i>
                                 </a>
                             </div>
@@ -129,23 +135,23 @@
                         </div>
 
 
-                        @if($task->details->count() > 0)
-                        <h3>Question  & Answers</h3>                        
-                        <table class="table">
-                            <tr>
-                                <td style="width:500px;">Question</td>
-                                <td>Answers</td>
-                            </tr>
-                        
-                            @foreach ($task->details as $item)
-                            <tr>
-                                <td>{{$item->questions}}</td>
-                                <td>{!!$item->answers!!}</td>
-                            </tr>
-                            @endforeach
-                        
+                        @if ($task->details->count() > 0)
+                            <h3>Question & Answers</h3>
+                            <table class="table">
+                                <tr>
+                                    <td style="width:500px;">Question</td>
+                                    <td>Answers</td>
+                                </tr>
 
-                        </table>
+                                @foreach ($task->details as $item)
+                                    <tr>
+                                        <td>{{ $item->questions }}</td>
+                                        <td>{!! $item->answers !!}</td>
+                                    </tr>
+                                @endforeach
+
+
+                            </table>
 
                         @endif
                     </div>
@@ -154,4 +160,19 @@
             </div>
         </div>
     </div>
-            @endsection
+@endsection
+
+@push('js')
+
+<script>
+
+    $(document).on('submit', '#publishSolutionLibrary', function(){
+        var con = confirm('Are you sure you want to publish');
+        if(!con){
+            return false;
+        }
+    })
+    
+</script>
+
+@endpush

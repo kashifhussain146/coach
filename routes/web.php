@@ -26,6 +26,8 @@ use App\Http\Controllers\Backend\WidgetDataController;
 use App\Http\Controllers\Backend\RolePermissionController;
 use App\Http\Controllers\Backend\TasksController;
 use App\Http\Controllers\Backend\EmailTemplatesController;
+use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\GetAQuoteController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,6 +44,11 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/blogs', [HomeController::class, 'blogs'])->name('blogs');
+Route::get('/blog/{id}', [HomeController::class, 'blogDetail'])->name('blog.detail');
+
+Route::get('/about-us', [HomeController::class, 'aboutUsView'])->name('about-us');
+Route::get('/services', [HomeController::class, 'servicesView'])->name('services');
+Route::get('/get-a-quote', [HomeController::class, 'contactView'])->name('get-a-quote');
 
 
 Route::get('/solutions-library', [HomeController::class, 'solutionsLibrary'])->name('solutions.library');
@@ -129,6 +136,8 @@ Route::group(['middleware' => ['auth:admin']], function() {
 
         Route::get('/tasks/start-work/{task}', [TasksController::class,'startWork'])->name('tasks-start-work')->middleware(['can:Edit Tasks']);
         Route::post('/tasks/update/start-work/{id}', [TasksController::class,'updateStartWork'])->name('update-start-work')->middleware(['can:Edit Tasks']);
+        
+        Route::post('/tasks/publish/{task}', [TasksController::class,'publish'])->name('task-publish')->middleware(['can:Edit Tasks']);
 
 
         Route::get('/tasks/roles', [TasksController::class,'rolesTasks'])->name('get.roles.tasks');
@@ -255,8 +264,8 @@ Route::group(['middleware' => ['auth:admin']], function() {
     Route::group([], function() {
 
         Route::get('/admin/questions', [QuestionsController::class,'index'])->name('questions-list')->middleware(['can:Module List Questions']);
-        Route::get('/admin/questions/create', [QuestionsController::class,'create'])->name('questions-create')->middleware(['can:Module Add Questions ']);
-        Route::post('/admin/questions/store', [QuestionsController::class,'store'])->name('questions-store')->middleware(['can:Module Add Questions ']);
+        Route::get('/admin/questions/create', [QuestionsController::class,'create'])->name('questions-create')->middleware(['can:Module Add Questions']);
+        Route::post('/admin/questions/store', [QuestionsController::class,'store'])->name('questions-store')->middleware(['can:Module Add Questions']);
         Route::get('/admin/questions/edit/{id}', [QuestionsController::class,'edit'])->name('questions-edit')->middleware(['can:Module Edit Questions']);
         Route::post('/admin/questions/update/{id}', [QuestionsController::class,'update'])->name('questions-update')->middleware(['can:Module Edit Questions']);
         Route::post('/admin/questions/delete/{id}', [QuestionsController::class,'destroy'])->name('questions-destroy')->middleware(['can:Module Delete Questions']);
@@ -354,6 +363,11 @@ Route::group(['middleware' => ['auth:admin']], function() {
     
 
     
+     Route::get('admin/about-us/edit', [AboutUsController::class, 'editAboutView'])->name('about-us.edit');
+     Route::put('admin/about-us/update', [AboutUsController::class, 'updateAbout'])->name('about-us.update');
+    
 
+     Route::get('admin/get-a-quote/edit', [GetAQuoteController::class, 'editGetAQuoteView'])->name('admin.get-a-quote.edit');
+     Route::put('admin/get-a-quote/update', [GetAQuoteController::class, 'updateGetAQuote'])->name('admin.get-a-quote.update');
     
 });

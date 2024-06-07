@@ -808,4 +808,39 @@ class TasksController extends Controller
     }
 
 
+    public function publish(Request $request, Task $task){
+
+       
+
+        $data = [];
+       
+        
+        foreach ($task->details as $k=>$v){
+
+            $question = [];
+
+            $question['collegeid'] = $task->college_id;
+            $question['coursesid'] = $task->course_id;
+            $question['score'] = $task->score;
+            $question['type'] = $task->task_type;
+            $question['startdatetime'] = $task->start_date_time;
+            $question['enddatetime'] = $task->end_date_time;
+            $question['num_words'] = $task->word_count;
+            $question['price'] = 100;
+            $question['subject_category'] = $task->subject->id;
+            $question['subject'] = $task->subject_id;        
+            $question['addedby'] =  $task->created_by;
+            $question['status'] =  'Y';
+            $question['visiblity'] =  'Y';
+            $question['added_date'] =  $task->created_at->format('Y-m-d');
+            $question['question'] = $v->questions;
+            $question['answer'] = $v->answers;
+
+            $data[] = $question;
+        }
+
+        dd($data);
+        dd($task,$task->subject);
+    }
+
 }

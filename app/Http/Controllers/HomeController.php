@@ -12,6 +12,8 @@ use App\Models\SubjectCategory;
 use App\Models\Questions;
 use App\Models\ModulesData;
 use App\Models\Modules;
+use App\Models\AboutUs;
+use App\Models\GetAQuote;
 
 class HomeController extends Controller
 {
@@ -33,7 +35,7 @@ class HomeController extends Controller
     public function index()
     {
         $banner = module(18);
-        $category = Category::where('status','active')->latest()->get();
+        $category = Category::where('status','active')->take(3)->get();
         $testimonial = module(12);
         $howWork =   module(10);
         $chooseUs =    module(20);
@@ -247,10 +249,38 @@ class HomeController extends Controller
         }
 
         $blogs = $blogs->latest()->paginate(10)->withQueryString();
-        // dd($blogs);
+         
         $subjectsCategory = SubjectCategory::whereHas('blogs')->withCount('blogs')->Activated()->orderBy('category_name')->get();
-        // dd($subjectsCategory)
+       
 
         return view('blog',compact('blogs','subjectsCategory','category','search'));
+    }
+    public function blogDetail($id)
+    {
+        $blog = ModulesData::where('id', $id)->with('modelable')->first();
+
+        if (!$blog) {
+            return redirect()->route('blogs')->with('error', 'Blog post not found');
+        }
+
+        return view('blog-detail', compact('blog'));
+    }
+    public function aboutUsView(Request $request)
+    {
+        $aboutUs = AboutUs::first();
+        return view('about-us', compact('aboutUs'));
+    }
+    public function servicesView(Request $request)
+    {
+        $services = Category::where('status','active')->latest()->get();
+        $testimonial = module(12);
+        $helpFaqs =    module(26);
+                
+        return view('services',compact('services','testimonial','helpFaqs'));
+    }
+    public function contactView(Request $request)
+    {
+        $contactUs = GetAQuote::first();
+        return view('get-a-quote', compact('contactUs'));
     }
 }
