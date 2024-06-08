@@ -10,12 +10,6 @@ class GetAQuoteController extends Controller
     public function editGetAQuoteView()
     {
         $contactUs = GetAQuote::first();
-        
-        if (!$contactUs) {
-            // Initialize a new instance with default values
-            $contactUs = new GetAQuote();
-        }
-
         return view('admin.get-a-quote.edit-get-a-quote', compact('contactUs'));
     }
 

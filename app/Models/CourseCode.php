@@ -11,8 +11,9 @@ class CourseCode extends Model
      *
      * @var array
      */
-	 protected $table = 'cousecode';
+	  protected $table = 'cousecode';
      protected $fillable = ['code', 'status'];
+     public $timestamps = false;
 
      public function scopeActivated($query){
         return  $query->where('status','Y');

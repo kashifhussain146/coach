@@ -60,13 +60,13 @@
                     <div class="card-body">
 
                         @if ($errors->any())
-                                       
-                                <ul class="alert alert-danger">
-                                    @foreach ($errors->all() as $error)
-                                        <li class="text-white">{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            
+
+                            <ul class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    <li class="text-white">{{ $error }}</li>
+                                @endforeach
+                            </ul>
+
                         @endif
 
                         @if (session()->has('success'))
@@ -86,7 +86,7 @@
 
                             <div class="row">
 
-                                   
+
 
                                 <div class="form-group col-md-4">
                                     <label for="course_code">Task Group ID : </label>
@@ -100,20 +100,22 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="college_name">College Name : </label>
-                                    &nbsp;&nbsp;{{ $task->college->title }}
+                                    &nbsp;&nbsp;{{ $task->college->name }}
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label for="subject">Subject : </label> &nbsp;&nbsp; {{ $task->subject->title }}
+                                    <label for="subject">Subject : </label> &nbsp;&nbsp;
+                                    {{ $task->subject->subject_name }}
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label for="course_name">Course Name : </label>&nbsp;&nbsp; {{ $task->course->title }}
+                                    <label for="course_name">Course Name : </label>&nbsp;&nbsp;
+                                    {{ $task->course->category_name }}
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label for="course_code">Course Code : </label>
-                                    &nbsp;&nbsp;{{ $task->courseCode->title }}
+                                    &nbsp;&nbsp;{{ $task->courseCode->code }}
                                 </div>
 
                                 <div class="form-group col-md-4">
@@ -157,8 +159,8 @@
                                         name="start_date_time"
                                         value="{{ $task->start_date_time != '' ? $task->start_date_time : old('start_date_time') }}">
                                     @error('start_date_time')
-                                     <span class="text-danger">{{ $message }}</span>
-                                     @enderror
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group col-md-4">
@@ -167,9 +169,9 @@
                                         id="end_date_time" name="end_date_time"
                                         value="{{ $task->end_date_time != '' ? $task->end_date_time : old('end_date_time') }}" />
 
-                                        @error('end_date_time')
-                                        <span class="text-danger">{{ $message}}</span>
-                                        @enderror
+                                    @error('end_date_time')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
 
                             </div>
@@ -180,20 +182,23 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="end_date_time">Question File: </label>
-                                    <a href="{{ asset('' . $task->questions_file) }}" download class="">Download
+                                    <a href="{{ asset('/uploads/questions/' . $task->questions_file) }}" download
+                                        class="">Download
                                         Question File</a>
                                 </div>
 
 
                                 <div class="form-group col-md-12">
-                                    <p class="text-danger text-bold"> Note : Before upload answer file please check the sample file</p> 
+                                    <p class="text-danger text-bold"> Note : Before upload answer file please check the
+                                        sample file</p>
                                     <label for="answers_file">Upload Answers File:</label>
                                     <input class="form-control" type="file" id="answers_file" name="answers_file">
                                     @error('answers_file')
-                                    <span class="text-danger">{{ $message}}</span>
+                                        <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                   
-                                    <a href="{{ route('questions-answers-sample-download') }}" class="">Download  Sample</a>
+
+                                    <a href="{{ route('questions-answers-sample-download') }}" class="">Download
+                                        Sample</a>
                                 </div>
                             @else
                                 @foreach ($task->details as $item)
@@ -204,7 +209,8 @@
                                                     <div class="form-group">
                                                         <label for="">Question:</label>
                                                         {!! $item->questions !!}
-                                                        <input type="hidden" name="questions[]" value="{!! $item->questions !!}">
+                                                        <input type="hidden" name="questions[]"
+                                                            value="{!! $item->questions !!}">
                                                     </div>
                                                 </div>
 
@@ -224,26 +230,26 @@
 
 
 
-                        <div class="col-md-12">
+                            <div class="col-md-12">
 
-                            @if($task->start_date_time=="")
-                                <button type="submit" id="submitButton" class="btn btn-warning "
-                                    data-loading-text="<i class='fa fa-spinner fa-spin '></i> Sending..."
-                                    data-rest-text="Update">Start Task
-                                </button>
-                            @endif
+                                @if ($task->start_date_time == '')
+                                    <button type="submit" id="submitButton" class="btn btn-warning "
+                                        data-loading-text="<i class='fa fa-spinner fa-spin '></i> Sending..."
+                                        data-rest-text="Update">Start Task
+                                    </button>
+                                @endif
 
-                            @if($task->start_date_time!="")
-                            <button type="submit" id="CompletedButton" class="btn btn-success "
-                            data-loading-text="<i class='fa fa-spinner fa-spin '></i> Sending..."
-                            data-rest-text="Update">Completed</button>
-                            @endif
-                        </div>
+                                @if ($task->start_date_time != '')
+                                    <button type="submit" id="CompletedButton" class="btn btn-success "
+                                        data-loading-text="<i class='fa fa-spinner fa-spin '></i> Sending..."
+                                        data-rest-text="Update">Completed</button>
+                                @endif
+                            </div>
 
 
                     </div>
 
-                    <input type="hidden" name="draft_type" id="draft_type" value="1"/>
+                    <input type="hidden" name="draft_type" id="draft_type" value="1" />
                     </form>
                 </div>
 
@@ -259,20 +265,18 @@
 
 
 @push('js')
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
-<!-- Add this script tag at the end of your HTML body or in an external JavaScript file -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
+    <!-- Add this script tag at the end of your HTML body or in an external JavaScript file -->
 
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script>
-        
-
-        $("#submitButton").on('click', function(){
+        $("#submitButton").on('click', function() {
             $("#draft_type").val(2);
             setTimeout(() => {
                 $("#submitForm").submit();
@@ -314,16 +318,16 @@
                     required: true,
                     date: true
                 },
-                @if($task->start_date_time!="")
-                end_date_time: {
-                    required: true,
-                    date: true
-                },
-                answers_file:{
-                    required: true,
-                    extension: "csv",
-                    // filesize: 1224000
-                }
+                @if ($task->start_date_time != '')
+                    end_date_time: {
+                        required: true,
+                        date: true
+                    },
+                    answers_file: {
+                        required: true,
+                        extension: "csv",
+                        // filesize: 1224000
+                    }
                 @endif
             },
             messages: {
@@ -352,38 +356,38 @@
                     const code = $(this).summernote('code');
                     $(this).val(code);
                 });
-               
-                
-                if($("#draft_type").val() == 1){
+
+
+                if ($("#draft_type").val() == 1) {
 
                     Swal.fire({
-                    title: 'Task',
-                    text: 'Are you sure you want to complete this task ?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Ok !'
+                        title: 'Task',
+                        text: 'Are you sure you want to complete this task ?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ok !'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             form.submit();
                         }
                     })
-                }else{
+                } else {
                     form.submit();
                 }
 
-                
+
             }
         });
 
         const startDateTimeInput = document.getElementById('start_date_time');
         const endDateTimeInput = document.getElementById('end_date_time');
         const wordsWrittenInput = document.getElementById('words_written');
-        const deadline_date_time = document.getElementById('deadline_date_time');
+
 
         // Initialize the start date/time picker
         flatpickr(startDateTimeInput, {
             enableTime: true,
-            minDate: 'today',
+            minDate: '{{ $task->start_date_time }}',
             dateFormat: 'Y-m-d H:i',
             minuteIncrement: 1,
             onChange: function(selectedDates, dateStr, instance) {
@@ -395,7 +399,7 @@
         // Initialize the end date/time picker
         const endDateTimePicker = flatpickr(endDateTimeInput, {
             enableTime: true,
-            minDate: 'today',
+            minDate: '{{ $task->start_date_time }}',
             dateFormat: 'Y-m-d H:i',
             minuteIncrement: 1,
         });
@@ -403,7 +407,7 @@
 
         flatpickr(deadline_date_time, {
             enableTime: true,
-            minDate: 'today',
+            minDate: '{{ $task->start_date_time }}',
             dateFormat: 'Y-m-d H:i',
             minuteIncrement: 1
         });

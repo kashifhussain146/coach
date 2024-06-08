@@ -1,32 +1,32 @@
 @extends('admin.layouts.app')
 @section('title')
-    <title>{{$title}}</title>
+    <title>{{ $title }}</title>
 @stop
 
 @section('inlinecss')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
-<style>
-    .typeahead {
-        width: 100% !important;
-        position: unset !important;
-    }
+    <style>
+        .typeahead {
+            width: 100% !important;
+            position: unset !important;
+        }
 
-    #FreeLancerDiv .select2-container {
-        width: 100% !important;
-    }
+        #FreeLancerDiv .select2-container {
+            width: 100% !important;
+        }
 
-    .select2-selection__choice__display {
-        color: black !important;
-    }
+        .select2-selection__choice__display {
+            color: black !important;
+        }
 
-    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
             color: black;
             padding-left: 29px;
             padding-right: 11px;
         }
-</style>
+    </style>
 
 @stop
 
@@ -53,136 +53,173 @@
     <div class="content-header">
         <div class="side-app">
             <div class="col-lg-12">
+
+                @if ($errors->all())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">{{ $title }}</h3>
                     </div>
                     <div class="card-body">
                         <form id="submitForm" enctype="multipart/form-data" method="post"
-                            action="{{ route('tasks-update',$task->id) }}">
+                            action="{{ route('tasks-update', $task->id) }}">
                             {{ csrf_field() }}
 
-                            @if(Auth()->user()->hasRole('Admin') || Auth()->user()->hasRole('Sub Admin'))
-                            {{-- <div class="form-group">
+                            @if (Auth()->user()->hasRole('Admin') || Auth()->user()->hasRole('Sub Admin'))
+                                {{-- <div class="form-group">
                                 <label for="created_by">Employees / Freelancers:</label>
                                 <select  class="form-control select2" id="created_by" name="created_by">
                                     <option value="">Select</option>
                                     @foreach ($employees as $item)
-                                    <option @if($item->id==$task->created_by) selected @endif value="{{$item->id}}">{{$item->name}} ({{$item->roles()->first()->name}})  </option>                                        
+                                    <option @if ($item->id == $task->created_by) selected @endif value="{{$item->id}}">{{$item->name}} ({{$item->roles()->first()->name}})  </option>                                        
                                     @endforeach
                                 </select>
                             </div> --}}
 
-                            <div id="rolesData">
-                                <div class="form-group" id="EmployeeDiv">
-                                    <label for="created_by">Employees</label>
-                                    <select class="form-control " id="employees" multiple name="employees[]">
-                                        @foreach ($employees as $item)  
-                                            @if($item->roles()->first()->name == 'Employee')
-                                            <option @if( in_array($item->id,$task->freelancers()->pluck('user_id')->toArray() )  ) selected @endif  value="{{ $item->id }}">{{ $item->name }}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                    <p class="row  pt-2" style="font-size: 12px;">
-                                       &nbsp;&nbsp;&nbsp; <a class="p-1 nav-link btn btn-sm btn-primary" id="selectAllemployees">Check All</a>&nbsp;&nbsp;
-                                        <a class="p-1 nav-link btn btn-sm btn-primary" id="uncheckAllemployees">UnCheck All</a>
-                                    </p>
+                                <div id="rolesData">
+                                    <div class="form-group" id="EmployeeDiv">
+                                        <label for="created_by">Employees</label>
+                                        <select class="form-control " id="employees" multiple name="employees[]">
+                                            @foreach ($employees as $item)
+                                                @if ($item->roles()->first()->name == 'Employee')
+                                                    <option @if (in_array($item->id, $task->freelancers()->pluck('user_id')->toArray())) selected @endif
+                                                        value="{{ $item->id }}">{{ $item->name }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                        <p class="row  pt-2" style="font-size: 12px;">
+                                            &nbsp;&nbsp;&nbsp; <a class="p-1 nav-link btn btn-sm btn-primary"
+                                                id="selectAllemployees">Check All</a>&nbsp;&nbsp;
+                                            <a class="p-1 nav-link btn btn-sm btn-primary" id="uncheckAllemployees">UnCheck
+                                                All</a>
+                                        </p>
+                                    </div>
+
+                                    <div class="form-group" id="FreelancerDiv">
+                                        <label for="created_by">Freelancers</label>
+                                        <select class="form-control " id="freelancers" multiple name="freelancers[]">
+                                            @foreach ($employees as $item)
+                                                @if ($item->roles()->first()->name == 'Free Lancer')
+                                                    <option @if (in_array($item->id, $task->freelancers()->pluck('user_id')->toArray())) selected @endif
+                                                        value="{{ $item->id }}">{{ $item->name }} </option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                        <p class="row pt-2" style="font-size: 12px;">
+                                            &nbsp;&nbsp;<a class="p-1 nav-link btn btn-sm btn-primary"
+                                                id="selectAllfreelancers">Check All</a>&nbsp;&nbsp;
+                                            <a class="p-1 nav-link btn btn-sm btn-primary"
+                                                id="uncheckAllfreelancers">UnCheck All</a>
+                                        </p>
+                                    </div>
+
                                 </div>
 
-                                <div class="form-group" id="FreelancerDiv">
-                                    <label for="created_by">Freelancers</label>
-                                    <select class="form-control " id="freelancers" multiple name="freelancers[]">
-                                        @foreach ($employees as $item)
-                                            @if($item->roles()->first()->name == 'Free Lancer')
-                                                <option  @if( in_array($item->id,$task->freelancers()->pluck('user_id')->toArray() )  ) selected @endif value="{{ $item->id }}">{{ $item->name }} </option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                    <p class="row pt-2" style="font-size: 12px;">
-                                        &nbsp;&nbsp;<a class="p-1 nav-link btn btn-sm btn-primary" id="selectAllfreelancers">Check All</a>&nbsp;&nbsp;
-                                        <a class="p-1 nav-link btn btn-sm btn-primary" id="uncheckAllfreelancers">UnCheck All</a>
-                                    </p>
-                                </div>
-
-                            </div>
-
-                        @endif
+                            @endif
 
                             <div class="form-group">
-                                <label for="deadline_date_time">Deadline Date:  </label>
-                                <input type="text" autocomplete="off" class="form-control" id="deadline_date_time" name="deadline_date_time" value="{{ ($task->deadline_date_time!='')? date('Y-m-d H:i',strtotime($task->deadline_date_time)):'' }}" >
+                                <label for="deadline_date_time">Deadline Date: </label>
+                                <input type="text" autocomplete="off" class="form-control" id="deadline_date_time"
+                                    name="deadline_date_time"
+                                    value="{{ $task->deadline_date_time != '' ? date('Y-m-d H:i', strtotime($task->deadline_date_time)) : '' }}">
                             </div>
 
                             <div class="form-group">
                                 <label for="start_date_time">Start Date & Time: </label>
-                                <input type="text" autocomplete="off" class="form-control" id="start_date_time" name="start_date_time" value="{{($task->start_date_time!='')?  $task->start_date_time:'' }}" >
+                                <input type="text" autocomplete="off" class="form-control" id="start_date_time"
+                                    name="start_date_time"
+                                    value="{{ $task->start_date_time != '' ? $task->start_date_time : '' }}">
                             </div>
 
                             <div class="form-group">
-                                <label for="end_date_time">End Date & Time:  </label>
-                                <input type="text" autocomplete="off" readonly class="form-control" id="end_date_time" name="end_date_time" value="{{($task->end_date_time!='')?  $task->end_date_time:'' }}"   />
+                                <label for="end_date_time">End Date & Time: </label>
+                                <input type="text" autocomplete="off" readonly class="form-control" id="end_date_time"
+                                    name="end_date_time"
+                                    value="{{ $task->end_date_time != '' ? $task->end_date_time : '' }}" />
                             </div>
 
-                          
+
 
                             <div class="form-group">
                                 <label for="college_name">College Name:</label>
-                                <input type="text" name="college_id" id="college_id" class="form-control" value="{{ $task->college->title }}"/>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label for="subject">Subject:</label>
-                                <input type="text" name="subject_id" id="subject_id" class="form-control" value="{{ $task->subject->title }}" />
+                                <input type="text" name="college_id" id="college_id" class="form-control"
+                                    value="{{ $task->college->name }}" />
                             </div>
 
                             <div class="form-group">
                                 <label for="course_name">Course Name:</label>
-                                <input type="text" name="course_id" id="course_id" class="form-control" value="{{ $task->course->title }}"  />
+                                <input type="text" name="course_id" id="course_id" class="form-control"
+                                    value="{{ $task->course->category_name }}" />
                             </div>
+
+                            <div class="form-group">
+                                <label for="subject">Subject:</label>
+                                <input type="text" name="subject_id" id="subject_id" class="form-control"
+                                    value="{{ $task->subject->subject_name }}" />
+                            </div>
+
+
 
 
                             <div class="form-group">
                                 <label for="course_code">Course Code:</label>
-                                <input type="text" name="course_code_id" id="course_code_id" class="form-control" value="{{ $task->courseCode->title }}" />
+                                <input type="text" name="course_code_id" id="course_code_id" class="form-control"
+                                    value="{{ $task->courseCode->code }}" />
                             </div>
 
-                            @php 
+                            @php
 
-                                    $unique_group_id_1 = "";
-                                    $unique_group_id_2 = "";
-                                    $unique_group_id_3 = "";
-                                    $unique_group_id_4 = "";
-                                    $unique_group_id_5 = "";
+                                $unique_group_id_1 = '';
+                                $unique_group_id_2 = '';
+                                $unique_group_id_3 = '';
+                                $unique_group_id_4 = '';
+                                $unique_group_id_5 = '';
 
-                                $unique_group_id = explode('_',$task->unique_group_id);
-                                if(isset($unique_group_id)){
+                                $unique_group_id = explode('_', $task->unique_group_id);
+                                if (isset($unique_group_id)) {
                                     $unique_group_id_1 = $unique_group_id[0];
                                     $unique_group_id_2 = $unique_group_id[1];
                                     $unique_group_id_3 = $unique_group_id[2];
                                     $unique_group_id_4 = $unique_group_id[3];
-                                    $unique_group_id_5 = str_replace('_','-',$unique_group_id[4].'-'.$unique_group_id[5].'-'.$unique_group_id[6]);
-                                    
+                                    $unique_group_id_5 = str_replace(
+                                        '_',
+                                        '-',
+                                        $unique_group_id[4] . '-' . $unique_group_id[5] . '-' . $unique_group_id[6],
+                                    );
                                 }
                             @endphp
                             <div class="form-group">
                                 <label for="course_code">Task Group ID: <span class="text-danger">*</span> </label>
                                 <div class="row">
                                     <div class="col-md-1">
-                                        <input type="text" name="unique_group_id_1" readonly id="unique_group_id_1" value="{{$unique_group_id_1}}_"  class="form-control" />
+                                        <input type="text" name="unique_group_id_1" readonly id="unique_group_id_1"
+                                            value="{{ $unique_group_id_1 }}_" class="form-control" />
                                     </div>-
                                     <div class="col-md-1">
-                                        <input type="text" name="unique_group_id_2" readonly id="unique_group_id_2" value="{{$unique_group_id_2}}_"  class="form-control" />
+                                        <input type="text" name="unique_group_id_2" readonly id="unique_group_id_2"
+                                            value="{{ $unique_group_id_2 }}_" class="form-control" />
                                     </div>-
                                     <div class="col-md-3">
-                                        <input type="text" name="unique_group_id_3"  id="unique_group_id_3" value="{{$unique_group_id_3}}" required class="form-control" />
+                                        <input type="text" name="unique_group_id_3" id="unique_group_id_3"
+                                            value="{{ $unique_group_id_3 }}" required class="form-control" />
                                     </div>-
 
                                     <div class="col-md-1">
-                                        <input type="text" name="unique_group_id_4" readonly id="unique_group_id_4"  value="_{{$unique_group_id_4}}_"  class="form-control" />
+                                        <input type="text" name="unique_group_id_4" readonly id="unique_group_id_4"
+                                            value="_{{ $unique_group_id_4 }}_" class="form-control" />
                                     </div>-
                                     <div class="col-md-2">
-                                        <input type="text" name="unique_group_id_5" readonly id="unique_group_id_5" value="{{ date('d_m_Y',strtotime( $unique_group_id_5))}}"   class="form-control" />
+                                        <input type="text" name="unique_group_id_5" readonly id="unique_group_id_5"
+                                            value="{{ date('d_m_Y', strtotime($unique_group_id_5)) }}"
+                                            class="form-control" />
                                     </div>
 
                                 </div>
@@ -194,29 +231,49 @@
                                 <select id="task_type" class="form-control" name="task_type" required>
                                     <option value="">Select</option>
                                     <!-- Add 'selected' attribute to the option matching the task's type -->
-                                    <option value="assignment_homework" {{ $task->task_type == 'assignment_homework' ? 'selected' : '' }}>Assignment / Homework</option>
-                                    <option value="discussion_initial_post" {{ $task->task_type == 'discussion_initial_post' ? 'selected' : '' }}>Discussion (Initial Post)</option>
-                                    <option value="quiz_exam" {{ $task->task_type == 'quiz_exam' ? 'selected' : '' }}>Quiz / Exam</option>
-                                    <option value="peer_responses" {{ $task->task_type == 'peer_responses' ? 'selected' : '' }}>Peer Responses</option>
+                                    <option value="assignment_homework"
+                                        {{ $task->task_type == 'assignment_homework' ? 'selected' : '' }}>Assignment /
+                                        Homework</option>
+                                    <option value="discussion_initial_post"
+                                        {{ $task->task_type == 'discussion_initial_post' ? 'selected' : '' }}>Discussion
+                                        (Initial Post)</option>
+                                    <option value="quiz_exam" {{ $task->task_type == 'quiz_exam' ? 'selected' : '' }}>Quiz
+                                        / Exam</option>
+                                    <option value="peer_responses"
+                                        {{ $task->task_type == 'peer_responses' ? 'selected' : '' }}>Peer Responses
+                                    </option>
                                 </select>
                             </div>
 
                             <!-- Additional fields based on task type -->
                             <!-- Assignment / Homework -->
-                            <div id="assignment_homework_fields" style="{{ $task->task_type == 'assignment_homework' ? 'display: block;' : 'display: none;' }}">
+                            <div id="assignment_homework_fields"
+                                style="{{ $task->task_type == 'assignment_homework' ? 'display: block;' : 'display: none;' }}">
                                 <!-- Populate assignment type select with the task's assignment type -->
 
                                 <div class="form-group">
                                     <label for="assignment_type">Assignment Type:</label>
-                                  
+
                                     <select class="form-control" id="assignment_type" name="assignment_type">
                                         <option value="">Select</option>
-                                        <option value="research_paper" {{ $task->assignment_type == 'research_paper' ? 'selected' : '' }}>Research Paper</option>
-                                        <option value="term_project" {{ $task->assignment_type == 'term_project' ? 'selected' : '' }}>Term Project</option>
-                                        <option value="group_work" {{ $task->assignment_type == 'group_work' ? 'selected' : '' }}>Group Work</option>
-                                        <option value="final_project" {{ $task->assignment_type == 'final_project' ? 'selected' : '' }}>Final Project</option>
-                                        <option value="final_paper" {{ $task->assignment_type == 'final_paper' ? 'selected' : '' }}>Final Paper</option>
-                                        <option value="presentation" {{ $task->assignment_type == 'presentation' ? 'selected' : '' }}>Presentation</option>
+                                        <option value="research_paper"
+                                            {{ $task->assignment_type == 'research_paper' ? 'selected' : '' }}>Research
+                                            Paper</option>
+                                        <option value="term_project"
+                                            {{ $task->assignment_type == 'term_project' ? 'selected' : '' }}>Term Project
+                                        </option>
+                                        <option value="group_work"
+                                            {{ $task->assignment_type == 'group_work' ? 'selected' : '' }}>Group Work
+                                        </option>
+                                        <option value="final_project"
+                                            {{ $task->assignment_type == 'final_project' ? 'selected' : '' }}>Final Project
+                                        </option>
+                                        <option value="final_paper"
+                                            {{ $task->assignment_type == 'final_paper' ? 'selected' : '' }}>Final Paper
+                                        </option>
+                                        <option value="presentation"
+                                            {{ $task->assignment_type == 'presentation' ? 'selected' : '' }}>Presentation
+                                        </option>
                                     </select>
                                 </div>
 
@@ -224,141 +281,155 @@
 
 
                             <!-- MCQ / Essay / Mixed -->
-                            <div id="quiz_exam_fields" style="{{ $task->task_type == 'quiz_exam' ? 'display: block;' : 'display: none;' }}">
+                            <div id="quiz_exam_fields"
+                                style="{{ $task->task_type == 'quiz_exam' ? 'display: block;' : 'display: none;' }}">
 
                                 <div class="form-group">
                                     <label for="mcq_essay_mixed">MCQ / Essay / Mixed:</label>
                                     <select class="form-control" id="mcq_essay_mixed" name="mcq_essay_mixed">
                                         <option value="">Select</option>
-                                        <option value="mcq" {{ $task->mcq_essay_mixed == 'mcq' ? 'selected' : '' }}>MCQ</option>
-                                        <option value="essay" {{ $task->mcq_essay_mixed == 'essay' ? 'selected' : '' }}>Essay</option>
-                                        <option value="mixed" {{ $task->mcq_essay_mixed == 'mixed' ? 'selected' : '' }}>Mixed</option>
+                                        <option value="mcq" {{ $task->mcq_essay_mixed == 'mcq' ? 'selected' : '' }}>MCQ
+                                        </option>
+                                        <option value="essay" {{ $task->mcq_essay_mixed == 'essay' ? 'selected' : '' }}>
+                                            Essay</option>
+                                        <option value="mixed" {{ $task->mcq_essay_mixed == 'mixed' ? 'selected' : '' }}>
+                                            Mixed</option>
                                     </select>
                                 </div>
 
                             </div>
 
 
-                                 <!-- Additional fields based on MCQ / Essay / Mixed -->
+                            <!-- Additional fields based on MCQ / Essay / Mixed -->
 
 
-                                 <div class="form-group">
-                                    <label>Choose Upload Type:</label><br>
-                                    <input type="radio" name="input_type" value="file" id="inputFile" @if($task->input_type=='file') checked @endif />
-                                    <label for="inputFile">Upload Question File</label>
-                                    <input type="radio" name="input_type" value="multiple" id="inputMultiple" @if($task->input_type=='multiple') checked @endif>
-                                    <label for="inputMultiple">Upload Questions & Answers</label>
-                                </div>
-                                
+                            <div class="form-group">
+                                <label>Choose Upload Type:</label><br>
+                                <input type="radio" name="input_type" value="file" id="inputFile"
+                                    @if ($task->input_type == 'file') checked @endif />
+                                <label for="inputFile">Upload Question File</label>
+                                <input type="radio" name="input_type" value="multiple" id="inputMultiple"
+                                    @if ($task->input_type == 'multiple') checked @endif>
+                                <label for="inputMultiple">Upload Questions & Answers</label>
+                            </div>
 
-                                <div id="uploadSection" class="form-group" @if($task->input_type=="file") style="display:block" @else style="display:none"  @endif>
-                                    <label for="questions_file">Upload Question File:</label>
-                                    <input class="form-control" type="file" id="questions_file" name="questions_file">
-                                    <a href="{{route('questions-tasks-sample')}}" class="">Download Sample</a>
-                                    <br /> <br />
 
-                                    <label for="answers_file">Upload Answers File:</label>
-                                    <input class="form-control" type="file" id="answers_file" name="answers_file">
-                                    <a href="{{route('answers-tasks-sample')}}" class="">Download Sample</a>
+                            <div id="uploadSection" class="form-group"
+                                @if ($task->input_type == 'file') style="display:block" @else style="display:none" @endif>
+                                <label for="questions_file">Upload Question File:</label>
+                                <input class="form-control" type="file" id="questions_file" name="questions_file">
+                                <a href="{{ route('questions-tasks-sample') }}" class="">Download Sample</a>
+                                <br /> <br />
 
-                                </div>
+                                <label for="answers_file">Upload Answers File:</label>
+                                <input class="form-control" type="file" id="answers_file" name="answers_file">
+                                <a href="{{ route('answers-tasks-sample') }}" class="">Download Sample</a>
 
-                                
+                            </div>
 
-                                  <!-- Multiple Add More Section -->
-                                <div id="multipleSection" class="form-group" @if($task->input_type=="multiple") style="display:block" @else style="display:none;"  @endif >
-                                    
-                                        <div class="question-answer-set row" style="border:1px solid;">
-                                            <div class="col-md-11">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label for="">Question:</label>
-                                                            <textarea type="text" name="questions[]" class="form-control summernote" required ></textarea>
-                                                        </div>                                                    
-                                                    </div>
 
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label>Answer:</label>
-                                                            <textarea type="text" name="answers[]" class="form-control summernote" required ></textarea>
-                                                        </div>
-                                                    </div>
+
+                            <!-- Multiple Add More Section -->
+                            <div id="multipleSection" class="form-group"
+                                @if ($task->input_type == 'multiple') style="display:block" @else style="display:none;" @endif>
+
+                                <div class="question-answer-set row" style="border:1px solid;">
+                                    <div class="col-md-11">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="">Question:</label>
+                                                    <textarea type="text" name="questions[]" class="form-control summernote" required></textarea>
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-1">
-                                                <button type="button" class="mt-4 btn btn-primary btn-sm addMore" id="addMore"><i class="fa fa-plus"></i></button>
-                                                <button type="button" class="mt-4 btn btn-danger btn-sm removeSet"><i class="fa fa-trash"></i></button>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Answer:</label>
+                                                    <textarea type="text" name="answers[]" class="form-control summernote" required></textarea>
+                                                </div>
                                             </div>
                                         </div>
-                                   
+                                    </div>
 
-                                    @foreach ($task->details as $item)
-                                    
+                                    <div class="col-md-1">
+                                        <button type="button" class="mt-4 btn btn-primary btn-sm addMore"
+                                            id="addMore"><i class="fa fa-plus"></i></button>
+                                        <button type="button" class="mt-4 btn btn-danger btn-sm removeSet"><i
+                                                class="fa fa-trash"></i></button>
+                                    </div>
+                                </div>
+
+
+                                @foreach ($task->details as $item)
                                     <div class="question-answer-set row">
                                         <div class="col-md-11">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="">Question:</label>
-                                                        <textarea type="text" name="questions[]" class="form-control summernote" required >{!!$item->questions!!}</textarea>
+                                                        <textarea type="text" name="questions[]" class="form-control summernote" required>{!! $item->questions !!}</textarea>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label>Answer:</label>
-                                                        <textarea type="text" name="answers[]" class="form-control summernote" required >{!!$item->answers!!}</textarea>
+                                                        <textarea type="text" name="answers[]" class="form-control summernote" required>{!! $item->answers !!}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-1">
-                                            <button type="button" class="mt-4 btn btn-primary btn-sm addMore" >
+                                            <button type="button" class="mt-4 btn btn-primary btn-sm addMore">
                                                 <i class="fa fa-plus"></i>
                                             </button>
-                                            <button type="button" data-route="{{ route('tasks-delete',$item->id)}}" class="mt-4 btn btn-danger btn-sm removeSet2">
+                                            <button type="button" data-route="{{ route('tasks-delete', $item->id) }}"
+                                                class="mt-4 btn btn-danger btn-sm removeSet2">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </div>
 
                                     </div>
+                                @endforeach
 
-                                    @endforeach
-                                    
-                                  
 
-                                </div>
 
-                            
+                            </div>
 
-                                <!-- Peer Responses -->
-                                <div id="peer_responses_fields" style="{{ $task->task_type == 'peer_responses' ? 'display: block;' : 'display: none;' }}">
-                                
-                                </div>
 
-                                
-                                <div id="actual_length_fields" {{ $task->mcq_essay_mixed !== 'mcq' ? 'display: block;' : 'display: none;' }}>
-                                    <div class="form-group">
-                                        <label for="actual_length">Actual Length (Assignment):</label>
-                                        <input class="form-control" type="number" id="actual_length" name="actual_length" value="{{ $task->actual_length }}">
-                                    </div>
-                                </div>
 
+                            <!-- Peer Responses -->
+                            <div id="peer_responses_fields"
+                                style="{{ $task->task_type == 'peer_responses' ? 'display: block;' : 'display: none;' }}">
+
+                            </div>
+
+
+                            <div id="actual_length_fields"
+                                {{ $task->mcq_essay_mixed !== 'mcq' ? 'display: block;' : 'display: none;' }}>
                                 <div class="form-group">
-                                    <label for="words_written">Number of Words Written:</label>
-                                    <input class="form-control" type="number" id="words_written" name="words_written" value="{{ $task->words_written }}">
+                                    <label for="actual_length">Actual Length (Assignment):</label>
+                                    <input class="form-control" type="number" id="actual_length" name="actual_length"
+                                        value="{{ $task->actual_length }}">
                                 </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="words_written">Number of Words Written:</label>
+                                <input class="form-control" type="number" id="words_written" name="words_written"
+                                    value="{{ $task->words_written }}">
+                            </div>
 
 
-                            
 
-                            
+
+
 
                             <div class="form-group">
                                 <label for="score">Score:</label>
-                                <input class="form-control" type="number" id="score" name="score" value="{{ $task->score }}">
+                                <input class="form-control" type="number" id="score" name="score"
+                                    value="{{ $task->score }}">
                             </div>
 
                             <div class="form-group">
@@ -393,16 +464,17 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
     <!-- Add this script tag at the end of your HTML body or in an external JavaScript file -->
-    
+
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script>
-
         $("#employees").select2();
         $("#freelancers").select2();
         $(document).ready(function() {
 
-            $('.summernote').summernote({height:'300'});
+            $('.summernote').summernote({
+                height: '300'
+            });
 
             const $uploadSection = $('#uploadSection');
             const $multipleSection = $('#multipleSection');
@@ -424,7 +496,7 @@
             // Add More functionality for multiple inputs
             let setIndex = 1;
             $(document).on('click', '.addMore', function() {
-                 const $questionAnswerSet = `
+                const $questionAnswerSet = `
                                     <div class="question-answer-set row" style="border:1px solid;">
                                         <div class="col-md-11">
                                             <div class="row">
@@ -452,14 +524,18 @@
                                     </div>
 
                  `;
-               
+
                 $multipleSection.append($questionAnswerSet);
 
-                $('#summernote'+setIndex).summernote({height:'300'})
-                $("#summernote"+setIndex).val($("#summernote"+setIndex).summernote('code'));
+                $('#summernote' + setIndex).summernote({
+                    height: '300'
+                })
+                $("#summernote" + setIndex).val($("#summernote" + setIndex).summernote('code'));
 
-                $('#answers'+setIndex).summernote({height:'300'})
-                $("#answers"+setIndex).val($("#answers"+setIndex).summernote('code'));
+                $('#answers' + setIndex).summernote({
+                    height: '300'
+                })
+                $("#answers" + setIndex).val($("#answers" + setIndex).summernote('code'));
 
                 setIndex++;
             });
@@ -467,8 +543,8 @@
 
             // Remove functionality for added sets
             $(document).on('click', '.removeSet', function() {
-                console.log("setIndex",setIndex);
-                if(setIndex==1){
+                console.log("setIndex", setIndex);
+                if (setIndex == 1) {
                     alert('You cant delete this Last record ')
                     return false;
                 }
@@ -478,102 +554,104 @@
         });
 
 
-            $(document).on('click','.removeSet2',function(){
+        $(document).on('click', '.removeSet2', function() {
 
-                var con = confirm('Are you sure want to delete this questions/answers');
-                    if(!con){
-                        return false;
-                    }
-                $.ajax({
-                    url: $(this).attr('data-route'),
-                    type: 'DELETE',
-                    // dataType: "json",
-                    // cache: false,
-                    // contentType: false,
-                    // processData: false,
-                    data:{_token:"{{csrf_token()}}"},
-                    beforeSend: function() {
+            var con = confirm('Are you sure want to delete this questions/answers');
+            if (!con) {
+                return false;
+            }
+            $.ajax({
+                url: $(this).attr('data-route'),
+                type: 'DELETE',
+                // dataType: "json",
+                // cache: false,
+                // contentType: false,
+                // processData: false,
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                beforeSend: function() {
 
-                    },
-                    success: function(response) {
-                        if(response.status){
-                            location.reload();
-                        }else{
-                            alert(response.success);
-                        }
-                    },
-                    error: function(error) {
-
-                    },
-                    complete: function() {
-
-                    }
-                });
-
-            });
-
-            const startDateTimeInput = document.getElementById('start_date_time');
-            const endDateTimeInput = document.getElementById('end_date_time');
-            const wordsWrittenInput = document.getElementById('words_written');
-
-            flatpickr(startDateTimeInput, {
-                enableTime: true,
-                minDate: 'today',
-                dateFormat: 'Y-m-d H:i',
-                minuteIncrement: 1,
-                onClose: updateWordsWritten,
-            });
-
-            flatpickr(endDateTimeInput, {
-                enableTime: true,
-                minDate: 'today',
-                dateFormat: 'Y-m-d H:i',
-                minuteIncrement: 1,
-                onClose: updateWordsWritten,
-            });
-
-            function updateWordsWritten(selectedDates, dateStr, instance) {
-                console.log($("#mcq_essay_mixed option:selected").val());
-                if($("#mcq_essay_mixed option:selected").val()=='mcq'){
-                    const startDateTime = Date.parse(startDateTimeInput.value);
-                    const endDateTime = Date.parse(endDateTimeInput.value);
-                    
-                    if (!isNaN(startDateTime) && !isNaN(endDateTime) && endDateTime > startDateTime) {
-                        const timeDifference = (endDateTime - startDateTime) / (1000 * 60 * 60);
-                        console.log(timeDifference);
-                        const wordsWritten = timeDifference * 250;
-                        wordsWrittenInput.value = Math.max(0, wordsWritten);
+                },
+                success: function(response) {
+                    if (response.status) {
+                        location.reload();
                     } else {
-                        wordsWrittenInput.value = "";
+                        alert(response.success);
                     }
-                }else{
+                },
+                error: function(error) {
+
+                },
+                complete: function() {
+
+                }
+            });
+
+        });
+
+        const startDateTimeInput = document.getElementById('start_date_time');
+        const endDateTimeInput = document.getElementById('end_date_time');
+        const wordsWrittenInput = document.getElementById('words_written');
+
+        flatpickr(startDateTimeInput, {
+            enableTime: true,
+            minDate: 'today',
+            dateFormat: 'Y-m-d H:i',
+            minuteIncrement: 1,
+            onClose: updateWordsWritten,
+        });
+
+        flatpickr(endDateTimeInput, {
+            enableTime: true,
+            minDate: 'today',
+            dateFormat: 'Y-m-d H:i',
+            minuteIncrement: 1,
+            onClose: updateWordsWritten,
+        });
+
+        function updateWordsWritten(selectedDates, dateStr, instance) {
+            console.log($("#mcq_essay_mixed option:selected").val());
+            if ($("#mcq_essay_mixed option:selected").val() == 'mcq') {
+                const startDateTime = Date.parse(startDateTimeInput.value);
+                const endDateTime = Date.parse(endDateTimeInput.value);
+
+                if (!isNaN(startDateTime) && !isNaN(endDateTime) && endDateTime > startDateTime) {
+                    const timeDifference = (endDateTime - startDateTime) / (1000 * 60 * 60);
+                    console.log(timeDifference);
+                    const wordsWritten = timeDifference * 250;
+                    wordsWrittenInput.value = Math.max(0, wordsWritten);
+                } else {
                     wordsWrittenInput.value = "";
                 }
-
+            } else {
+                wordsWrittenInput.value = "";
             }
 
+        }
 
-            const deadline_date_time = document.getElementById('deadline_date_time');
-            flatpickr(deadline_date_time, {
-                enableTime: true,
-                minDate: 'today',
-                dateFormat: 'Y-m-d H:i',
-                minuteIncrement: 1
-            });
-            
-            
+
+        const deadline_date_time = document.getElementById('deadline_date_time');
+        flatpickr(deadline_date_time, {
+            enableTime: true,
+            minDate: 'today',
+            dateFormat: 'Y-m-d H:i',
+            minuteIncrement: 1
+        });
+
+
 
 
 
         // Add validation rules and messages
         $("#submitForm").validate({
             rules: {
-                
+
                 // deadline_date_time: {
                 //     required: true,
                 //     date: true
                 // },
-            
+
                 college_id: {
                     required: true
                 },
@@ -630,7 +708,7 @@
                     required: "Please select a college",
                     digits: true
                 },
-                 unique_group_id_3:{
+                unique_group_id_3: {
                     required: true,
                     maxlength: 5,
                 },
@@ -686,7 +764,7 @@
                     const code = $(this).summernote('code');
                     $(this).val(code);
                 });
-                
+
                 // Serialize form data
                 var formData = new FormData(form);
                 var $this = $('#submitButton');
@@ -787,8 +865,8 @@
             var actual_length = document.getElementById('actual_length_fields');
 
             actual_length.style.display = selectedQuizType === 'mcq' ? 'none' : 'block';
-            
-            updateWordsWritten("","","")
+
+            updateWordsWritten("", "", "")
             //mcqFields.style.display = selectedQuizType === 'mcq' ? 'block' : 'none';
             //essayFields.style.display = selectedQuizType === 'essay' ? 'block' : 'none';
             //mixedFields.style.display = selectedQuizType === 'mixed' ? 'block' : 'none';
@@ -815,12 +893,40 @@
             minLength: 1,
             items: 10, // Number of items to show in the dropdown
             afterSelect: function(item) {
-                $("#unique_group_id_2").val(item.substring(0, 3)+'_');
-            }
+                $("#unique_group_id_2").val(item.substring(0, 3) + '_');
+                getSubjectData(item);
+                $("#subject_id").val("");
+            },
         });
 
-        $(document).on('blur','#course_id',function(){
-            $("#unique_group_id_2").val(this.value.substring(0, 3)+'_');
+
+        function getSubjectData(course) {
+            $.ajax({
+                url: '{{ route('tasks.get.subjects') }}', // Your endpoint to fetch subject data
+                type: 'GET',
+                data: {
+                    course: course
+                },
+                success: function(response) {
+                    // Handle the response data
+                    console.log(response);
+
+                    // Initialize typeahead for subject_id field
+                    $('#subject_id').typeahead('destroy'); // Destroy previous typeahead instance if exists
+                    $('#subject_id').typeahead({
+                        source: response,
+                        minLength: 1,
+                        items: 10 // Number of items to show in the dropdown
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching subject data:', error);
+                }
+            });
+        }
+
+        $(document).on('blur', '#course_id', function() {
+            $("#unique_group_id_2").val(this.value.substring(0, 3) + '_');
         });
 
 

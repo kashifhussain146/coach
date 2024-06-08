@@ -69,6 +69,27 @@
 
 
                         <div class="form-group">
+                            <label for="college_name">College Name:</label>
+                            <p>{{ $task->college->name }} </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="course_name">Course Name:</label>
+                            <p>{{ $task->course->category_name }} </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Subject:</label>
+                            <p>{{ $task->subject->subject_name }}</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="course_code">Course Code:</label>
+                            <p>{{ $task->courseCode->code }}</p>
+                        </div>
+
+
+                        <div class="form-group">
                             <label>Number of Words Written:</label>
                             <p>{{ $task->words_written }}</p>
                         </div>
@@ -92,8 +113,8 @@
                         @if ($task->status == 'COMPLETED')
                             <div class="form-group">
                                 <label>Action :</label>
-                                <form id="publishSolutionLibrary" action="{{ route('task-publish', ['task' => $task->id]) }}"
-                                    method="POST">
+                                <form id="publishSolutionLibrary"
+                                    action="{{ route('task-publish', ['task' => $task->id]) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="btn-sm btn btn-success">Publish to Solution
                                         Library</button>
@@ -105,10 +126,11 @@
                         <div class="form-group">
                             <label>Question file:</label>
 
-                            &nbsp;<a target="_blank" download href="{{ asset('' . $task->questions_file) }}">
+                            &nbsp;<a target="_blank" download
+                                href="{{ asset('/uploads/questions/' . $task->questions_file) }}">
                                 <i class="fa fa-download"></i>
                             </a> &nbsp;&nbsp;
-                            <a target="_blank" href="{{ asset('' . $task->questions_file) }}">
+                            <a target="_blank" href="{{ asset('/uploads/questions/' . $task->questions_file) }}">
                                 <i class="fa fa-eye"></i>
                             </a>
                         </div>
@@ -118,10 +140,10 @@
                             <div class="form-group">
                                 <label>Answers file:</label>
 
-                                &nbsp;<a target="_blank" href="{{ asset('' . $task->answers_file) }}">
+                                &nbsp;<a target="_blank" href="{{ asset('/uploads/answers/' . $task->answers_file) }}">
                                     <i class="fa fa-download"></i>
                                 </a> &nbsp;&nbsp;
-                                <a target="_blank" href="{{ asset('' . $task->answers_file) }}">
+                                <a target="_blank" href="{{ asset('/uploads/answers/' . $task->answers_file) }}">
                                     <i class="fa fa-eye"></i>
                                 </a>
                             </div>
@@ -163,16 +185,12 @@
 @endsection
 
 @push('js')
-
-<script>
-
-    $(document).on('submit', '#publishSolutionLibrary', function(){
-        var con = confirm('Are you sure you want to publish');
-        if(!con){
-            return false;
-        }
-    })
-    
-</script>
-
+    <script>
+        $(document).on('submit', '#publishSolutionLibrary', function() {
+            var con = confirm('Are you sure you want to publish');
+            if (!con) {
+                return false;
+            }
+        })
+    </script>
 @endpush

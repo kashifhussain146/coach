@@ -5,6 +5,12 @@
     
 @endsection
 
+@section('meta')
+<meta name="title" content="Blogs | Coach On Couch">
+<meta name="description" content="Read the Latest by Coach On Couch Team">
+<meta name="keywords" content="blogs, blog, online coaching">
+@endsection
+
 @push('css')
     <style>
  .page-item.active .page-link{
@@ -73,7 +79,7 @@
                                         {{-- 06 Nov, 2023 --}}
                                     </div>
                                     <div class="col-6 text-end fs-6">
-                                        <a class="mx-3 fw-bold" href="">Read More <i
+                                        <a class="mx-3 fw-bold" href="{{ route('blog.detail', $item->id) }}">Read More <i
                                                 class="fa-solid fa-arrow-right ms-1"></i></a>
                                     </div>
                                 </div>

@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>@yield('title')</title>
+    @yield('meta')
     {{-- <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet"> --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     <link href="{{ asset('assets/plugins/revolution/css/layers.css') }}" rel="stylesheet" type="text/css">
@@ -124,21 +125,21 @@
 
                     <div class="top-right">
 
-                        @if(!Auth()->guard('admin')->user() && !Auth()->user())
+                        @if (!Auth()->guard('admin')->user() && !Auth()->user())
                             <ul class="useful-links">
                                 <li>
-                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#LoginForm">Login
+                                    <a href="javascript:void(0)" data-bs-toggle="modal"
+                                        data-bs-target="#LoginForm">Login
                                         Custmer &nbsp;&nbsp;</a>/ &nbsp;&nbsp;
                                     <a href="javascript:void(0)" data-bs-toggle="modal"
                                         data-bs-target="#LoginFreeLancerForm">Login Freelancer</a>
                                 </li>
                             </ul>
                         @elseif(Auth()->guard('admin')->user())
-
-                            @if(Auth()->guard('admin')->user()->roles()->first()->name == 'Free Lancer')
+                            @if (Auth()->guard('admin')->user()->roles()->first()->name == 'Free Lancer')
                                 <ul class="useful-links">
                                     <li>
-                                        <a href="{{route('free.lancer.dashboard')}}">Go to Dashboard </a>
+                                        <a href="{{ route('free.lancer.dashboard') }}">Go to Dashboard </a>
                                     </li>
                                 </ul>
                             @endif
@@ -166,7 +167,7 @@
             <div class="auto-container">
                 <div class="inner-container">
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img
+                        <div class="logo"><a href="{{ route('home') }}"><img
                                     src="{{ asset('images/' . widget(6)->extra_image_1) }}" alt=""
                                     title="Tronis"></a></div>
                     </div>
@@ -220,7 +221,7 @@
                             <ul class="navigation">
                                 <li class="current"><a href="">Home</a>
                                 </li>
-                                <li class=""><a href="#">About Us</a>
+                                <li class=""><a href="{{ route('about-us') }}">About Us</a>
                                 </li>
                                 <li class="dropdown"><a href="{{ route('assignment.help') }}">Assignment Help</a>
                                     <ul>
@@ -243,7 +244,7 @@
                                 <li class=""><a href="{{ route('take.my.online.class') }}">Take My Online
                                         Class</a></li>
 
-                                <li class=""><a href="{{route('blogs')}}">Blogs</a></li>
+                                <li class=""><a href="{{ route('blogs') }}">Blogs</a></li>
 
                                 <li class=""><a href="{{ route('solutions.library') }}">Solution Library</a>
                                 </li>
@@ -255,7 +256,7 @@
                                         <li><a href="">Do My Project</a></li>
                                     </ul>
                                 </li>
-                                <li class=""><a href="#">Get a Quote</a></li>
+                                <li class=""><a href="{{ route('get-a-quote') }}">Get a Quote</a></li>
 
 
                                 <!-- <ul>
@@ -283,8 +284,8 @@
             <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
             <nav class="menu-box">
                 <div class="upper-box">
-                    <div class="nav-logo"><a href="index.html"><img src="{{ asset('assets/images/logo-2.png') }}"
-                                alt="" title=""></a>
+                    <div class="nav-logo"><a href="{{ route('home') }}"><img
+                                src="{{ asset('assets/images/logo-2.png') }}" alt="" title=""></a>
                     </div>
                     <div class="close-btn"><i class="icon fa fa-times"></i></div>
                 </div>
@@ -335,8 +336,8 @@
                 <div class="inner-container">
                     <!--Logo-->
                     <div class="logo">
-                        <a href="index.html" title=""><img src="{{ asset('assets/images/logo.png') }}"
-                                alt="" title=""></a>
+                        <a href="{{ route('home') }}" title=""><img
+                                src="{{ asset('assets/images/logo.png') }}" alt="" title=""></a>
                     </div>
 
                     <!--Right Col-->
@@ -534,27 +535,27 @@
                                 <label for="name" class="form-label">{{ __('Name') }}</label>
                                 <input id="name" type="text"
                                     class="form-control @error('name') is-invalid @enderror" name="name"
-                                    value="{{ old('name') }}"  autocomplete="name" autofocus>
+                                    value="{{ old('name') }}" autocomplete="name" autofocus>
                             </div>
 
                             <div class="mb-3 mt-4">
                                 <label for="email" class="form-label">{{ __('Email Address') }}</label>
 
-                                <input id="email" type="email" class="form-control" name="email" 
+                                <input id="email" type="email" class="form-control" name="email"
                                     autocomplete="off">
 
                             </div>
 
                             <div class="mb-3 mt-4">
                                 <label for="password" class="form-label">{{ __('Password') }}</label>
-                                <input id="password" type="password" class="form-control" name="password" 
+                                <input id="password" type="password" class="form-control" name="password"
                                     autocomplete="off">
                             </div>
 
                             <div class="mb-3 mt-4">
                                 <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
                                 <input id="password-confirm" type="password" class="form-control"
-                                    name="password_confirmation"  autocomplete="off">
+                                    name="password_confirmation" autocomplete="off">
                             </div>
 
                             <button type="submit" class="btn btn-light mt-3">SignUp</button>
@@ -636,12 +637,12 @@
                             @csrf
                             <div class="mb-3 mt-4">
                                 <label for="email" class="form-label">Email address</label>
-                                <input id="email" type="email" class="form-control" name="email" 
+                                <input id="email" type="email" class="form-control" name="email"
                                     autocomplete="off" autofocus>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
-                                <input id="password" type="password" class="form-control" name="password" 
+                                <input id="password" type="password" class="form-control" name="password"
                                     autocomplete="off">
 
                             </div>
@@ -673,7 +674,7 @@
                                 <label for="name" class="form-label">{{ __('Name') }}</label>
                                 <input id="name" type="text"
                                     class="form-control @error('name') is-invalid @enderror" name="name"
-                                    value="{{ old('name') }}"  autocomplete="name" autofocus>
+                                    value="{{ old('name') }}" autocomplete="name" autofocus>
                             </div>
                             <span class="text-danger" style="color:red">
                                 @error('name')
@@ -684,7 +685,7 @@
                             <div class="mb-3 mt-4">
                                 <label for="email" class="form-label">{{ __('Email Address') }}</label>
                                 <input id="email" type="email" class="form-control" name="email"
-                                    value="{{ old('email') }}"  autocomplete="off">
+                                    value="{{ old('email') }}" autocomplete="off">
                             </div>
 
                             <span class="text-danger" style="color:red">
@@ -696,7 +697,7 @@
                             <div class="mb-3 mt-4">
                                 <label for="password" class="form-label">{{ __('Password') }}</label>
                                 <input id="password" type="password" class="form-control"
-                                    value="{{ old('email') }}"name="password"  autocomplete="off">
+                                    value="{{ old('email') }}"name="password" autocomplete="off">
                             </div>
 
                             <span class="text-danger" style="color:red">
@@ -708,7 +709,7 @@
                             <div class="mb-3 mt-4">
                                 <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
                                 <input id="password-confirm" type="password" class="form-control"
-                                    name="password_confirmation"  autocomplete="off">
+                                    name="password_confirmation" autocomplete="off">
                             </div>
 
                             <span class="text-danger" style="color:red">
@@ -914,18 +915,18 @@
         $('#LoginFreeLancerForm').modal('show');
     @endif
 
-    $(document).on('click','input',function(){
-        console.log("invalida",$('.invalid-feedback').length);
-        if($('.invalid-feedback').length > 0){
+    $(document).on('click', 'input', function() {
+        console.log("invalida", $('.invalid-feedback').length);
+        if ($('.invalid-feedback').length > 0) {
             //$(this).closest('div').removeClass('invalid-feedback');
             $('.invalid-feedback').remove();
             $(this).removeClass('valid is-invalid state-invalid');
         }
     })
 
-    function submitAjax(formObj){
+    function submitAjax(formObj) {
 
-        var $this = $('#'+formObj.id+ " #submitButton");
+        var $this = $('#' + formObj.id + " #submitButton");
         buttonLoading('loading', $this);
         $(".invalid-feedback").remove();
         $.ajax({
@@ -938,25 +939,25 @@
             success: function(data) {
                 if (data.status) {
 
-                    $('#'+formObj.id).prepend(`<div class="alert alert-success">${data.message}</div>`);
+                    $('#' + formObj.id).prepend(`<div class="alert alert-success">${data.message}</div>`);
 
                     setTimeout(function() {
                         $(formObj).modal('hide');
                         location.reload();
                     }, 1300);
 
-                    if(data.route){
+                    if (data.route) {
                         location.href = data.route;
                     }
 
                 } else {
-                    
+
 
                     $.each(data.errors, function(fieldName, field) {
                         $.each(field, function(index, msg) {
-                            $("#"+formObj.id+" #"+fieldName).addClass(
+                            $("#" + formObj.id + " #" + fieldName).addClass(
                                 'is-invalid state-invalid');
-                            errorDiv = $("#"+formObj.id+" #"+fieldName).parent(
+                            errorDiv = $("#" + formObj.id + " #" + fieldName).parent(
                                 'div');
                             errorDiv.append('<div class="invalid-feedback">' + msg +
                                 '</div>');

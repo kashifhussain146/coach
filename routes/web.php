@@ -51,6 +51,8 @@ Route::get('/services', [HomeController::class, 'servicesView'])->name('services
 Route::get('/get-a-quote', [HomeController::class, 'contactView'])->name('get-a-quote');
 
 
+
+
 Route::get('/solutions-library', [HomeController::class, 'solutionsLibrary'])->name('solutions.library');
 Route::get('/take-my-online-class', [HomeController::class, 'takeMyOnlineClass'])->name('take.my.online.class');
 Route::get('/solutions-library/question/{question_id}', [HomeController::class, 'questionDetails'])->name('solutions.library.question.page');
@@ -139,6 +141,7 @@ Route::group(['middleware' => ['auth:admin']], function() {
         
         Route::post('/tasks/publish/{task}', [TasksController::class,'publish'])->name('task-publish')->middleware(['can:Edit Tasks']);
 
+        Route::get('/tasks/getSubjects', [TasksController::class, 'getSubjects'])->name('tasks.get.subjects');
 
         Route::get('/tasks/roles', [TasksController::class,'rolesTasks'])->name('get.roles.tasks');
         

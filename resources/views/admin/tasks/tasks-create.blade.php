@@ -79,15 +79,17 @@
                                     <div class="form-group" id="EmployeeDiv">
                                         <label for="created_by">Employees</label>
                                         <select class="form-control " id="employees" multiple name="employees[]">
-                                            @foreach ($employees as $item)  
-                                                @if($item->roles()->first()->name == 'Employee')
-                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            @foreach ($employees as $item)
+                                                @if ($item->roles()->first()->name == 'Employee')
+                                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
                                         <p class="row  pt-2" style="font-size: 12px;">
-                                           &nbsp;&nbsp;&nbsp; <a class="p-1 nav-link btn btn-sm btn-primary" id="selectAllemployees">Check All</a>&nbsp;&nbsp;
-                                            <a class="p-1 nav-link btn btn-sm btn-primary" id="uncheckAllemployees">UnCheck All</a>
+                                            &nbsp;&nbsp;&nbsp; <a class="p-1 nav-link btn btn-sm btn-primary"
+                                                id="selectAllemployees">Check All</a>&nbsp;&nbsp;
+                                            <a class="p-1 nav-link btn btn-sm btn-primary" id="uncheckAllemployees">UnCheck
+                                                All</a>
                                         </p>
                                     </div>
 
@@ -95,14 +97,16 @@
                                         <label for="created_by">Freelancers</label>
                                         <select class="form-control " id="freelancers" multiple name="freelancers[]">
                                             @foreach ($employees as $item)
-                                                @if($item->roles()->first()->name == 'Free Lancer')
+                                                @if ($item->roles()->first()->name == 'Free Lancer')
                                                     <option value="{{ $item->id }}">{{ $item->name }} </option>
                                                 @endif
                                             @endforeach
                                         </select>
                                         <p class="row pt-2" style="font-size: 12px;">
-                                            &nbsp;&nbsp;<a class="p-1 nav-link btn btn-sm btn-primary" id="selectAllfreelancers">Check All</a>&nbsp;&nbsp;
-                                            <a class="p-1 nav-link btn btn-sm btn-primary" id="uncheckAllfreelancers">UnCheck All</a>
+                                            &nbsp;&nbsp;<a class="p-1 nav-link btn btn-sm btn-primary"
+                                                id="selectAllfreelancers">Check All</a>&nbsp;&nbsp;
+                                            <a class="p-1 nav-link btn btn-sm btn-primary"
+                                                id="uncheckAllfreelancers">UnCheck All</a>
                                         </p>
                                     </div>
 
@@ -126,24 +130,28 @@
 
                             <div class="form-group">
                                 <label for="college_name">College Name: <span class="text-danger">*</span> </label>
-                                <input type="text" name="college_id" id="college_id" class="form-control" />
+                                <input type="text" autocomplete="off" name="college_id" id="college_id"
+                                    class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="course_name">Course Name: <span class="text-danger">*</span> </label>
+                                <input type="text" autocomplete="off" name="course_id" id="course_id"
+                                    class="form-control" />
                             </div>
 
 
                             <div class="form-group">
                                 <label for="subject">Subject: <span class="text-danger">*</span> </label>
-                                <input type="text" name="subject_id" id="subject_id" class="form-control" />
-                            </div>
-
-                            <div class="form-group">
-                                <label for="course_name">Course Name: <span class="text-danger">*</span> </label>
-                                <input type="text" name="course_id" id="course_id" class="form-control" />
+                                <input type="text" autocomplete="off" name="subject_id" id="subject_id"
+                                    class="form-control" />
                             </div>
 
 
                             <div class="form-group">
                                 <label for="course_code">Course Code: <span class="text-danger">*</span> </label>
-                                <input type="text" name="course_code_id" id="course_code_id" class="form-control" />
+                                <input type="text" autocomplete="off" name="course_code_id" id="course_code_id"
+                                    class="form-control" />
                             </div>
 
 
@@ -151,20 +159,25 @@
                                 <label for="course_code">Task Group ID: <span class="text-danger">*</span> </label>
                                 <div class="row">
                                     <div class="col-md-1">
-                                        <input type="text" name="unique_group_id_1" readonly id="unique_group_id_1" value="COC_"  class="form-control" />
+                                        <input type="text" name="unique_group_id_1" readonly id="unique_group_id_1"
+                                            value="COC_" class="form-control" />
                                     </div>-
                                     <div class="col-md-1">
-                                        <input type="text" name="unique_group_id_2" readonly id="unique_group_id_2"  class="form-control" />
+                                        <input type="text" name="unique_group_id_2" readonly id="unique_group_id_2"
+                                            class="form-control" />
                                     </div>-
                                     <div class="col-md-3">
-                                        <input type="text" name="unique_group_id_3"  id="unique_group_id_3" required class="form-control" />
+                                        <input type="text" name="unique_group_id_3" id="unique_group_id_3" required
+                                            class="form-control" />
                                     </div>-
 
                                     <div class="col-md-1">
-                                        <input type="text" name="unique_group_id_4" readonly id="unique_group_id_4" value="_{{rand(1,10)}}_"  class="form-control" />
+                                        <input type="text" name="unique_group_id_4" readonly id="unique_group_id_4"
+                                            value="_{{ rand(1, 10) }}_" class="form-control" />
                                     </div>-
                                     <div class="col-md-2">
-                                        <input type="text" name="unique_group_id_5" readonly id="unique_group_id_5" value="{{date('d_m_Y')}}"   class="form-control" />
+                                        <input type="text" name="unique_group_id_5" readonly id="unique_group_id_5"
+                                            value="{{ date('d_m_Y') }}" class="form-control" />
                                     </div>
 
                                 </div>
@@ -435,7 +448,7 @@
                 course_id: {
                     required: true
                 },
-                unique_group_id_3:{
+                unique_group_id_3: {
                     required: true,
                     maxlength: 5,
                 },
@@ -638,7 +651,6 @@
 
         // Set up typeahead
         $('#subject_id').typeahead({
-            source: {!! json_encode($subjects) !!},
             minLength: 1,
             items: 10 // Number of items to show in the dropdown
         });
@@ -657,12 +669,45 @@
             minLength: 1,
             items: 10, // Number of items to show in the dropdown
             afterSelect: function(item) {
-                $("#unique_group_id_2").val(item.substring(0, 3)+'_');
-            }
+                $("#unique_group_id_2").val(item.substring(0, 3) + '_');
+                getSubjectData(item);
+                $("#subject_id").val("");
+            },
         });
 
-        $(document).on('blur','#course_id',function(){
-            $("#unique_group_id_2").val(this.value.substring(0, 3)+'_');
+
+        function getSubjectData(course) {
+            $.ajax({
+                url: '{{ route('tasks.get.subjects') }}', // Your endpoint to fetch subject data
+                type: 'GET',
+                data: {
+                    course: course
+                },
+                success: function(response) {
+                    // Handle the response data
+                    console.log(response);
+
+                    // Assuming response.subjects is an array of subject objects
+                    // var subjects = response.subjects.map(function(subject) {
+                    //     return subject.name; // Adjust according to your data structure
+                    // });
+
+                    // Initialize typeahead for subject_id field
+                    $('#subject_id').typeahead('destroy'); // Destroy previous typeahead instance if exists
+                    $('#subject_id').typeahead({
+                        source: response,
+                        minLength: 1,
+                        items: 10 // Number of items to show in the dropdown
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching subject data:', error);
+                }
+            });
+        }
+
+        $(document).on('blur', '#course_id', function() {
+            $("#unique_group_id_2").val(this.value.substring(0, 3) + '_');
         });
 
         // Set up typeahead
@@ -688,21 +733,24 @@
         $(document).on('change', 'input[name="roles"]', function() {
 
             $.ajax({
-                
+
                 url: '{{ route('get.roles.tasks') }}',
-                
+
                 type: "GET",
-                
-                data:{role_name:$(this).val()},
+
+                data: {
+                    role_name: $(this).val()
+                },
 
                 success: function(data) {
 
                     var html = '';
-                        html+='<div class="form-group" id="EmployeeDiv"><label for="created_by"></label><select class="form-control" id="employees" multiple name="created_by[]">';
-                                $.each(data,function(key,value){
-                                    html+='<option value="'+value.id+'">'+value.name+'</option>';
-                                })
-                        html+='</select></div>';
+                    html +=
+                        '<div class="form-group" id="EmployeeDiv"><label for="created_by"></label><select class="form-control" id="employees" multiple name="created_by[]">';
+                    $.each(data, function(key, value) {
+                        html += '<option value="' + value.id + '">' + value.name + '</option>';
+                    })
+                    html += '</select></div>';
 
                     $("#rolesData").html(html);
 
@@ -751,7 +799,5 @@
             $('#freelancers option').prop('selected', false);
             $('#freelancers').trigger('change');
         });
-
-
     </script>
 @endpush

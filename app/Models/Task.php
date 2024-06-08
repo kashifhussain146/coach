@@ -57,27 +57,26 @@ class Task extends Model
     }
 
     // Define the relationship with the College model
-    public function college()
-    {
-        return $this->belongsTo(\App\Models\ModulesData::class, 'college_id')->where('module_id', '=', 35);
+    public function college(){
+      return $this->belongsTo(\App\Models\Colleges::class,'college_id')->Activated();
     }
 
     // Define the relationship with the Subject model
     public function subject()
     {
-        return $this->belongsTo(\App\Models\ModulesData::class, 'subject_id')->where('module_id', '=', 11);
+        return $this->belongsTo(\App\Models\Subject::class, 'subject_id')->Activated();
     }
 
     // Define the relationship with the Course model
     public function course()
     {
-        return $this->belongsTo(\App\Models\ModulesData::class, 'course_id');
+        return $this->belongsTo(\App\Models\SubjectCategory::class, 'course_id')->Activated();
     }
 
     // Define the relationship with the CourseCode model
     public function courseCode()
     {
-        return $this->belongsTo(\App\Models\ModulesData::class, 'course_code_id');
+        return $this->belongsTo(\App\Models\CourseCode::class, 'course_code_id')->Activated();
     }
 
 

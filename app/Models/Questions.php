@@ -15,19 +15,19 @@ class Questions extends Model
    protected $fillable = ['question','expiry_date', 'collegeid', 'coursesid', 'score', 'visiblity', 'type', 'startdatetime', 'enddatetime', 'num_words', 'answer', 'price', 'subject_category', 'subject', 'file_name', 'answer_file', 'addedby', 'answerstatus', 'status', 'views_count', 'added_date'];
 
    public function category(){
-        return $this->belongsTo(SubjectCategory::class,'subject_category','id')->Activated();
+        return $this->belongsTo(SubjectCategory::class,'subject_category')->Activated();
    }
 
    public function subjects(){
-      return $this->belongsTo(Subject::class,'subject','id')->Activated();
+      return $this->belongsTo(Subject::class,'subject')->Activated();
    }
 
    public function college(){
-      return $this->belongsTo(Colleges::class,'collegeid','id')->Activated();
+      return $this->belongsTo(Colleges::class,'collegeid')->Activated();
    }
 
    public function course_code(){
-      return $this->belongsTo(CourseCode::class,'coursesid','id')->Activated();
+      return $this->belongsTo(CourseCode::class,'coursesid')->Activated();
    }
 
    public function scopeActivated($query){
