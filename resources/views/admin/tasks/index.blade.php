@@ -135,18 +135,19 @@
                                 </div>
 
                                 @if (Auth()->guard('admin')->user()->hasRole('Free Lancer'))
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Task Status</label>
-                                        <select name="status" class="form-control select2" id="status">
-                                            <option value="PREVIEW">New Task</option>
-                                            <option value="ACCEPTED">Accepted Task</option>
-                                            <option value="ASSIGNED">Pending Task</option>
-                                            <option value="COMPLETED">Completed Task</option>
-                       
-                                        </select>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Task Status</label>
+                                            <select name="status" class="form-control select2" id="status">
+                                                <option value="">All Task</option>
+                                                <option value="PREVIEW">New Task</option>
+                                                <option value="ACCEPTED">Accepted Task</option>
+                                                <option value="ASSIGNED">Pending Task</option>
+                                                <option value="COMPLETED">Completed Task</option>
+
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
                                 @endif
 
                                 <div class="col-md-3">
@@ -164,7 +165,8 @@
                         <br />
 
                         <div class="table-responsive">
-                            <table   style="width:100%" class="display nowrap table table-bordered data-table" id="data-table">
+                            <table style="width:100%" class="display nowrap table table-bordered data-table"
+                                id="data-table">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -222,7 +224,7 @@
                                         <label for="">Freelancers</label>
                                         <select required class="form-control select2" name="user_id" id="user_id">
                                             <option value="">Select</option>
-                                            
+
                                         </select>
                                     </div>
                                 </div>
@@ -230,7 +232,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success" >Submit</button>
+                            <button type="submit" class="btn btn-success">Submit</button>
 
                         </div>
                     </div>
@@ -261,7 +263,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
-    <script type="text/javascript" src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.10/js/dataTables.checkboxes.min.js"></script>
+    <script type="text/javascript"
+        src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.10/js/dataTables.checkboxes.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 
@@ -269,15 +272,15 @@
     <script type="text/javascript">
         $('.js-example-basic-multiple').select2();
 
-        
+
 
         $(document).on('click', '.assignModal', function() {
-            $("#assignFreeLancersForm").attr('action',$(this).attr('data-url'));
+            $("#assignFreeLancersForm").attr('action', $(this).attr('data-url'));
             let created_by = $(this).attr('data-created_by');
 
-            console.log("created_by",);
+            console.log("created_by", );
             $.ajax({
-                url: '{{route('get-freelancers')}}',
+                url: '{{ route('get-freelancers') }}',
                 type: 'get',
                 data: {
                     task_id: $(this).attr('data-id'),
@@ -287,22 +290,25 @@
                 },
                 dataType: 'json',
                 success: function(data) {
-                    
+
                     $("#user_id").empty();
                     $("#user_id").append(`<option value=""> Select </li>`);
-                    if(data.length > 0){
-                        $.each(data,function(key,value){
-                            if(created_by == value.id){
-                                $("#user_id").append(`<option selected value="${value.id}"> ${value.name} </li>`);                                
-                            }else{
-                                $("#user_id").append(`<option value="${value.id}"> ${value.name} </li>`);
+                    if (data.length > 0) {
+                        $.each(data, function(key, value) {
+                            if (created_by == value.id) {
+                                $("#user_id").append(
+                                    `<option selected value="${value.id}"> ${value.name} </li>`
+                                );
+                            } else {
+                                $("#user_id").append(
+                                    `<option value="${value.id}"> ${value.name} </li>`);
                             }
 
                         })
                     }
 
-                    
-                   console.log("user_id",data);
+
+                    console.log("user_id", data);
                 }
             });
 
@@ -318,7 +324,9 @@
             scrollX: true,
             "scrollCollapse": true,
             "pageLength": 50,
-            order:[[0,'DESC']],
+            order: [
+                [0, 'DESC']
+            ],
             lengthMenu: [
                 [10, 25, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, -1],
                 [10, 25, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 'Show all']
@@ -329,7 +337,8 @@
                 text: 'Download CSV',
                 exportOptions: {
                     columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-                        12] // Specify the column indexes you want to export
+                        12
+                    ] // Specify the column indexes you want to export
                 }
             }],
             ajax: {
@@ -354,18 +363,17 @@
                         data: 'createdBy',
                         name: 'createdBy'
                     },
-                @endif 
-                {
+                @endif {
                     data: 'start_date_time',
                     name: 'start_date_time',
                     "render": function(data, type, row) {
                         // Use Moment.js to format the date
-                        if(data!==null){
+                        if (data !== null) {
                             return moment(data).format('DD/MM/YYYY HH:mm:ss');
                         }
 
                         return "N/A";
-                        
+
                     }
                 },
                 {
@@ -373,7 +381,7 @@
                     name: 'end_date_time',
                     "render": function(data, type, row) {
                         // Use Moment.js to format the date
-                        if(data!==null){
+                        if (data !== null) {
                             return moment(data).format('DD/MM/YYYY HH:mm:ss');
                         }
 

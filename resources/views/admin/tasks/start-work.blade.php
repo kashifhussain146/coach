@@ -155,8 +155,8 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="start_date_time">Start Date & Time: </label>
-                                    <input type="text" autocomplete="off" class="form-control " id="start_date_time"
-                                        name="start_date_time"
+                                    <input type="text" disabled autocomplete="off" class="form-control "
+                                        id="start_date_time" name="start_date_time"
                                         value="{{ $task->start_date_time != '' ? $task->start_date_time : old('start_date_time') }}">
                                     @error('start_date_time')
                                         <span class="text-danger">{{ $message }}</span>
@@ -325,7 +325,7 @@
                     },
                     answers_file: {
                         required: true,
-                        extension: "csv",
+                        //extension: "csv",
                         // filesize: 1224000
                     }
                 @endif
@@ -387,7 +387,7 @@
         // Initialize the start date/time picker
         flatpickr(startDateTimeInput, {
             enableTime: true,
-            minDate: '{{ $task->start_date_time }}',
+            minDate: "{{ date('Y-m-d H:i:s') }}",
             dateFormat: 'Y-m-d H:i',
             minuteIncrement: 1,
             onChange: function(selectedDates, dateStr, instance) {
@@ -399,17 +399,9 @@
         // Initialize the end date/time picker
         const endDateTimePicker = flatpickr(endDateTimeInput, {
             enableTime: true,
-            minDate: '{{ $task->start_date_time }}',
+            minDate: "{{ $task->start_date_time ? $task->start_date_time : date('Y-m-d H:i:s') }}",
             dateFormat: 'Y-m-d H:i',
             minuteIncrement: 1,
-        });
-
-
-        flatpickr(deadline_date_time, {
-            enableTime: true,
-            minDate: '{{ $task->start_date_time }}',
-            dateFormat: 'Y-m-d H:i',
-            minuteIncrement: 1
         });
     </script>
 @endpush

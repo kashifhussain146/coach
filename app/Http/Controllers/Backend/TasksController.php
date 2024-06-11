@@ -19,8 +19,17 @@ use App\Models\Subject;
 use App\Models\Colleges;
 use App\Models\SubjectCategory;
 use App\Models\CourseCode;
+use App\Services\DocxReaderService;
 class TasksController extends Controller
 {
+
+    protected $docxReader;
+
+    public function __construct(DocxReaderService $docxReader)
+    {
+        $this->docxReader = $docxReader;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -294,7 +303,7 @@ class TasksController extends Controller
             $data['subject_id'] = $subjects->id;
             $data['course_id'] = $courses->id;
             $data['course_code_id'] = $courseCode->id;
-
+            $data['created_by'] = auth()->guard('admin')->user()->id;
             /* If employee role select only */
             if ($request->hasFile('questions_file')) {
                 $questions_file = 'questions_' . time() . '.' . $request->questions_file->extension();
@@ -778,6 +787,24 @@ class TasksController extends Controller
         return view('admin.tasks.start-work', compact('task', 'title'));
     }
 
+    // public function updateStartWork(Request $request, $id){
+        
+    //     $file = $request->file('answers_file');
+    //     $filePath = $file->getPathname();
+    //     $data = $this->docxReader->convert($filePath);
+
+    //     echo "<h1>Converted Data</h1>";
+    //     echo $data;
+        
+    //     // Define output DOCX file path
+    //     // $outputFilePath = storage_path('app/public/output.docx');
+
+    //     // $this->docxReader->convertToDocx($htmlContent, $outputFilePath);
+
+    //     //dd($data);
+
+    // }
+
     public function updateStartWork(Request $request, $id)
     {
         $task = Task::findOrFail($id);
@@ -912,7 +939,7 @@ class TasksController extends Controller
                 $question['addedby'] = $task->created_by;
                 $question['answerstatus'] = 'N';
                 $question['status'] = 'Y';
-                $question['visiblity'] = 'Y';
+                $question['visiblity'] = 'N';
                 $question['added_date'] = $task->created_at->format('Y-m-d');
                 $question['expiry_date'] = $task->expiry_date;
                 $question['created_at'] = date('Y-m-d H:i:s');

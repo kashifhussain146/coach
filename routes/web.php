@@ -6,6 +6,10 @@ use App\Http\Controllers\Backend\BannerController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\AssignmentCategoryController;
 use App\Http\Controllers\Backend\SubjectCategoryController;
+
+use App\Http\Controllers\Backend\CollegesController;
+use App\Http\Controllers\Backend\CourseCodeController;
+
 use App\Http\Controllers\Backend\SubjectController;
 use App\Http\Controllers\Backend\OnlineClassesController;
 use App\Http\Controllers\Backend\UserController;
@@ -262,6 +266,33 @@ Route::group(['middleware' => ['auth:admin']], function() {
 
     });
     
+
+    //Colleges Master
+    Route::group([], function() {
+
+        Route::get('/admin/colleges', [CollegesController::class,'index'])->name('colleges-list')->middleware(['can:Module_List_library']);
+        Route::get('/admin/colleges/create', [CollegesController::class,'create'])->name('colleges-create')->middleware(['can:Module_Add_library']);
+        Route::post('/admin/colleges/store', [CollegesController::class,'store'])->name('colleges-store')->middleware(['can:Module_Add_library']);
+        Route::get('/admin/colleges/edit/{id}', [CollegesController::class,'edit'])->name('colleges-edit')->middleware(['can:Module_Edit_library']);
+        Route::post('/admin/colleges/update/{id}', [CollegesController::class,'update'])->name('colleges-update')->middleware(['can:Module_List_library']);
+        Route::post('/admin/colleges/delete/{id}', [CollegesController::class,'destroy'])->name('colleges-destroy')->middleware(['can:Module_Delete_library']);
+        Route::get('/admin/ajax/colleges/view/{id}', [CollegesController::class,'show'])->name('colleges-view')->middleware(['can:Module_List_library']);
+
+    });
+
+
+        //Course Code Master
+    Route::group([], function() {
+
+        Route::get('/admin/course-code', [CourseCodeController::class,'index'])->name('course-code-list')->middleware(['can:Module_List_course-code']);
+        Route::get('/admin/course-code/create', [CourseCodeController::class,'create'])->name('course-code-create')->middleware(['can:Module_Add_course-code']);
+        Route::post('/admin/course-code/store', [CourseCodeController::class,'store'])->name('course-code-store')->middleware(['can:Module_Add_course-code']);
+        Route::get('/admin/course-code/edit/{id}', [CourseCodeController::class,'edit'])->name('course-code-edit')->middleware(['can:Module_Edit_course-code']);
+        Route::post('/admin/course-code/update/{id}', [CourseCodeController::class,'update'])->name('course-code-update')->middleware(['can:Module_Edit_course-code']);
+        Route::post('/admin/course-code/delete/{id}', [CourseCodeController::class,'destroy'])->name('course-code-destroy')->middleware(['can:Module_Delete_course-code']);
+        Route::get('/admin/ajax/course-code/view/{id}', [CourseCodeController::class,'show'])->name('course-code-view')->middleware(['can:Module_Edit_course-code']);
+
+    });
    
     //Questions Modules
     Route::group([], function() {
