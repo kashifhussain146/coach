@@ -110,6 +110,17 @@
                             <p>{{ $task->comments }}</p>
                         </div>
 
+                        <div class="form-group">
+                            <label>Work Status :</label>
+                            <p>
+                                {!! $task->isDeadlineMet
+                                    ? '<span class="badge badge-danger">Deadline Not Met</span>'
+                                    : '<span class="badge badge-success">Deadline Met</span>' !!}
+                            </p>
+                        </div>
+
+
+
                         @if ($task->status == 'COMPLETED')
                             <div class="form-group">
                                 <label>Action :</label>

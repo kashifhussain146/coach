@@ -165,7 +165,7 @@ class HomeController extends Controller
         if( ($request->subject_category==null && $request->subject==null && $request->search==null) && ($subject_category_id==null && $topic_id==null)){
             $questions = $questions->take(10);
         }
-        $questions = $questions->paginate(25)
+        $questions = $questions->orderBy('id','DESC')->paginate(25)
                                 ->groupBy('category.category_name')
                                 ->map(function ($products, $categoryName) {
                                     $data =  [
@@ -177,7 +177,7 @@ class HomeController extends Controller
                                 })
                                 ->sortKeys()
                                 ->values();
-        //dd($questions);
+         //dd($questions);
 
         $subjectsCategory = SubjectCategory::TopicsData()->Activated()->get();
         return view('solutions-library.index',compact('courseCode','subject_category_id','topic_id','subjectcategory','topics','questions','subjectsCategory'));

@@ -19,16 +19,16 @@ use App\Models\Subject;
 use App\Models\Colleges;
 use App\Models\SubjectCategory;
 use App\Models\CourseCode;
-use App\Services\DocxReaderService;
+//use App\Services\DocxReaderService;
 class TasksController extends Controller
 {
 
-    protected $docxReader;
+    // protected $docxReader;
 
-    public function __construct(DocxReaderService $docxReader)
-    {
-        $this->docxReader = $docxReader;
-    }
+    // public function __construct(DocxReaderService $docxReader)
+    // {
+    //     $this->docxReader = $docxReader;
+    // }
 
     /**
      * Display a listing of the resource.
@@ -164,6 +164,9 @@ class TasksController extends Controller
             ->addColumn('course_code', function ($row) {
                 return $row->courseCode ? $row->courseCode->title : 'N/A';
             })
+            ->addColumn('isDeadlineMet', function ($row) {
+                return $row->isDeadlineMet ? '<span class="badge badge-danger">Deadline Not Met</span>' : '<span class="badge badge-success">Deadline Met</span>';
+            })
             ->addColumn('task_type', function ($row) {
                 return $row->task_type != '' ? ucwords(str_replace('_', ' ', $row->task_type)) : 'N/A';
             })
@@ -188,6 +191,7 @@ class TasksController extends Controller
                 return $employees = implode(',', $employees);
                 //return (isset($row->createdBy))?$row->createdBy->name.' '.$row->createdBy->last_name:"N/A";
             })
+            ->rawColumns(['isDeadlineMet','action'])
             ->make(true);
     }
 
@@ -812,26 +816,26 @@ class TasksController extends Controller
             'start_date_time' => [
                 'required',
                 'date',
-                function ($attribute, $value, $fail) use ($task) {
-                    // Check if start date is after or equal to deadline date
-                    if (strtotime($value) > strtotime($task->deadline_date_time)) {
-                        $fail('The '.$attribute.' must be before the deadline date.');
-                    }
-                },
+                // function ($attribute, $value, $fail) use ($task) {
+                //     // Check if start date is after or equal to deadline date
+                //     if (strtotime($value) > strtotime($task->deadline_date_time)) {
+                //         $fail('The '.$attribute.' must be before the deadline date.');
+                //     }
+                // },
             ],
             'end_date_time' => [
                 'nullable',
                 'date',
-                function ($attribute, $value, $fail) use ($task) {
-                    // Check if end date is after or equal to deadline date
-                    if ($value && strtotime($value) > strtotime($task->deadline_date_time)) {
-                        $fail('The '.$attribute.' must be before the deadline date.');
-                    }
-                    // Check if end date is after start date
-                    if ($value && strtotime($value) < strtotime($task->start_date_time)) {
-                        $fail('The '.$attribute.' must be after the start date.');
-                    }
-                },
+                // function ($attribute, $value, $fail) use ($task) {
+                //     // Check if end date is after or equal to deadline date
+                //     if ($value && strtotime($value) > strtotime($task->deadline_date_time)) {
+                //         $fail('The '.$attribute.' must be before the deadline date.');
+                //     }
+                //     // Check if end date is after start date
+                //     if ($value && strtotime($value) < strtotime($task->start_date_time)) {
+                //         $fail('The '.$attribute.' must be after the start date.');
+                //     }
+                // },
             ],
         ], [
             'questions_file.mimes' => 'Please enter a valid file extension eg..csv,pdf,docx',
@@ -874,6 +878,9 @@ class TasksController extends Controller
                 $task->status = Task::STATUS_COMPLETED;
 
                 Proposals::where(['user_id' => Auth()->guard('admin')->user()->id, 'task_id' => $task->id])->update(['status' => Proposals::STATUS_COMPLETED]);
+
+                $data['isDeadlineMet'] =  strtotime($task->end_date_time) > strtotime($task->deadline_date_time) ? 1 : 0;
+
             }
 
             $task->update($data);

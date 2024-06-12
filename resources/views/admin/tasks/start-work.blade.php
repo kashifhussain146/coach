@@ -148,22 +148,31 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
+                                    <label>Work Status :</label>
+
+                                    {!! $task->isDeadlineMet
+                                        ? '<span class="badge badge-danger">Deadline Not Met</span>'
+                                        : '<span class="badge badge-success">Deadline Met</span>' !!}
+
+                                </div>
+
+                                <div class="form-group col-md-4">
                                     <label for="comments">Comments: </label>&nbsp;&nbsp; {{ $task->comments }}
                                 </div>
 
 
 
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-5">
                                     <label for="start_date_time">Start Date & Time: </label>
-                                    <input type="text" disabled autocomplete="off" class="form-control "
-                                        id="start_date_time" name="start_date_time"
+                                    <input type="text" autocomplete="off" class="form-control " id="start_date_time"
+                                        name="start_date_time"
                                         value="{{ $task->start_date_time != '' ? $task->start_date_time : old('start_date_time') }}">
                                     @error('start_date_time')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
 
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-5">
                                     <label for="end_date_time">End Date & Time: </label>
                                     <input type="text" autocomplete="off" readonly class="form-control"
                                         id="end_date_time" name="end_date_time"

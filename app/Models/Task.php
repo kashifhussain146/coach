@@ -41,7 +41,8 @@ class Task extends Model
         'created_by',
         'deadline_date_time',
         'input_type',
-        'unique_group_id'
+        'unique_group_id',
+        'isDeadlineMet'
     ];
 
 

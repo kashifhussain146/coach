@@ -52,14 +52,14 @@
                         <h3 class="card-title">Tasks</h3>
                         <div class="ml-auto pageheader-btn">
 
-
-                            <a href="{{ route('tasks-create') }}"
-                                class="float-right btn btn-success btn-icon text-white mr-2">
-                                <span>
-                                    <i class="fa fa-plus"></i>
-                                </span> Add Tasks
-                            </a>
-
+                            @can('Add Tasks')
+                                <a href="{{ route('tasks-create') }}"
+                                    class="float-right btn btn-success btn-icon text-white mr-2">
+                                    <span>
+                                        <i class="fa fa-plus"></i>
+                                    </span> Add Tasks
+                                </a>
+                            @endcan
 
                         </div>
                     </div>
