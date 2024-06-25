@@ -134,7 +134,7 @@ Route::group(['middleware' => ['auth:admin']], function() {
         Route::get('/tasks/create', [TasksController::class,'create'])->name('tasks-create')->middleware(['can:Add Tasks']);
         Route::post('/tasks/store', [TasksController::class,'store'])->name('tasks-save')->middleware(['can:Add Tasks']);
         Route::get('/tasks/edit/{id}', [TasksController::class,'edit'])->name('tasks-edit')->middleware(['can:Edit Tasks']);
-        Route::post('/tasks/update/tasks/{id}', [TasksController::class,'update'])->name('tasks-update')->middleware(['can:Edit Tasks']);
+        Route::post('/tasks/update/{id}', [TasksController::class,'update'])->name('tasks-update')->middleware(['can:Edit Tasks']);
         Route::get('/tasks/view/{id}', [TasksController::class,'show'])->name('tasks-view')->middleware(['can:Edit Tasks']);
         Route::delete('/tasks/delete/{id}', [TasksController::class,'destroy'])->name('tasks-delete')->middleware(['can:Delete Tasks']);
         Route::get('/tasks/update/status/{id}/{status}', [TasksController::class,'statusUpdate'])->name('status-update')->middleware(['can:Edit Tasks']);

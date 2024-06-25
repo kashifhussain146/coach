@@ -303,7 +303,7 @@
                             <!-- Additional fields based on MCQ / Essay / Mixed -->
 
 
-                            <div class="form-group">
+                            <div class="form-group d-none">
                                 <label>Choose Upload Type:</label><br>
                                 <input type="radio" name="input_type" value="file" id="inputFile"
                                     @if ($task->input_type == 'file') checked @endif />
@@ -318,13 +318,16 @@
                                 @if ($task->input_type == 'file') style="display:block" @else style="display:none" @endif>
                                 <label for="questions_file">Upload Question File:</label>
                                 <input class="form-control" type="file" id="questions_file" name="questions_file">
-                                <a href="{{ route('questions-tasks-sample') }}" class="">Download Sample</a>
-                                <br /> <br />
+                                <p class="text-danger text-bold"> Note : we can accept only
+                                    docx,doc,ppt,pptx,jpg,png,jpeg,xlsx,csv</p>
+                                {{-- <a href="{{ route('questions-tasks-sample') }}" class="">Download Sample</a> --}}
+
 
                                 <label for="answers_file">Upload Answers File:</label>
                                 <input class="form-control" type="file" id="answers_file" name="answers_file">
-                                <a href="{{ route('answers-tasks-sample') }}" class="">Download Sample</a>
-
+                                {{-- <a href="{{ route('answers-tasks-sample') }}" class="">Download Sample</a> --}}
+                                <p class="text-danger text-bold"> Note : we can accept only
+                                    docx,doc,ppt,pptx,jpg,png,jpeg,xlsx,csv</p>
                             </div>
 
 

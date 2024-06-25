@@ -19,16 +19,24 @@ use App\Models\Subject;
 use App\Models\Colleges;
 use App\Models\SubjectCategory;
 use App\Models\CourseCode;
-//use App\Services\DocxReaderService;
+use App\Services\DocxReaderService;
+use App\Services\XlsxReaderService;
+use App\Services\PPTReaderService;
+
 class TasksController extends Controller
 {
 
-    // protected $docxReader;
+    protected $docxReader;
+    protected $xlsxReader;
+    protected $pptReader;
 
-    // public function __construct(DocxReaderService $docxReader)
-    // {
-    //     $this->docxReader = $docxReader;
-    // }
+
+    public function __construct(DocxReaderService $docxReader,XlsxReaderService $xlsxReader,PPTReaderService $pptReader)
+    {
+        $this->docxReader = $docxReader;
+        $this->xlsxReader = $xlsxReader;
+        $this->pptReader = $pptReader;
+    }
 
     /**
      * Display a listing of the resource.
@@ -132,37 +140,36 @@ class TasksController extends Controller
                         "\" class=\"btn-xs btn btn-danger \"> I can't do it </a>&nbsp;&nbsp;";
                 }
 
-                if (Auth()->guard('admin')->user()->hasRole('Free Lancer') && $status == 'ASSIGNED') {
+                 
+
+                if (Auth()->guard('admin')->user()->hasRole('Free Lancer') && $row
+                        ->freelancers()
+                        ->where('role',30)
+                        ->where('user_id', $authUser->id)
+                        ->whereIn('status', [Proposals::STATUS_ASSIGNED])
+                        ->count() > 0) {
                     $actions .= "<a href=\"" . route('tasks-start-work', ['task' => $row->id]) . "\" class=\"btn-xs btn btn-warning \"> <i class='fa fa-edit'></i> Start work </a>&nbsp;&nbsp;";
                 }
 
-                if (Auth()->user()->can('Assign Tasks')) {
-                    $haveRecords = $row
-                        ->freelancers()
-                        ->where('role', 30)
-                        ->whereIn('status', [Proposals::STATUS_ACCEPTED, Proposals::STATUS_ASSIGNED])
-                        ->count();
-                    if ($haveRecords > 0) {
+               if (Auth()->user()->can('Assign Tasks') && ($row->status == Proposals::STATUS_ASSIGNED || $row->status == Proposals::STATUS_ACCEPTED)) {
+                        
                         $actions .= "<a data-created_by='" . $row->created_by . "' data-id='" . $row->id . "' data-url='" . route('status-assign', $row->id) . "' class=\"assignModal btn btn-xs btn-primary btn-flat info-btn\" data-toggle='modal' data-target='#viewDetail'><i class=\"fa fa-eye\" ></i> Assign To </a>";
-                    }
+                        
                 }
 
                 return $actions;
             })
             ->addColumn('college', function ($row) {
-                return $row->college ? $row->college->title : 'N/A';
+                return $row->college ? $row->college->name : 'N/A';
             })
-            // ->addColumn('status', function($row) {
-            //     return $row->status;
-            // })
             ->addColumn('subject', function ($row) {
-                return $row->subject ? $row->subject->title : 'N/A';
+                return $row->subject ? $row->subject->subject_name : 'N/A';
             })
             ->addColumn('course', function ($row) {
-                return $row->course ? $row->course->title : 'N/A';
+                return $row->course ? $row->course->category_name : 'N/A';
             })
             ->addColumn('course_code', function ($row) {
-                return $row->courseCode ? $row->courseCode->title : 'N/A';
+                return $row->courseCode ? $row->courseCode->code : 'N/A';
             })
             ->addColumn('isDeadlineMet', function ($row) {
                 return $row->isDeadlineMet ? '<span class="badge badge-danger">Deadline Not Met</span>' : '<span class="badge badge-success">Deadline Met</span>';
@@ -213,9 +220,10 @@ class TasksController extends Controller
         })
             ->where('status', 'active')
             ->get();
+        $masterList = DB::table('master__list')->get();
 
         // dd($subjects,$colleges,$courses,$courseCode);
-        return view('admin.tasks.tasks-create', compact('employees', 'title', 'subjects', 'colleges', 'courses', 'courseCode'));
+        return view('admin.tasks.tasks-create', compact('employees', 'title', 'subjects', 'colleges', 'courses', 'courseCode','masterList'));
     }
 
     public function rolesTasks(Request $request)
@@ -302,51 +310,53 @@ class TasksController extends Controller
                                         'status' => 'Y'
                                     ]);
 
+            $data['end_date_time'] = $request->start_date_time;
             $data['unique_group_id'] = $request->unique_group_id_1 . $request->unique_group_id_2 . $request->unique_group_id_3 . $request->unique_group_id_4 . $request->unique_group_id_5 . date('His');
             $data['college_id'] = $colleges->id;
             $data['subject_id'] = $subjects->id;
             $data['course_id'] = $courses->id;
             $data['course_code_id'] = $courseCode->id;
             $data['created_by'] = auth()->guard('admin')->user()->id;
-            /* If employee role select only */
+            
             if ($request->hasFile('questions_file')) {
                 $questions_file = 'questions_' . time() . '.' . $request->questions_file->extension();
                 $request->questions_file->move(public_path('/uploads/questions'), $questions_file);
-                //$questions_file = "/uploads/questions/".$questions_file;
                 $data['questions_file'] = $questions_file;
             }
 
+            //$data['question'] = $this->convertedData($request->file('questions_file'));
+
             $task = Task::create($data);
 
-            if ($request->input_type == 'file' && $request->hasFile('questions_file')) {
-                // $extension = $request->file('questions_file')->extension();
-                // if($extension=='csv'){
+            // if ($request->input_type == 'file' && $request->hasFile('questions_file')) {
+            //     // $extension = $request->file('questions_file')->extension();
+            //     // if($extension=='csv'){
 
-                //     $file = $request->file('questions_file');
-                //     $filePath = $file->getRealPath();
-                //     $csvData = array_map('str_getcsv', file($filePath));
-                //     $headers = array_shift($csvData);
+            //     //     $file = $request->file('questions_file');
+            //     //     $filePath = $file->getRealPath();
+            //     //     $csvData = array_map('str_getcsv', file($filePath));
+            //     //     $headers = array_shift($csvData);
 
-                //     foreach ($csvData as $row) {
-                //         $rowData = array_combine($headers, $row);
+            //     //     foreach ($csvData as $row) {
+            //     //         $rowData = array_combine($headers, $row);
 
-                //         TaskDetail::create([
-                //             'task_id' => $task->id,
-                //             'questions' => strip_tags(json_decode(json_encode($rowData['Question']), True)),
-                //             //'answers' => $rowData['Answer'],
-                //         ]);
-                //     }
+            //     //         TaskDetail::create([
+            //     //             'task_id' => $task->id,
+            //     //             'questions' => strip_tags(json_decode(json_encode($rowData['Question']), True)),
+            //     //             //'answers' => $rowData['Answer'],
+            //     //         ]);
+            //     //     }
 
-                // }
-            } else {
-                foreach ($request->questions as $k => $row) {
-                    TaskDetail::create([
-                        'task_id' => $task->id,
-                        'questions' => $row,
-                        //'answers' => $request->answers[$k],
-                    ]);
-                }
-            }
+            //     // }
+            // } else {
+            //     foreach ($request->questions as $k => $row) {
+            //         TaskDetail::create([
+            //             'task_id' => $task->id,
+            //             'questions' => $row,
+            //             //'answers' => $request->answers[$k],
+            //         ]);
+            //     }
+            // }
 
             if (isset($request->freelancers)) {
                 if (count($request->freelancers) > 0) {
@@ -472,7 +482,7 @@ class TasksController extends Controller
                 //'deadline_date_time'=>'required|date',
                 'task_type' => 'required|in:assignment_homework,discussion_initial_post,quiz_exam,peer_responses',
 
-                'questions_file' => 'nullable|mimes:csv,txt,pdf', // Example for essay_upload
+                'questions_file' => 'nullable', // Example for essay_upload
             ],
             [
                 'questions_file.mimes' => 'Please enter a valid file extension eg..csv,pdf,docx',
@@ -486,8 +496,8 @@ class TasksController extends Controller
             ]);
         }
 
-        try {
-            DB::beginTransaction();
+        // try {
+        //     DB::beginTransaction();
 
             $data = $request->except('_token');
 
@@ -496,45 +506,47 @@ class TasksController extends Controller
             if ($request->hasFile('questions_file')) {
                 $questions_file = 'questions_' . time() . '.' . $request->questions_file->extension();
                 $request->questions_file->move(public_path('/uploads/questions'), $questions_file);
-                //$questions_file = "/uploads/questions/".$questions_file;
                 $data['questions_file'] = $questions_file;
             }
 
             if ($request->hasFile('answers_file')) {
                 $answers_file = 'answers_' . time() . '.' . $request->answers_file->extension();
                 $request->answers_file->move(public_path('/uploads/answers'), $answers_file);
-                //$answers_file = "/uploads/answers/".$answers_file;
                 $data['answers_file'] = $answers_file;
             }
 
-            if ($request->input_type == 'file' && $request->hasFile('questions_file')) {
-                // $task->details()->delete();
 
-                // $file = $request->file('questions_file');
-                // $filePath = $file->getRealPath();
+            // $data['question'] = $this->convertedData($request->file('questions_file'));
+            // $data   = $this->convertedData($request->file('answers_file'));
+            // dd($data);
+            // if ($request->input_type == 'file' && $request->hasFile('questions_file')) {
+            //     // $task->details()->delete();
 
-                // $csvData = array_map('str_getcsv', file($filePath));
-                // $headers = array_shift($csvData);
+            //     // $file = $request->file('questions_file');
+            //     // $filePath = $file->getRealPath();
 
-                // foreach ($csvData as $row) {
-                //     $rowData = array_combine($headers, $row);
-                //     TaskDetail::create([
-                //         'task_id' => $task->id,
-                //         'questions' => json_decode(json_encode($rowData['Question']), True),
-                //         'answers' => json_decode(json_encode($rowData['Answer']), True),
-                //     ]);
-                // }
-            } elseif ($request->input_type == 'multiple') {
-                $task->details()->delete();
+            //     // $csvData = array_map('str_getcsv', file($filePath));
+            //     // $headers = array_shift($csvData);
 
-                foreach ($request->questions as $k => $row) {
-                    TaskDetail::create([
-                        'task_id' => $task->id,
-                        'questions' => mb_convert_encoding($row, 'UTF-8', 'auto'),
-                        'answers' => mb_convert_encoding($request->answers[$k], 'UTF-8', 'auto'),
-                    ]);
-                }
-            }
+            //     // foreach ($csvData as $row) {
+            //     //     $rowData = array_combine($headers, $row);
+            //     //     TaskDetail::create([
+            //     //         'task_id' => $task->id,
+            //     //         'questions' => json_decode(json_encode($rowData['Question']), True),
+            //     //         'answers' => json_decode(json_encode($rowData['Answer']), True),
+            //     //     ]);
+            //     // }
+            // } elseif ($request->input_type == 'multiple') {
+            //     $task->details()->delete();
+
+            //     foreach ($request->questions as $k => $row) {
+            //         TaskDetail::create([
+            //             'task_id' => $task->id,
+            //             'questions' => mb_convert_encoding($row, 'UTF-8', 'auto'),
+            //             'answers' => mb_convert_encoding($request->answers[$k], 'UTF-8', 'auto'),
+            //         ]);
+            //     }
+            // }
 
             $courses =    SubjectCategory::firstOrCreate(['category_name' => $request->input('course_id')],
                                     [
@@ -686,15 +698,15 @@ class TasksController extends Controller
                 }
             }
 
-            DB::commit();
+            //DB::commit();
             return response()->json(['success' => 'Task updated successfully', 'route' => route('tasks-list')]);
-        } catch (\Exception $e) {
-            DB::rollback();
-            return response()->json([
-                'status' => false,
-                'msg' => $e->getMessage(),
-            ]);
-        }
+        // } catch (\Exception $e) {
+        //     DB::rollback();
+        //     return response()->json([
+        //         'status' => false,
+        //         'msg' => $e->getMessage(),
+        //     ]);
+        // }
     }
 
     /**
@@ -773,8 +785,9 @@ class TasksController extends Controller
             ->whereHas('roles', function ($query) {
                 $query->where('name', 'Free Lancer');
             })
-            ->whereHas('proposalsMany', function ($query) {
-                $query->whereIn('status', [Proposals::STATUS_ACCEPTED, Proposals::STATUS_ASSIGNED]);
+            ->whereHas('proposalsMany', function ($query) use ($task) {
+                // $query->whereIn('status', [Proposals::STATUS_ACCEPTED, Proposals::STATUS_ASSIGNED]);
+                                $query->where('task_id',$task->id)->whereIn('status', [Proposals::STATUS_ACCEPTED])->where('role',30);
             })
             ->where('status', 'active')
             ->get();
@@ -791,23 +804,92 @@ class TasksController extends Controller
         return view('admin.tasks.start-work', compact('task', 'title'));
     }
 
-    // public function updateStartWork(Request $request, $id){
+    public function convertedData(Request $request){
         
-    //     $file = $request->file('answers_file');
-    //     $filePath = $file->getPathname();
-    //     $data = $this->docxReader->convert($filePath);
+        $file = $request->answers_file;
+        $extension = $file->getClientOriginalExtension();
+       
+       
+        switch ($extension) {
+            case 'docx':
+                $data = $this->docxReader->convert($file->getPathname());
+            break;
 
-    //     echo "<h1>Converted Data</h1>";
-    //     echo $data;
+            case 'xlsx':
+            case 'csv':
+                $data = $this->xlsxReader->convert($file->getRealPath());
+            break;
+
+            case 'ppt':
+            case 'pptx':
+                $data = $this->pptReader->convert($file->getRealPath());
+            break;
+            case 'jpg':
+            case 'png':
+            case 'jpeg':
+                $data = $request->rawFileData;
+            break;
+            
+            default:
+                $data = "";
+            break;
+        }
         
-    //     // Define output DOCX file path
-    //     // $outputFilePath = storage_path('app/public/output.docx');
+       return $data;
+    }
 
-    //     // $this->docxReader->convertToDocx($htmlContent, $outputFilePath);
 
-    //     //dd($data);
+    function extractBodyContent($html)
+    {
+        $doc = new \DOMDocument();
+        @$doc->loadHTML($html, LIBXML_NOERROR | LIBXML_NOWARNING);
+        $xpath = new \DOMXPath($doc);
+        $body = $xpath->query('//body')->item(0);
+        $bodyContent = '';
+        
+        foreach ($body->childNodes as $child) {
+            $bodyContent .= $doc->saveHTML($child);
+        }
+        
+        return $bodyContent;
+    }
 
-    // }
+      public function convertedDataFullPath($file){
+        
+       
+       
+       $extension =  pathinfo($file, PATHINFO_EXTENSION);
+       
+        switch ($extension) {
+            case 'docx':
+                $data = $this->docxReader->convert($file);
+            break;
+
+            case 'xlsx':
+            case 'csv':
+                $data = $this->xlsxReader->convert($file);
+            break;
+
+            case 'ppt':
+            case 'pptx':
+                $data = $this->pptReader->convert($file);
+            break;
+            case 'jpg':
+            case 'png':
+            case 'jpeg':
+                $data = $request->rawFileData;
+            break;
+            
+            default:
+                $data = "";
+            break;
+        }
+        
+       
+        $data = $this->extractBodyContent($data);
+       
+       return $data;
+    }
 
     public function updateStartWork(Request $request, $id)
     {
@@ -852,21 +934,25 @@ class TasksController extends Controller
 
                 $message = 'Task completed successfully';
 
-                if ($task->input_type == 'file' && $request->hasFile('answers_file') && $request->file('answers_file')->isValid()) {
-                    $task->details()->delete();
+                //if ($task->input_type == 'file' && $request->hasFile('answers_file') && $request->file('answers_file')->isValid()) {
+                    // $task->details()->delete();
                     // Import the CSV file
-                    Excel::import(new TaskDetailsImport($task->id), $request->file('answers_file'));
-                } elseif ($task->input_type == 'multiple') {
-                    $task->details()->delete();
+                    // Excel::import(new TaskDetailsImport($task->id), $request->file('answers_file'));
+                $task->answer = $this->convertedData($request);                
+                $task->question = $this->convertedDataFullPath(public_path('/uploads/questions/' . $task->questions_file));
+               // } 
+                
+                // elseif ($task->input_type == 'multiple') {
+                //     $task->details()->delete();
 
-                    foreach ($request->questions as $k => $row) {
-                        TaskDetail::create([
-                            'task_id' => $task->id,
-                            'questions' => mb_convert_encoding($row, 'UTF-8', 'auto'),
-                            'answers' => mb_convert_encoding($request->answers[$k], 'UTF-8', 'auto'),
-                        ]);
-                    }
-                }
+                //     foreach ($request->questions as $k => $row) {
+                //         TaskDetail::create([
+                //             'task_id' => $task->id,
+                //             'questions' => mb_convert_encoding($row, 'UTF-8', 'auto'),
+                //             'answers' => mb_convert_encoding($request->answers[$k], 'UTF-8', 'auto'),
+                //         ]);
+                //     }
+                // }
 
                 if ($request->hasFile('answers_file')) {
                     $answers_file = 'answers_' . time() . '.' . $request->answers_file->extension();
@@ -877,13 +963,16 @@ class TasksController extends Controller
 
                 $task->status = Task::STATUS_COMPLETED;
 
-                Proposals::where(['user_id' => Auth()->guard('admin')->user()->id, 'task_id' => $task->id])->update(['status' => Proposals::STATUS_COMPLETED]);
+               
 
-                $data['isDeadlineMet'] =  strtotime($task->end_date_time) > strtotime($task->deadline_date_time) ? 1 : 0;
+                $data['isDeadlineMet'] =  strtotime($request->end_date_time) > strtotime($task->deadline_date_time) ? 1 : 0;
 
             }
 
             $task->update($data);
+
+            Proposals::where(['task_id' => $task->id])->where('status','!=',Task::STATUS_ASSIGNED)->delete();
+
 
             DB::commit();
 
@@ -926,36 +1015,61 @@ class TasksController extends Controller
             DB::beginTransaction();
             $data = [];
 
-            foreach ($task->details as $k => $v) {
-                $question = [];
+            // foreach ($task->details as $k => $v) {
+            //     $question = [];
 
-                $question['question'] = $v->questions;
-                $question['collegeid'] = $task->college_id;
-                $question['coursesid'] = $task->course_code_id;
-                $question['score'] = $task->score != '' ? $task->score : 0;
-                $question['type'] = $this->getType($task->task_type);
-                $question['startdatetime'] = $task->start_date_time;
-                $question['enddatetime'] = $task->end_date_time;
-                $question['num_words'] = ($task->word_count!="")?$task->word_count:0;
-                $question['answer'] = $v->answers;
-                $question['price'] = 100;
-                $question['subject_category'] = $task->course_id;
-                $question['subject'] = $task->subject_id;
-                $question['file_name'] = $task->questions_file;
-                $question['answer_file'] = $task->answers_file;
-                $question['addedby'] = $task->created_by;
-                $question['answerstatus'] = 'N';
-                $question['status'] = 'Y';
-                $question['visiblity'] = 'N';
-                $question['added_date'] = $task->created_at->format('Y-m-d');
-                $question['expiry_date'] = $task->expiry_date;
-                $question['created_at'] = date('Y-m-d H:i:s');
-                $question['updated_at'] = date('Y-m-d H:i:s');
+            //     $question['question'] = $v->questions;
+            //     $question['collegeid'] = $task->college_id;
+            //     $question['coursesid'] = $task->course_code_id;
+            //     $question['score'] = $task->score != '' ? $task->score : 0;
+            //     $question['type'] = $this->getType($task->task_type);
+            //     $question['startdatetime'] = $task->start_date_time;
+            //     $question['enddatetime'] = $task->end_date_time;
+            //     $question['num_words'] = ($task->word_count!="")?$task->word_count:0;
+            //     $question['answer'] = $v->answers;
+            //     $question['price'] = 100;
+            //     $question['subject_category'] = $task->course_id;
+            //     $question['subject'] = $task->subject_id;
+            //     $question['file_name'] = $task->questions_file;
+            //     $question['answer_file'] = $task->answers_file;
+            //     $question['addedby'] = $task->created_by;
+            //     $question['answerstatus'] = 'N';
+            //     $question['status'] = 'Y';
+            //     $question['visiblity'] = 'N';
+            //     $question['added_date'] = $task->created_at->format('Y-m-d');
+            //     $question['expiry_date'] = $task->expiry_date;
+            //     $question['created_at'] = date('Y-m-d H:i:s');
+            //     $question['updated_at'] = date('Y-m-d H:i:s');
 
-                $data[] = $question;
-            }
+            //     $data[] = $question;
+            // }
+
+            $question = [];
+
+            $question['question'] = $task->question;
+            $question['collegeid'] = $task->college_id;
+            $question['coursesid'] = $task->course_code_id;
+            $question['score'] = $task->score != '' ? $task->score : 0;
+            $question['type'] = $this->getType($task->task_type);
+            $question['startdatetime'] = $task->start_date_time;
+            $question['enddatetime'] = $task->end_date_time;
+            $question['num_words'] = ($task->word_count!="")?$task->word_count:0;
+            $question['answer'] = $task->answer;
+            $question['price'] = 100;
+            $question['subject_category'] = $task->course_id;
+            $question['subject'] = $task->subject_id;
+            $question['file_name'] = $task->questions_file;
+            $question['answer_file'] = $task->answers_file;
+            $question['addedby'] = $task->created_by;
+            $question['answerstatus'] = 'N';
+            $question['status'] = 'Y';
+            $question['visiblity'] = 'N';
+            $question['added_date'] = $task->created_at->format('Y-m-d');
+            $question['expiry_date'] = $task->expiry_date;
+            $question['created_at'] = date('Y-m-d H:i:s');
+            $question['updated_at'] = date('Y-m-d H:i:s');
             
-            Questions::insert($data);
+            Questions::insert($question);
 
             DB::commit();
 

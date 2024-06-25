@@ -190,7 +190,7 @@
                             @if ($task->input_type == 'file')
 
                                 <div class="form-group col-md-4">
-                                    <label for="end_date_time">Question File: </label>
+                                    <label for="">Question File: </label>
                                     <a href="{{ asset('/uploads/questions/' . $task->questions_file) }}" download
                                         class="">Download
                                         Question File</a>
@@ -198,14 +198,18 @@
 
 
                                 <div class="form-group col-md-12">
-                                    <p class="text-danger text-bold"> Note : Before upload answer file please check the
-                                        sample file</p>
+
                                     <label for="answers_file">Upload Answers File:</label>
                                     <input class="form-control" type="file" id="answers_file" name="answers_file">
+                                    <p class="text-danger text-bold"> Note : we can accept only
+                                        docx,doc,ppt,pptx,jpg,png,jpeg,xlsx,csv</p>
                                     @error('answers_file')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
 
+
+                                </div>
+                                <div class="form-group col-md-12">
                                     <a href="{{ route('questions-answers-sample-download') }}" class="">Download
                                         Sample</a>
                                 </div>
@@ -258,7 +262,10 @@
 
                     </div>
 
+                    <pre id="result"></pre>
                     <input type="hidden" name="draft_type" id="draft_type" value="1" />
+                    <input type="hidden" name="rawFileData" id="rawFileData" value="" />
+
                     </form>
                 </div>
 
@@ -281,10 +288,63 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
     <!-- Add this script tag at the end of your HTML body or in an external JavaScript file -->
-
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.1.1/dist/tesseract.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script>
+        $('#answers_file').on('change', function(event) {
+            const file = event.target.files[0];
+            const errorMessageElement = $('#error_message');
+            errorMessageElement.text(''); // Clear any previous error message
+
+            if (file) {
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+                const validExtensions = ['jpg', 'jpeg', 'png'];
+
+                if (validExtensions.includes(fileExtension)) {
+                    Tesseract.recognize(
+                        file,
+                        'eng', {
+                            logger: m => {
+                                console.log(m)
+                                $("#CompletedButton").prop('disabled', true);
+                                $("#CompletedButton").html(`Please wait... <div class="spinner-border spinner-border-sm" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>`)
+
+                            }
+                        }
+                    ).then(({
+                        data: {
+                            text
+                        }
+                    }) => {
+                        console.log("text", text);
+                        if (text == "") {
+                            Swal.fire({
+                                title: 'File Upload',
+                                text: 'There is no content found in your image. Please try another one',
+                                icon: 'warning',
+                                showCancelButton: false,
+                                confirmButtonText: 'Ok !'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    form.submit();
+                                }
+                            })
+                            $("#answers_file").val('');
+                        } else {
+                            $('#rawFileData').val(text);
+                        }
+                        $("#CompletedButton").prop('disabled', false);
+                        $("#CompletedButton").html(`Completed`)
+                    });
+                } else {
+                    errorMessageElement.text('Please upload a valid image file (jpg, jpeg, or png).');
+                }
+            }
+        });
+
         $("#submitButton").on('click', function() {
             $("#draft_type").val(2);
             setTimeout(() => {
@@ -334,7 +394,7 @@
                     },
                     answers_file: {
                         required: true,
-                        //extension: "csv",
+                        extension: "docx|doc|ppt|pptx|jpg|png|jpeg|xlsx|csv",
                         // filesize: 1224000
                     }
                 @endif
@@ -345,8 +405,13 @@
                     date: "Please enter a valid date"
                 },
                 end_date_time: {
-                    required: "Please enter a valid start time",
+                    required: "Please enter a valid end time",
                     date: "Please enter a valid date"
+                },
+
+                answers_file: {
+                    required: "Please select a file",
+                    extension: "Please select only a valid file extension"
                 },
 
             },

@@ -33,6 +33,8 @@ class Task extends Model
         'mcq_essay_mixed',
         'questions_file',
         'answers_file',
+        'question',
+        'answer',
         'word_count',
         'actual_length',
         'words_written',

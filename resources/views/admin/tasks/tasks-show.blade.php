@@ -121,7 +121,9 @@
 
 
 
-                        @if ($task->status == 'COMPLETED')
+                        @if (
+                            (Auth()->guard('admin')->user()->hasRole('Admin') || Auth()->guard('admin')->user()->hasRole('Admin')) &&
+                                $task->status == 'COMPLETED')
                             <div class="form-group">
                                 <label>Action :</label>
                                 <form id="publishSolutionLibrary"
@@ -168,25 +170,30 @@
                         </div>
 
 
-                        @if ($task->details->count() > 0)
-                            <h3>Question & Answers</h3>
-                            <table class="table">
-                                <tr>
-                                    <td style="width:500px;">Question</td>
-                                    <td>Answers</td>
-                                </tr>
 
-                                @foreach ($task->details as $item)
-                                    <tr>
-                                        <td>{{ $item->questions }}</td>
-                                        <td>{!! $item->answers !!}</td>
-                                    </tr>
-                                @endforeach
+                        <h3>Question & Answers</h3>
+                        <table id="questionTable" class="table table-bordered">
+                            {{-- <tr>
+                                <td style="width:500px;">Question</td>
+                                <td>Answers</td>
+                            </tr>
+
+                            <tr>
+                                <td>{!! $task->question !!}</td>
+                                <td>{!! $task->answer !!}</td>
+                            </tr> --}}
+
+                            <tr>
+
+                                <td>
+                                    {!! $task->question !!} <br />
+                                    {!! $task->answer !!}
+                                </td>
+                            </tr>
+
+                        </table>
 
 
-                            </table>
-
-                        @endif
                     </div>
 
                 </div>
@@ -203,5 +210,26 @@
                 return false;
             }
         })
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const table = document.getElementById('questionTable');
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = rows.length - 1; i >= 0; i--) {
+                const cells = rows[i].getElementsByTagName('td');
+                let isEmptyRow = true;
+
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].innerText.trim() !== '') {
+                        isEmptyRow = false;
+                        break;
+                    }
+                }
+
+                if (isEmptyRow) {
+                    rows[i].parentNode.removeChild(rows[i]);
+                }
+            }
+        });
     </script>
 @endpush

@@ -62,6 +62,17 @@
 
                             @if (Auth()->guard('admin')->user()->hasRole('Admin') || Auth()->guard('admin')->user()->hasRole('Sub Admin'))
 
+                                <div class="form-group">
+                                    <label>Master List :</label>
+                                    <select class="form-control" id="master_id" name="master_id">
+                                        <option value="">Select</option>
+                                        @foreach ($masterList as $item)
+                                            <option data-master='{!! json_encode($item) !!}' value="{{ $item->id }}">
+                                                {{ $item->emailsubject }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
                                 {{-- <div class="form-check-inline">
                                     <label for="rolesEmployees" class="form-check-label">
                                         <input type="radio" class="form-check-input" checked id="rolesEmployees"
@@ -232,9 +243,9 @@
                             <!-- Additional fields based on MCQ / Essay / Mixed -->
 
 
-                            <div class="form-group">
+                            <div class="form-group d-none">
                                 <label>Choose Upload Type:</label><br>
-                                <input type="radio" name="input_type" value="file" id="inputFile" checked>
+                                <input type="radio" name="input_type" checked value="file" id="inputFile" checked>
                                 <label for="inputFile">Upload Question File</label>
                                 <input type="radio" name="input_type" value="multiple" id="inputMultiple">
                                 <label for="inputMultiple">Upload Questions</label>
@@ -243,7 +254,7 @@
                             <div id="uploadSection" class="form-group">
                                 <label for="questions_file">Upload Question File:</label>
                                 <input class="form-control" type="file" id="questions_file" name="questions_file">
-                                <a href="{{ route('questions-tasks-sample') }}" class="">Download Sample</a>
+                                {{-- <a href="{{ route('questions-tasks-sample') }}" class="">Download Sample</a> --}}
                             </div>
 
                             <!-- Multiple Add More Section -->
@@ -335,7 +346,23 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script>
+        $("#master_id").select2();
+        $(document).on('change', '#master_id', function() {
+
+            var master = JSON.parse($("#master_id option:selected").attr('data-master'));
+
+            if (typeof master !== "undefined") {
+
+                $("#start_date_time").val(master.startdate);
+                $("#college_id").val(master.collegename);
+                $("#course_id").val(master.coursename);
+
+            }
+
+        });
+
         //$(document).ready(function() {
+
         $("#employees").select2();
         $("#freelancers").select2();
 
