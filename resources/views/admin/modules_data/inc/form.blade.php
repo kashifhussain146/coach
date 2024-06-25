@@ -118,12 +118,9 @@
                         $name = 'extra_field_date_' . $i;
                     @endphp
                     {!! Form::label($name, $module->$label, ['class' => 'font-weight-bold']) !!}
-                    {!! Form::date($name, null, [
-                        'class' => 'form-control',
-                        'id' => $name,
-                        'placeholder' => $module->$label,
-                        'required' => 'required',
-                    ]) !!}
+                    <input type="datetime-local" value="{{ isset($module_data) ? $module_data->$name : '' }}"
+                        class="form-control" name="{{ $name }}" id="{{ $name }}"
+                        placeholder="{{ $module->$label }}" required />
                 </div>
             </div>
         @endfor

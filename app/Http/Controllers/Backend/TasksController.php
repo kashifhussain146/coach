@@ -220,7 +220,8 @@ class TasksController extends Controller
         })
             ->where('status', 'active')
             ->get();
-        $masterList = DB::table('master__list')->get();
+
+        $masterList = module(39);
 
         // dd($subjects,$colleges,$courses,$courseCode);
         return view('admin.tasks.tasks-create', compact('employees', 'title', 'subjects', 'colleges', 'courses', 'courseCode','masterList'));
@@ -458,7 +459,10 @@ class TasksController extends Controller
             ->where('status', 'active')
             ->get();
         $title = 'Tasks Edit';
-        return view('admin.tasks.tasks-edit', compact('employees', 'task', 'subjects', 'colleges', 'courses', 'courseCode', 'title'));
+        
+        $masterList = module(39);
+
+        return view('admin.tasks.tasks-edit', compact('masterList','employees', 'task', 'subjects', 'colleges', 'courses', 'courseCode', 'title'));
     }
 
     /**

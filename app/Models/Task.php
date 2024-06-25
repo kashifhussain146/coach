@@ -22,6 +22,7 @@ class Task extends Model
     const STATUS_RETIRE = 'RETIRE';
     
     protected $fillable = [
+        'master_id',
         'start_date_time',
         'end_date_time',
         'college_id',

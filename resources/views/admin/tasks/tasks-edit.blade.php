@@ -74,6 +74,19 @@
                             {{ csrf_field() }}
 
                             @if (Auth()->user()->hasRole('Admin') || Auth()->user()->hasRole('Sub Admin'))
+
+                                <div class="form-group">
+                                    <label>Master List :</label>
+                                    <select class="form-control" id="master_id" name="master_id">
+                                        <option value="">Select</option>
+                                        @foreach ($masterList as $item)
+                                            <option @if ($item->id == $task->master_id) selected @endif
+                                                data-master='{!! json_encode($item) !!}' value="{{ $item->id }}">
+                                                {{ $item->title }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
                                 {{-- <div class="form-group">
                                 <label for="created_by">Employees / Freelancers:</label>
                                 <select  class="form-control select2" id="created_by" name="created_by">
@@ -471,6 +484,23 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script>
+        $("#master_id").select2();
+        $(document).on('change', '#master_id', function() {
+
+            var master = JSON.parse($("#master_id option:selected").attr('data-master'));
+            console.log("master", master);
+            if (typeof master !== "undefined") {
+
+                $("#start_date_time").val(master.extra_field_date_1);
+                $("#college_id").val(master.extra_field_4);
+                $("#course_id").val(master.extra_field_5);
+                $("#subject_id").val(master.extra_field_7);
+                $("#course_code_id").val(master.extra_field_5);
+
+            }
+
+        });
+
         $("#employees").select2();
         $("#freelancers").select2();
         $(document).ready(function() {
