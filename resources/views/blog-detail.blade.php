@@ -7,6 +7,11 @@
 <meta name="keywords" content="{{ $blog->meta_keywords }}">
 <!-- JSON-LD Schema Markup -->
 <script type="application/ld+json">
+
+
+
+
+
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
