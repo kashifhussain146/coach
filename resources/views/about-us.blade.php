@@ -5,6 +5,8 @@
 Coach | About us    
 @endsection
 
+
+
 @section('meta')
 <meta name="title" content="{{ $aboutUs->aboutusmetatitle ?? 'N/A' }}">
 <meta name="description" content="{{ $aboutUs->aboutusmetadesc ?? 'N/A' }}">
