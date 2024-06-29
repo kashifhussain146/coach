@@ -58,20 +58,20 @@
                         <form id="submitForm" enctype="multipart/form-data" method="post"
                             action="{{ route('tasks-save') }}">
                             {{ csrf_field() }}
-
+                            <div class="form-group">
+                                <label>Master List :</label>
+                                <select class="form-control" id="master_id" name="master_id">
+                                    <option data-master="" value="">Select</option>
+                                    @foreach ($masterList as $item)
+                                        <option data-master='{!! json_encode($item) !!}' value="{{ $item->id }}">
+                                            {{ $item->emailsubject }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
                             @if (Auth()->guard('admin')->user()->hasRole('Admin') || Auth()->guard('admin')->user()->hasRole('Sub Admin'))
 
-                                <div class="form-group">
-                                    <label>Master List :</label>
-                                    <select class="form-control" id="master_id" name="master_id">
-                                        <option value="">Select</option>
-                                        @foreach ($masterList as $item)
-                                            <option data-master='{!! json_encode($item) !!}' value="{{ $item->id }}">
-                                                {{ $item->title }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+
 
                                 {{-- <div class="form-check-inline">
                                     <label for="rolesEmployees" class="form-check-label">
@@ -349,15 +349,26 @@
         $("#master_id").select2();
         $(document).on('change', '#master_id', function() {
 
-            var master = JSON.parse($("#master_id option:selected").attr('data-master'));
-            console.log("master", master);
-            if (typeof master !== "undefined") {
+            if ($("#master_id option:selected").attr('data-master')) {
 
-                $("#start_date_time").val(master.extra_field_date_1);
-                $("#college_id").val(master.extra_field_4);
-                $("#course_id").val(master.extra_field_5);
-                $("#subject_id").val(master.extra_field_7);
-                $("#course_code_id").val(master.extra_field_5);
+
+
+                var master = JSON.parse($("#master_id option:selected").attr('data-master'));
+                console.log("master", master);
+                if (typeof master !== "undefined") {
+
+                    $("#start_date_time").val(master.startdate);
+                    $("#deadline_date_time").val(master.enddate);
+
+
+                    $("#college_id").val(master.college.name);
+                    $("#course_id").val(master.course.category_name);
+                    $("#subject_id").val(master.subject.subject_name);
+                    $("#course_code_id").val(master.course_code.code);
+
+                    $("#unique_group_id_2").val(master.course.category_name.substring(0, 3) + '_');
+
+                }
 
             }
 

@@ -30,6 +30,7 @@ use App\Http\Controllers\Backend\WidgetDataController;
 use App\Http\Controllers\Backend\RolePermissionController;
 use App\Http\Controllers\Backend\TasksController;
 use App\Http\Controllers\Backend\EmailTemplatesController;
+use App\Http\Controllers\Backend\MastersController;
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\GetAQuoteController;
 /*
@@ -125,6 +126,16 @@ Route::group(['middleware' => ['auth:admin']], function() {
         Route::get('/users/edit/{id}', [UserController::class,'edit'])->name('user-edit')->middleware(['can:Edit Users']);
         Route::post('/users/update/users/{id}', [UserController::class,'update'])->name('user-update')->middleware(['can:Edit Users']);
         Route::get('/users/view/{id}', [UserController::class,'show'])->name('user-view')->middleware(['can:Edit Users']);
+    });
+
+    Route::group([], function() {
+        Route::get('/masters', [MastersController::class,'index'])->name('masters-list');
+        Route::get('/ajax/masters/list', [MastersController::class,'indexAajax'])->name('ajax-masters-list');
+        Route::get('/masters/create', [MastersController::class,'create'])->name('masters-create');
+        Route::post('/masters/store', [MastersController::class,'store'])->name('masters-save');
+        Route::get('/masters/edit/{id}', [MastersController::class,'edit'])->name('masters-edit');
+        Route::post('/masters/update/masters/{master}', [MastersController::class,'update'])->name('masters-update');
+        Route::get('/masters/view/{id}', [MastersController::class,'show'])->name('masters-view');
     });
 
     //Task Master
