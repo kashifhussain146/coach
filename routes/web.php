@@ -6,7 +6,7 @@ use App\Http\Controllers\Backend\BannerController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\AssignmentCategoryController;
 use App\Http\Controllers\Backend\SubjectCategoryController;
-
+use App\Http\Controllers\Backend\SubjectCategoryControllers;
 use App\Http\Controllers\Backend\CollegesController;
 use App\Http\Controllers\Backend\CourseCodeController;
 
