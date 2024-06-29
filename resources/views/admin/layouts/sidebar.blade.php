@@ -1228,7 +1228,7 @@
 
                              @can('Module_List_master')
                                  <li class="nav-item  ">
-                                     <a href="{{ route('admin.modules.data', ['module' => 'master']) }}" class="nav-link">
+                                     <a href="{{ route('masters-list') }}" class="nav-link">
                                          <i class="far fa-circle nav-icon"></i>
                                          <p>Master List</p>
                                      </a>
