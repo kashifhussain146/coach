@@ -9,6 +9,9 @@
 <meta name="title" content="Blogs | Coach On Couch">
 <meta name="description" content="Read the Latest by Coach On Couch Team">
 <meta name="keywords" content="blogs, blog, online coaching">
+
+
+
 @endsection
 
 @push('css')
