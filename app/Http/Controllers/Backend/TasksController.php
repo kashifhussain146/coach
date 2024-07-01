@@ -22,6 +22,8 @@ use App\Models\CourseCode;
 use App\Services\DocxReaderService;
 use App\Services\XlsxReaderService;
 use App\Services\PPTReaderService;
+use App\Models\Masters;
+
 
 class TasksController extends Controller
 {
@@ -59,9 +61,14 @@ class TasksController extends Controller
         $tasks = Task::where(function ($query) {
             if (!Auth()->guard('admin')->user()->hasRole('Admin')) {
                 // $query->where('created_by',Auth()->guard('admin')->user()->id);
+                
                 $query->whereHas('freelancers', function ($query) {
                     $query->where('user_id', Auth()->guard('admin')->user()->id);
+                })->orWhereHas('masters',function($query){
+                    $query->where('user_id',Auth()->guard('admin')->user()->id);
                 });
+
+
             }
         })->latest();
 
@@ -147,7 +154,7 @@ class TasksController extends Controller
                         ->where('role',30)
                         ->where('user_id', $authUser->id)
                         ->whereIn('status', [Proposals::STATUS_ASSIGNED])
-                        ->count() > 0) {
+                        ->count() > 0  && $row->status != Proposals::STATUS_COMPLETED) {
                     $actions .= "<a href=\"" . route('tasks-start-work', ['task' => $row->id]) . "\" class=\"btn-xs btn btn-warning \"> <i class='fa fa-edit'></i> Start work </a>&nbsp;&nbsp;";
                 }
 
@@ -221,7 +228,21 @@ class TasksController extends Controller
             ->where('status', 'active')
             ->get();
 
-        $masterList = module(39);
+      $masterList = Masters::with('college:id,name','subject:id,subject_name','course:id,category_name','courseCode:id,code');
+
+      if(Auth()->guard('admin')->user()->hasRole('Free Lancer') || Auth()->guard('admin')->user()->hasRole('Employee')){
+
+
+        $masterList =   $masterList->whereHas('masters',function($query){
+
+                            $query->where('user_id',Auth()->guard('admin')->user()->id);
+
+
+                        });
+
+      }
+
+    $masterList = $masterList->orderBy('emailsubject')->get();
 
         // dd($subjects,$colleges,$courses,$courseCode);
         return view('admin.tasks.tasks-create', compact('employees', 'title', 'subjects', 'colleges', 'courses', 'courseCode','masterList'));
@@ -449,10 +470,10 @@ class TasksController extends Controller
         //     }
         // }
 
-        $subjects =   Subject::select('id','subject_name as title')->where('status','Y')->pluck('title')->toArray(); //ModulesData::where('module_id', 11)->pluck('title')->toArray();
-        $colleges =   Colleges::select('id','name as title')->where('status','Y')->pluck('title')->toArray();//ModulesData::where('module_id', 35)->pluck('title')->toArray();
-        $courses =    SubjectCategory::select('id','category_name as title')->where('status','Y')->pluck('title')->toArray(); //ModulesData::where('module_id', 37)->pluck('title')->toArray();
-        $courseCode = CourseCode::select('id','code as title')->where('status','Y')->pluck('title')->toArray(); //ModulesData::where('module_id', 21)->pluck('title')->toArray();
+        $subjects =   Subject::select('id','subject_name as title')->where('status','Y')->pluck('title')->toArray();
+        $colleges =   Colleges::select('id','name as title')->where('status','Y')->pluck('title')->toArray();
+        $courses =    SubjectCategory::select('id','category_name as title')->where('status','Y')->pluck('title')->toArray();
+        $courseCode = CourseCode::select('id','code as title')->where('status','Y')->pluck('title')->toArray();
         $employees = Admins::whereHas('roles', function ($query) {
             $query->whereIn('name', ['Employee', 'Free Lancer']);
         })
@@ -460,7 +481,7 @@ class TasksController extends Controller
             ->get();
         $title = 'Tasks Edit';
         
-        $masterList = module(39);
+        $masterList = Masters::with('college:id,name','subject:id,subject_name','course:id,category_name','courseCode:id,code')->orderBy('emailsubject')->get();
 
         return view('admin.tasks.tasks-edit', compact('masterList','employees', 'task', 'subjects', 'colleges', 'courses', 'courseCode', 'title'));
     }
@@ -942,8 +963,10 @@ class TasksController extends Controller
                     // $task->details()->delete();
                     // Import the CSV file
                     // Excel::import(new TaskDetailsImport($task->id), $request->file('answers_file'));
-                $task->answer = $this->convertedData($request);                
-                $task->question = $this->convertedDataFullPath(public_path('/uploads/questions/' . $task->questions_file));
+                $task->answer = $this->convertedData($request);
+                if($task->questions_file!="" && \File::exists(public_path('/uploads/questions/' . $task->questions_file))){
+                    $task->question = $this->convertedDataFullPath(public_path('/uploads/questions/' . $task->questions_file));
+                }
                // } 
                 
                 // elseif ($task->input_type == 'multiple') {
@@ -1087,7 +1110,15 @@ class TasksController extends Controller
 
 
     public function getSubjects(Request $request){
-        // dd($request->all());
+
+        $data = $request->all();
+
+
+        if(isset($data['course']['id'])){
+            $subjects = Subject::where('subject_category',$data['course']['id'])->pluck('subject_name')->toArray();
+            return response()->json($subjects);        
+        }
+
         $course = $request->course;
 
         $subjects = Subject::whereHas('category',function($query) use ($course){

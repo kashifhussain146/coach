@@ -103,5 +103,10 @@ class Task extends Model
     {
         return $this->hasMany(Proposals::class, 'task_id', 'id');
     }
+
+    public function masters()
+    {
+        return $this->hasMany(MastersUsers::class, 'master_id', 'master_id');
+    }
 }
 
