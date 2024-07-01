@@ -112,91 +112,60 @@
 
     <!-- Preloader -->
     <!-- <div class="preloader"></div> -->
-    <!-- Main Header-->
+
+
+    <!-- New Main Header -->
     <header class="main-header header-style-two">
-
-        <!-- Header Top -->
-        <div class="header-top">
-            <div class="auto-container">
-                <div class="inner-container">
-                    <div class="top-left">
-                        <div class="text">First 20 students get 50% discount. Hurry up!</div>
-                    </div>
-
-                    <div class="top-right">
-
-                        @if (!Auth()->guard('admin')->user() && !Auth()->user())
-                            <ul class="useful-links">
-                                <li>
-                                    <a href="javascript:void(0)" data-bs-toggle="modal"
-                                        data-bs-target="#LoginForm">Login
-                                        Custmer &nbsp;&nbsp;</a>/ &nbsp;&nbsp;
-                                    <a href="javascript:void(0)" data-bs-toggle="modal"
-                                        data-bs-target="#LoginFreeLancerForm">Login Freelancer</a>
-                                </li>
-                            </ul>
-                        @elseif(Auth()->guard('admin')->user())
-                            @if (Auth()->guard('admin')->user()->roles()->first()->name == 'Free Lancer')
-                                <ul class="useful-links">
-                                    <li>
-                                        <a href="{{ route('free.lancer.dashboard') }}">Go to Dashboard </a>
-                                    </li>
-                                </ul>
-                            @endif
-
-                        @endif
-
-                        <ul class="social-icon-one light">
-                            <li><a target="_blank" href="{{ widget(6)->extra_field_5 }}"><span
-                                        class="fab fa-twitter"></span></a></li>
-                            <li><a target="_blank" href="{{ widget(6)->extra_field_6 }}"><span
-                                        class="fab fa-facebook-square"></span></a></li>
-                            <li><a target="_blank" href="{{ widget(6)->extra_field_7 }}"><span
-                                        class="fab fa-pinterest-p"></span></a></li>
-                            <li><a target="_blank" href="{{ widget(6)->extra_field_8 }}"><span
-                                        class="fab fa-instagram"></span></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Header Top -->
 
         <!-- Header Upper -->
         <div class="header-upper">
             <div class="auto-container">
                 <div class="inner-container">
-                    <div class="logo-box">
-                        <div class="logo"><a href="{{ route('home') }}"><img
-                                    src="{{ asset('images/' . widget(6)->extra_image_1) }}" alt=""
-                                    title="Tronis"></a></div>
-                    </div>
-
                     <ul class="contact-info-outer">
-                        <li>
+                        <li class="info-list-header">
                             <!-- Contact Info Box -->
                             <div class="contact-info-box">
                                 <i class="icon lnr-icon-phone-handset"></i>
-                                <span class="title">Call Anytime</span>
+                                <!-- <span class="title">Call Anytime</span> -->
                                 <a href="tel:{{ widget(6)->extra_field_2 }}"
                                     class="text">{{ widget(6)->extra_field_2 }}</a>
                             </div>
-                        </li>
-                        <li>
-                            <!-- Contact Info Box -->
                             <div class="contact-info-box">
                                 <i class="icon lnr-icon-envelope"></i>
-                                <span class="title">Send Email</span>
+                                <!-- <span class="title">Send Email</span> -->
                                 <a href="mailto:{{ widget(6)->extra_field_3 }}"
                                     class="text">{{ widget(6)->extra_field_3 }}</a>
                             </div>
                         </li>
                         <li>
-                            <!-- Contact Info Box -->
-                            <div class="contact-info-box">
-                                <i class="icon lnr-icon-map"></i>
-                                <span class="title">Location</span>
-                                <div class="text"> {{ widget(6)->extra_field_4 }}</div>
+                            <div class="top-bar-text">
+                                <div class="text">First 20 students get 50% discount. Hurry up!</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="topheader-button">
+                                <a href="{{ route('solutions.library') }}" class="sol-lib-btn">Solution Library</a>
+                                @if (!Auth()->guard('admin')->user() && !Auth()->user())
+                                    <ul class="useful-links" style="display: inline-block;">
+                                        <li>
+                                            <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                data-bs-target="#LoginForm" class="btn login-btn">Login
+                                                Customer</a>
+                                            <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                data-bs-target="#LoginFreeLancerForm" class="btn login-btn">Login
+                                                Freelancer</a>
+                                        </li>
+                                    </ul>
+                                @elseif(Auth()->guard('admin')->user())
+                                    @if (Auth()->guard('admin')->user()->roles()->first()->name == 'Free Lancer')
+                                        <ul class="useful-links">
+                                            <li>
+                                                <a href="{{ route('free.lancer.dashboard') }}">Go to Dashboard </a>
+                                            </li>
+                                        </ul>
+                                    @endif
+
+                                @endif
                             </div>
                         </li>
                     </ul>
@@ -210,66 +179,69 @@
 
 
         <!-- Header Lower -->
-        <div class="header-lower">
+        <div id="oneStickyHeader" class="header-lower">
             <div class="auto-container">
                 <!-- Main box -->
                 <div class="main-box">
+                    <!-- Logo -->
+                    <div class="logo-box">
+                        <div class="logo"><a href="https://stage.webshark.in/coc/index.html"><img
+                                    src="assets/images/logo.png" alt="" title="Tronis"></a></div>
+                    </div>
                     <!--Nav Box-->
                     <div class="nav-outer">
 
                         <nav class="nav main-menu">
                             <ul class="navigation">
-                                <li class="current"><a href="">Home</a>
+                                <!-- <li class="current"><a href="https://stage.webshark.in/coc">Home</a>
+                                </li> -->
+                                <li class=""><a style="color: #FF7707;" href="{{ route('about-us') }}">About
+                                        Us</a>
                                 </li>
-                                <li class=""><a href="{{ route('about-us') }}">About Us</a>
-                                </li>
-                                <li class="dropdown"><a href="{{ route('assignment.help') }}">Assignment Help</a>
-                                    <ul>
-                                        <li><a href="">Accounting</a></li>
-                                        <li><a href="">Economics</a></li>
-                                        <li><a href="">Math</a></li>
-                                        <li><a href="">Statistics</a></li>
-                                        <li><a href="">Calculus</a></li>
-                                        <li><a href="">English</a></li>
-                                        <li><a href="">Finance</a></li>
-                                        <li><a href="">History</a></li>
-                                        <li><a href="">Psychology</a></li>
-                                        <li><a href="">Management</a></li>
-                                        <li><a href="">Science</a></li>
-                                        <li><a href="">Political Science</a></li>
-                                        <li><a href="">Biology</a></li>
-                                        <li><a href="">Marketing</a></li>
-                                    </ul>
+                                <li class="dropdown d-flex"><a id="assignmentDrop" class="assign-help"
+                                        href="{{ route('assignment.help') }}">Assignment Help</a>
+                                    <!--<a onclick="dropAssignment()"><i style="font-size: 13px;" class="fa fa-angle-down px-1 my-auto dropvtnassign"></i></a>-->
+                                    <!--<ul id="dropElement" class="dropdown-assignment">-->
+                                    <!--        <li><a href="https://stage.webshark.in/coc/assignment-help-accounting.html">Accounting</a></li>-->
+                                    <!--        <li><a href="https://stage.webshark.in/coc/assignment-help-economics.html">Economics</a></li>-->
+                                    <!--         <li><a href="https://stage.webshark.in/coc/assignment-help-maths.html">Math</a></li>-->
+                                    <!--         <li><a href="https://stage.webshark.in/coc/assignment-help-statistics.html">Statistics</a></li>-->
+                                    <!--         <li><a href="https://stage.webshark.in/coc/assignment-help-calculus.html">Calculus</a></li>-->
+                                    <!--         <li><a href="https://stage.webshark.in/coc/assignment-help-english.html">English</a></li>-->
+                                    <!--          <li><a href="https://stage.webshark.in/coc/assignment-help-finance.html">Finance</a></li>-->
+                                    <!--          <li><a href="https://stage.webshark.in/coc/assignment-help-history.html">History</a></li>-->
+                                    <!--         <li><a href="https://stage.webshark.in/coc/assignment-help-psychology.html">Psychology</a></li>-->
+                                    <!--          <li><a href="https://stage.webshark.in/coc/assignment-help-management.html">Management</a></li>-->
+                                    <!--          <li><a href="https://stage.webshark.in/coc/assignment-help-science.html">Science</a></li>-->
+                                    <!--          <li><a href="https://stage.webshark.in/coc/assignment-help-political-science.html">Political Science</a></li>-->
+                                    <!--          <li><a href="https://stage.webshark.in/coc/assignment-help-biology.html">Biology</a></li>-->
+                                    <!--          <li><a href="https://stage.webshark.in/coc/assignment-help-marketing.html">Marketing</a></li>-->
+                                    <!--    </ul>-->
                                 </li>
                                 <li class=""><a href="{{ route('take.my.online.class') }}">Take My Online
                                         Class</a></li>
-
-                                <li class=""><a href="{{ route('blogs') }}">Blogs</a></li>
-
-                                <li class=""><a href="{{ route('solutions.library') }}">Solution Library</a>
+                                <!-- <li class=""><a href="https://stage.webshark.in/coc/solution-library.html">Solution Library</a></li> -->
+                                <li class="dropdown d-flex"><a href="{{ route('services') }}">Services</a>
+                                    <!--    <a onclick="dropServices()"><i style="font-size: 13px;" class="fa fa-angle-down px-1 my-auto dropbtnservices"></i></a>-->
+                                    <!--<ul id="dropElementServices" class="dropdown-services">-->
+                                    <!--        <li><a href="https://stage.webshark.in/coc/discussion-board.html">Discussion Board</a></li>-->
+                                    <!--        <li><a href="https://stage.webshark.in/coc/do-my-online-quiz.html">Do My Online Quiz</a></li>-->
+                                    <!--         <li><a href="https://stage.webshark.in/coc/do-my-research-paper.html">Do My Research Paper</a></li>-->
+                                    <!--          <li><a href="https://stage.webshark.in/coc/do-my-project.html">Do My Project</a></li>-->
+                                    <!--           <li><a href="https://stage.webshark.in/coc/take-my-online-exam.html">Take My Online Exam</a></li>-->
+                                    <!--    </ul>-->
                                 </li>
-                                <li class="dropdown"><a href="#">Services</a>
-                                    <ul>
-                                        <li><a href="">Discussion Board</a></li>
-                                        <li><a href="">Do My Online Quiz</a></li>
-                                        <li><a href="">Do My Research Paper</a></li>
-                                        <li><a href="">Do My Project</a></li>
-                                    </ul>
-                                </li>
-                                <li class=""><a href="{{ route('get-a-quote') }}">Get a Quote</a></li>
-
-
-                                <!-- <ul>
-                                    <li><a href="page-courses.html">Courses List</a></li>-->
-                                <!--    <li><a href="page-course-details.html">Course Details</a></li>-->
-                                <!--</ul> -->
-
-
                             </ul>
                         </nav>
                         <!-- Main Menu End-->
 
                     </div>
+                    <!-- Get a quote button -->
+                    <div class="get-quote-sec">
+                        <a href="{{ route('get-a-quote') }}"
+                            class="home-button-header theme-btn btn-style-one bg-theme-color4 bg-dark">Get a Quote</a>
+                    </div>
+                    <!-- End Get a quote button -->
                 </div>
                 <!-- End Main Box -->
             </div>
@@ -277,62 +249,55 @@
         <!-- Header Lower -->
 
 
-        <!-- Mobile Menu  -->
-        <div class="mobile-menu">
-            <div class="menu-backdrop"></div>
-
-            <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
-            <nav class="menu-box">
-                <div class="upper-box">
-                    <div class="nav-logo"><a href="{{ route('home') }}"><img
-                                src="{{ asset('assets/images/logo-2.png') }}" alt="" title=""></a>
-                    </div>
-                    <div class="close-btn"><i class="icon fa fa-times"></i></div>
+        <!-- New Mobile Menu -->
+        <div class="topnav" id="myTopnav">
+            <a href="{{ route('home') }}" class="active"><img src="{{ asset('assets/images/logo-2.png') }}"
+                    alt=""></a>
+            <a href="https://stage.webshark.in/coc/about-us.html">About Us</a>
+            <div class="dropdown-phone">
+                <button onclick="show()" class="dropbtn">Assignment Help
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="https://stage.webshark.in/coc/assignment-help-accounting.html">Accounting</a>
+                    <a href="https://stage.webshark.in/coc/assignment-help-economics.html">Economics</a>
+                    <a href="https://stage.webshark.in/coc/assignment-help-maths.html">Math</a>
+                    <a href="https://stage.webshark.in/coc/assignment-help-statistics.html">Statistics</a>
+                    <a href="https://stage.webshark.in/coc/assignment-help-calculus.html">Calculus</a>
+                    <a href="https://stage.webshark.in/coc/assignment-help-english.html">English</a>
+                    <a href="https://stage.webshark.in/coc/assignment-help-finance.html">Finance</a>
+                    <a href="https://stage.webshark.in/coc/assignment-help-history.html">History</a>
+                    <a href="https://stage.webshark.in/coc/assignment-help-psychology.html">Psychology</a>
+                    <a href="https://stage.webshark.in/coc/assignment-help-management.html">Management</a>
+                    <a href="https://stage.webshark.in/coc/assignment-help-science.html">Science</a>
+                    <a href="https://stage.webshark.in/coc/assignment-help-political-science.html">Political
+                        Science</a>
+                    <a href="https://stage.webshark.in/coc/assignment-help-biology.html">Biology</a>
+                    <a href="https://stage.webshark.in/coc/assignment-help-marketing.html">Marketing</a>
                 </div>
-
-                <ul class="navigation clearfix">
-                    <!--Keep This Empty / Menu will come through Javascript-->
-                </ul>
-                <ul class="contact-list-one">
-                    <li>
-                        <!-- Contact Info Box -->
-                        <div class="contact-info-box">
-                            <i class="icon lnr-icon-phone-handset"></i>
-                            <span class="title">Call Now</span>
-                            <a href="tel:+92880098670">+92 (8800) - 98670</a>
-                        </div>
-                    </li>
-                    <li>
-                        <!-- Contact Info Box -->
-                        <div class="contact-info-box">
-                            <span class="icon lnr-icon-envelope1"></span>
-                            <span class="title">Send Email</span>
-                            <a href="mailto:help@company.com">help@company.com</a>
-                        </div>
-                    </li>
-                    <li>
-                        <!-- Contact Info Box -->
-                        <div class="contact-info-box">
-                            <span class="icon lnr-icon-clock"></span>
-                            <span class="title">Send Email</span>
-                            Mon - Sat 8:00 - 6:30, Sunday - CLOSED
-                        </div>
-                    </li>
-                </ul>
-
-
-                <ul class="social-links">
-                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                    <li><a href="#"><i class="fab fa-pinterest"></i></a></li>
-                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                </ul>
-            </nav>
-        </div><!-- End Mobile Menu -->
+            </div>
+            <a href="https://stage.webshark.in/coc/take-my-online-class.html">Take My Online Class</a>
+            <!-- <a href="https://stage.webshark.in/coc/solution-library.html">Solution Library</a> -->
+            <div class="dropdown-phone">
+                <button onclick="show1()" class="dropbtn">Services
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="https://stage.webshark.in/coc/discussion-board.html">Discussion Board</a>
+                    <a href="https://stage.webshark.in/coc/do-my-online-quiz.html">Do My Online Quiz</a>
+                    <a href="https://stage.webshark.in/coc/do-my-research-paper.html">Do My Research Paper</a>
+                    <a href="https://stage.webshark.in/coc/do-my-project.html">Do My Project</a>
+                    <a href="https://stage.webshark.in/coc/take-my-online-exam.html">Take My Online Exam</a>
+                </div>
+            </div>
+            <a id="toggle-btn-phone" href="javascript:void(0);" style="font-size:36px;" class="icon"
+                onclick="myToggleFunction()">&#9776;</a>
+        </div>
+        <!-- End New Mobile Menu -->
 
         <!-- Sticky Header  -->
-        <div class="sticky-header">
-            <div class="auto-container">
+        <div class="sticky-header d-none">
+            <div class="container-fluid sticky-header-inner-box">
                 <div class="inner-container">
                     <!--Logo-->
                     <div class="logo">
@@ -354,12 +319,17 @@
                         <!--Mobile Navigation Toggler-->
                         <div class="mobile-nav-toggler"><span class="icon lnr-icon-bars"></span></div>
                     </div>
+                    <!-- Get a quote button -->
+                    <div class="get-quote-sec">
+                        <a href="https://stage.webshark.in/coc/get-a-quote.html"
+                            class="home-button-header theme-btn btn-style-one bg-theme-color4 bg-dark">Get a Quote</a>
+                    </div>
+                    <!-- End Get a quote button -->
                 </div>
             </div>
         </div><!-- End Sticky Menu -->
-
     </header>
-    <!--End Main Header -->
+    <!-- End New Main header -->
 
 
     @yield('content')

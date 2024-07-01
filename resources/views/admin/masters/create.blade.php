@@ -227,7 +227,7 @@
                 },
                 url: {
                     required: true,
-                    url: true,
+                    // url: true,
                     maxlength: 255
                 },
                 username: {
