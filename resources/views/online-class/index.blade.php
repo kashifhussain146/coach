@@ -10,9 +10,9 @@
 
 @section('content')
    <!-- Start main-content -->
-   <section class="page-title" style="background-image: url('{{asset('images/'.$category->image)}}');">
+   <section class="page-title-take-my-online-class page-title" style="background-image: url('{{asset('images/'.$category->image)}}');">
     <div class="auto-container">
-        <div class="row">
+        <div class="row align-center-cstm">
             <div class="col-md-7">
                 <div class="title-outer">
                     <h1 class="title">{{$category->title}}</h1>
@@ -59,52 +59,52 @@
         <h2 class="fs-1 pb-4">{{$category->extra_field_1}}</h2>
     </div>
 
-    <div style="padding: 0 5rem 2rem 5rem;" class="row">
+    <!-- <div style="padding: 0 5rem 2rem 5rem;" class="row">
         <div class="col-6">
             <p style="font-size: large !important;" class="fs-5 black">{{$category->extra_field_2}}</p>
         </div>
         <div class="col-6">
             <p style="font-size: large !important;" class="fs-5 black">{{$category->extra_field_3}}</p>
         </div>
-    </div>
+    </div> -->
 
 
-    <div style="padding: 0 5rem;" class="row py-4 justify-content-around position-relative">
+    <div style="padding: 0 5rem;" class="row py-4 justify-content-around position-relative mobile-cstm-padding-toc-sec-two">
         <img style="position: absolute; top: 6rem; right: -3rem; width: 8rem;" src="./assets/images/trial25.png" alt="">
-        <div style="width: 35% !important;" class="col-6 position-relative">
+        <div style="width: 35%;" class="col-6 position-relative cstm-left">
             <img style="position: relative; z-index: 10;" class="rounded-3 mx-auto" src="./assets/images/online_class1.png" alt="">
-            <img style="position: absolute; bottom: -3.5rem; right: -5.5rem; z-index: 20; width: 45%;" src="./assets/images/online_class2.png" alt="">
+            <img style="position: absolute; bottom: -3.5rem; right: -5.5rem; z-index: 20; width: 45%;" src="./assets/images/online_class2.png" alt="" class="mob-sec-two-toc-img-two">
             <img style="position: absolute; bottom: -3rem; left: -3.5rem; z-index: 0;" src="./assets/images/new_trial11.png" alt="">
         </div>
-        <div style="width: 58%;" class="col-6">
+        <div style="width: 58%;padding-left: 70px;" class="col-6">
             <div class="row">
-                <div class="col-3 text-end">
+                <!-- <div class="col-3 text-end">
                     <img src="./assets/images/online_class3.png" alt="">
-                </div>
-                <div class="col-9">
-                    <p style="margin: 0 !important; color: black; font-weight: 600;">{{$category->extra_field_4}}</p>
-                    <p style="margin: 0.5rem 0 !important; font-size: medium; line-height: 1.5; color: black;">{{$category->extra_field_5}}</p>
+                </div> -->
+                <div class="col-12">
+                    <!-- <p style="margin: 0 !important; color: black; font-weight: 600;">{{$category->extra_field_4}}</p> -->
+                    <p style="margin: 0.5rem 0 !important;font-size: 18px;line-height: 1.5;color: black;font-weight: 500;">{{$category->extra_field_5}}</p>
                 </div>
             </div>
             <div class="row">
-                <div class="col-3 text-end">
+                <!-- <div class="col-3 text-end">
                     <img src="./assets/images/online_class3.png" alt="">
-                </div>
-                <div class="col-9">
-                    <p style="margin: 0 !important; color: black; font-weight: 600;">{{$category->extra_field_6}}</p>
-                    <p style="margin: 0.5rem 0 !important; font-size: medium; line-height: 1.5; color: black;">{{$category->extra_field_7}}</p>
+                </div> -->
+                <div class="col-12">
+                    <!-- <p style="margin: 0 !important; color: black; font-weight: 600;">{{$category->extra_field_6}}</p> -->
+                    <p style="margin: 0.5rem 0 !important;font-size: 18px;line-height: 1.5;color: black;font-weight: 500;">{{$category->extra_field_7}}</p>
                 </div>
             </div>
             <div class="row">
-                <div class="col-3 text-end">
+                <!-- <div class="col-3 text-end">
                     <img src="./assets/images/online_class3.png" alt="">
-                </div>
-                <div class="col-9">
-                    <p style="margin: 0 !important; color: black; font-weight: 600;">{{$category->extra_field_8}}</p>
-                    <p style="margin: 0.5rem 0 !important; font-size: medium; line-height: 1.5; color: black;">{{$category->extra_field_9}}</p>
+                </div> -->
+                <div class="col-12">
+                    <!-- <p style="margin: 0 !important; color: black; font-weight: 600;">{{$category->extra_field_8}}</p> -->
+                    <p style="margin: 0.5rem 0 !important;font-size: 18px;line-height: 1.5;color: black;font-weight: 500;">{{$category->extra_field_9}}</p>
                 </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-3 text-end">
                     <img src="./assets/images/online_class3.png" alt="">
                 </div>
@@ -121,7 +121,7 @@
                     <p style="margin: 0 !important; color: black; font-weight: 600;">{{$category->extra_field_12}}</p>
                     <p style="margin: 0.5rem 0 !important; font-size: medium; line-height: 1.5; color: black;">{{$category->extra_field_13}}</p>
                 </div>
-            </div>
+            </div> -->
         </div>
         
     </div>
@@ -162,7 +162,7 @@ $customData = [
 
     <img style="position: absolute; bottom: 0; left: -2rem;" src="{{asset('/assets/images/trial26.png')}}" alt="">
     <img style="position: absolute; top: 0; right: 0;" src="{{asset('/assets/images/trial10_new.png')}}" alt="">
-    <div style="padding: 0 4rem 4rem 4rem;" class="row justify-content-evenly">
+    <div style="padding: 0 4rem 4rem 4rem;" class="row justify-content-evenly mob-toc-sec-four">
         @foreach($services as $k=>$v)
         <div class="col-3" style="background-color: #ff7707; width: 20%; text-align: center;">
             <img style="width: 40% !important;" class="py-3" src="{{asset('images/'.$v->image)}}" alt="">
@@ -176,6 +176,7 @@ $customData = [
     @include('sections.clients',['data'=>$colleges])
 	@include('sections.faq',['faq'=>$faqs,'tag_line'=>'FAQ','heading'=>'Faq','col'=>'col-md-12'])
 	@include('sections.testimonials',['type'=>2,'tagline'=>'Testimonials','heading'=>'Testimonials','testimonial'=>$testimonials])
+
 
 @endsection
 
