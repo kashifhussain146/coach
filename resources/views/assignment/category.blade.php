@@ -10,7 +10,7 @@
 
 @section('content')
 		<!-- Start main-content -->
-		<section class="page-title" style="background-image: url(assets/images/banner-about.jpg);">
+		<section class="page-title page-title-sec-one-assignment" style="background-image: url(assets/images/banner-about.jpg);">
 			<div class="auto-container">
 				<div class="row">
 					<div class="col-md-7">
@@ -58,7 +58,7 @@
 		<!-- end main-content -->
 
 		<!-- Why Choose Section -->
-		<section class="whychoose-section section-paddding">
+		<section class="whychoose-section section-paddding page-assignment-sec-two">
 			<div class="auto-container">
 				<div class="row">
 					<div class="sec-title text-center">
@@ -77,7 +77,7 @@
 								<div class="icon lnr-icon-book"></div>
 							</div>
 							<h4><a href="{{route('assignment.help.details',['module_data_id'=>$v->id])}}">{{$v->title}}</a></h4>
-							<div class="text">{{$v->description}}</div>
+							<!-- <div class="text">{{$v->description}}</div> -->
 						</div>
 					</div>
                     @endforeach	
@@ -89,7 +89,7 @@
 
 
 		<!-- About Section -->
-		<section class="about-section">
+		<section class="about-section assignment-sec-two-main-cstm">
 			<div class="anim-icons">
 				<span class="icon icon-dotted-map"></span>
 			</div>
@@ -120,7 +120,7 @@
 					</div>
 
 					<!-- Image Column -->
-					<div class="image-column col-lg-6 col-md-12">
+					<div class="image-column col-lg-6 col-md-12 img-sec-three-cstm-assignment">
 						<div class="anim-icons">
 							<span class="icon icon-dotted-map-2"></span>
 							<span class="icon icon-paper-plan"></span>
@@ -140,7 +140,7 @@
 		<!--End About Section -->
 
 		<!-- Do My Assignment Section Three -->
-		<section class="about-section-three">
+		<section class="about-section-three assignment-sec-three-main-cstm">
 			<div class="auto-container">
 				<div class="row">
 					<div class="sec-title text-center">

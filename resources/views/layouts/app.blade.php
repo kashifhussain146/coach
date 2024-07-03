@@ -344,7 +344,7 @@
             <div class="auto-container">
                 <div class="row">
                     <!--Footer Column-->
-                    <div class="footer-column col-xl-4 col-lg-12 col-md-6 col-sm-12">
+                    <div class="footer-column col-xl-4 col-lg-12 col-md-6 col-sm-12 footer-cstm-tab-one">
                         <div class="footer-widget about-widget">
                             <div class="logo"><a href="{{ route('home') }}"><img
                                         src="{{ asset('images/' . widget(7)->extra_image_1) }}" alt=""></a>
@@ -371,7 +371,7 @@
                     </div>
 
                     <!--Footer Column-->
-                    <div class="footer-column col-xl-2 col-lg-4 col-md-6 col-sm-12">
+                    <div class="footer-column col-xl-2 col-lg-4 col-md-6 col-sm-12 footer-cstm-tab-two">
                         <div class="footer-widget">
                             <h4 class="widget-title">Subjects</h4>
                             <ul class="user-links">
@@ -386,7 +386,7 @@
                     </div>
 
                     <!--Footer Column-->
-                    <div class="footer-column col-xl-2 col-lg-4 col-md-6 col-sm-12">
+                    <div class="footer-column col-xl-2 col-lg-4 col-md-6 col-sm-12 footer-cstm-tab-three">
                         <div class="footer-widget">
                             <h4 class="widget-title">Quick Links</h4>
                             <ul class="user-links">
@@ -400,7 +400,7 @@
                     </div>
 
                     <!--Footer Column-->
-                    <div class="footer-column col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                    <div class="footer-column col-xl-4 col-lg-4 col-md-6 col-sm-12 footer-cstm-tab-four">
                         <div class="footer-widget contact-widget">
                             <h4 class="widget-title">Get Contact</h4>
                             <div class="widget-content">

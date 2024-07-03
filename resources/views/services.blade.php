@@ -9,7 +9,7 @@
 
 
 <!-- Start main-content -->
-<section class="page-title" style="background-image: url(assets/images/contact-bnnr.png);">
+<section class="page-title page-title-services" style="background-image: url(assets/images/contact-bnnr.png);">
         <div class="auto-container">
             <div class="row">
                 <div class="col-md-7">
@@ -65,11 +65,11 @@
     <!-- Services Section  -->
 
     <div class="pt-5">
-        <div class="sec-title text-center">
+        <div class="sec-title text-center service-service-sec">
             <span class="sub-title">TAGLINE HEADING</span>
             <h2 class="fs-1 pb-4">Our Services</h2>
         </div>
-        <div class="px-md-5 py-3 position-relative">
+        <div class="px-md-5 py-3 position-relative tab-padding-cstm">
             <img class="why-us-img1" src="./assets/images/trial11_new.png" alt="">
             <img class="why-us-img2" src="./assets/images/trial16.png" alt="">
             <div class="py-4 row sec-why-us-inner">
@@ -98,7 +98,7 @@
 
     <!-- Frequently Asked Question  -->
     
-    @include('sections.faq',['type'=>2,'tag_line'=>'TAGLINE HEADING','heading'=>'Faq','faq'=>$helpFaqs])
+    @include('sections.faq',['type'=>2,'tag_line'=>'TAGLINE','heading'=>'Frequently Asked Questions','faq'=>$helpFaqs])
     <!--<section class="about-section-three position-relative p-0 mt-0">-->
     <!--    <img class="home-faq-img1" src="./assets/images/trial25.png" alt="">-->
         <!-- <img class="home-faq-img2" src="./assets/images/trial24.png" alt=""> -->
@@ -244,13 +244,13 @@
 
                 <!-- Image Column -->
                 <!-- <div class="image-column col-lg-6 col-md-12">
-    <!--                <div class="inner-column wow fadeInLeft">-->
+                    <div class="inner-column wow fadeInLeft">-->
     <!--                    <figure class="image overlay-anim wow fadeInUp mt-5 pt-5"><img class="w-100"-->
     <!--                            src="assets/images/faq-home.png" alt="">-->
     <!--                    </figure>-->
 
     <!--                </div>-->
-    <!--            </div> -->-->
+    <!--            </div> -->
     <!--        </div>-->
     <!--    </div>-->
     <!--</section>-->
