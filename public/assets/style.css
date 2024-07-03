@@ -1992,4 +1992,77 @@ div#myTopnav {
     text-align: center;
     padding-right: 0px;
   }
+  /* About US Page */
+  .about-cstm-sec-one-main .acc-title{
+    padding-top: 0px !important;
+  }
+  .about-cstm-sec-one-main .title{
+    font-size: 40px;
+    text-align: center;
+  }
+  .about-cstm-sec-one-main .ntext{
+    font-size: 16px;
+    text-align: justify;
+    line-height: 24px;
+  }
+  .about-cstm-sec-two-main .sec-title{
+    margin-top: 0px !important;
+    margin-bottom: 15px !important;
+  }
+  .about-cstm-sec-two-main .row{
+    padding: 0px 20px !important;
+  }
+  .about-cstm-sec-two-main .row .col-6{
+    width: 100%;
+  }
+  .about-cstm-sec-two-main .row .col-6 h5{
+    font-size: 26px !important;
+    line-height: 32px;
+    text-align: center;
+  }
+  .about-cstm-sec-two-main .row .col-6 p{
+    padding-top: 0px !important;
+    font-size: 16px !important;
+    line-height: 24px;
+    text-align: justify;
+  }
+  .about-cstm-sec-three-main .sec-title{
+    margin-top: 0px !important;
+    margin-bottom: 10px !important;
+  }
+  .about-cstm-sec-three-main .home-service{
+    font-size: 34px !important;
+  }
+  .about-cstm-sec-three-main .home-service-section{
+    padding: 0px 20px;
+  }
+  .about-cstm-sec-three-main .home-service-section .col-4{
+    width: 100%;
+    margin: 10px 0px;
+  }
+  .about-cstm-sec-three-main .btn-box{
+    margin-top: 10px !important;
+  }
+  .about-cstm-sec-three-main .home-service-img2{
+    top: 2.5rem !important;
+    left: -6.5rem !important;
+    width: 10rem !important;
+  }
+  .about-cstm-sec-four-innerrow{
+    padding: 0 20px !important;
+  }
+  .about-cstm-sec-four-innerrow .col-6{
+    width: 100%;
+  }
+  .about-cstm-sec-four-innerrow h5{
+    font-size: 26px !important;
+    line-height: 32px;
+    text-align: center;
+  }
+  .about-cstm-sec-four-innerrow p{
+    padding-top: 0px !important;
+    font-size: 16px !important;
+    line-height: 24px;
+    text-align: justify;
+  }
 }

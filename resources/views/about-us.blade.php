@@ -17,13 +17,13 @@ Coach | About us
     <!-- Banner Section  -->
 
     <!-- Start main-content -->
-    <section class="page-title acc-banner">
+    <section class="page-title acc-banner about-cstm-sec-one-main">
         <div class="auto-container">
             <div class="row">
                 <div class="col-md-7">
                     <div class="title-outer acc-title">
                         <h1 class="title">About Us</h1>
-                        <p class="text-white ntext">{{ $aboutUs->aboutusbannerdesc ?? 'N/A' }}</p>
+                        <p class="text-white ntext">{{ $aboutUs->aboutusbannerdesc ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' }}</p>
                         
                     </div>
                 </div>
@@ -64,29 +64,29 @@ Coach | About us
 
     <!-- Know your partners better!  -->
 
-    <section class="bg-light pt-5">
+    <section class="bg-light pt-5 about-cstm-sec-two-main">
         <div class="sec-title text-center">
-            <span class="sub-title">{{ $aboutUs->aboutsectwotagline ?? 'N/A' }}</span>
-            <h2 class="fs-1 pb-4">{{ $aboutUs->aboutsectwoheading ?? 'N/A' }}</h2>
+            <span class="sub-title">{{ $aboutUs->aboutsectwotagline ?? 'Tagline' }}</span>
+            <h2 class="fs-1 pb-4">{{ $aboutUs->aboutsectwoheading ?? 'About Us Two Heading' }}</h2>
         </div>
 
         <div style="padding: 0 4.5rem;" class="row">
             <div class="col-6">
-                <h5 style="color: #ff7707;" class="fw-bold fs-2">{{ $aboutUs->aboutsectwoinnerheadingone ?? 'N/A' }}</h5>
-                <p style="font-size: large;" class="black pt-4">{{ $aboutUs->aboutsectwoinnertextone ?? 'N/A' }}</p>
+                <h5 style="color: #ff7707;" class="fw-bold fs-2">{{ $aboutUs->aboutsectwoinnerheadingone ?? 'Heading One' }}</h5>
+                <p style="font-size: large;" class="black pt-4">{{ $aboutUs->aboutsectwoinnertextone ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' }}</p>
             </div>
             <div class="col-6">
-                <h5 style="color: #ff7707;" class="fw-bold fs-2">{{ $aboutUs->aboutsectwoinnerheadingtwo ?? 'N/A' }}</h5>
-                <p style="font-size: large;" class="black pt-4">{{ $aboutUs->aboutsectwoinnertexttwo ?? 'N/A' }}</p>
+                <h5 style="color: #ff7707;" class="fw-bold fs-2">{{ $aboutUs->aboutsectwoinnerheadingtwo ?? 'Heading Two' }}</h5>
+                <p style="font-size: large;" class="black pt-4">{{ $aboutUs->aboutsectwoinnertexttwo ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' }}</p>
             </div>
         </div>
     </section>
 
     <!-- Services Section -->
 
-    <div class="bg-light row pt-4 position-relative px-md-5">
+    <div class="bg-light row pt-4 position-relative px-md-5 about-cstm-sec-three-main">
         <div class="sec-title text-center">
-            <span class="sub-title">{{ $aboutUs->aboutsecthreetagline ?? 'N/A' }}</span>
+            <span class="sub-title">{{ $aboutUs->aboutsecthreetagline ?? 'Tagline' }}</span>
             <h2 class="home-service">Our Services</h2>
         </div>
         <img class="home-service-img1" src="./assets/images/trial26.png" alt="">
@@ -104,8 +104,8 @@ Coach | About us
                         @else
                             <p>No image uploaded</p>
                         @endif
-                        <p class="fs-4 black mt-4 mb-0 fw-bold">{{ $aboutUs->aboutsecthreeheadone ?? 'N/A' }}</p>
-                        <p style="display:none;">{{ $aboutUs->aboutsecthreedescone ?? 'N/A' }}</p>
+                        <p class="fs-4 black mt-4 mb-0 fw-bold">{{ $aboutUs->aboutsecthreeheadone ?? 'Heading One' }}</p>
+                        <p style="display:none;">{{ $aboutUs->aboutsecthreedescone ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' }}</p>
                     </div>
                 </a>
                 </div>
@@ -119,8 +119,8 @@ Coach | About us
                         @else
                             <p>No image uploaded</p>
                         @endif
-                        <p class="fs-4 black mt-4 mb-0 fw-bold">{{ $aboutUs->aboutsecthreeheadtwo ?? 'N/A' }}</p>
-                        <p style="display:none;">{{ $aboutUs->aboutsecthreedesctwo ?? 'N/A' }}</p>
+                        <p class="fs-4 black mt-4 mb-0 fw-bold">{{ $aboutUs->aboutsecthreeheadtwo ?? 'Heading Two' }}</p>
+                        <p style="display:none;">{{ $aboutUs->aboutsecthreedesctwo ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' }}</p>
                     </div>
                     </a>
                 </div>
@@ -134,8 +134,8 @@ Coach | About us
                         @else
                             <p>No image uploaded</p>
                         @endif
-                        <p class="fs-4 black mt-4 mb-0 fw-bold">{{ $aboutUs->aboutsecthreeheadthree ?? 'N/A' }}</p>
-                        <p style="display:none;">{{ $aboutUs->aboutsecthreedescthree ?? 'N/A' }}</p>
+                        <p class="fs-4 black mt-4 mb-0 fw-bold">{{ $aboutUs->aboutsecthreeheadthree ?? 'Heading Three' }}</p>
+                        <p style="display:none;">{{ $aboutUs->aboutsecthreedescthree ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' }}</p>
                     </div>
                     </a>
                 </div>
@@ -150,20 +150,20 @@ Coach | About us
 
         <!-- Take My Online Class  -->
 
-        <section class="bg-light py-5">
+        <section class="bg-light py-5 about-cstm-sec-four-main">
             <div class="sec-title text-center">
-                <span class="sub-title">{{ $aboutUs->aboutsecfourtagline ?? 'N/A' }}</span>
-                <h2 class="fs-1 pb-4">{{ $aboutUs->aboutsecfourheading ?? 'N/A' }}</h2>
+                <span class="sub-title">{{ $aboutUs->aboutsecfourtagline ?? 'Tagline' }}</span>
+                <h2 class="fs-1 pb-4">{{ $aboutUs->aboutsecfourheading ?? 'Main Heading' }}</h2>
             </div>
     
-            <div style="padding: 0 4.5rem;" class="row">
+            <div style="padding: 0 4.5rem;" class="row about-cstm-sec-four-innerrow">
                 <div class="col-6">
-                    <h5 style="color: #ff7707;" class="fw-bold fs-2">{{ $aboutUs->aboutsecfourinnerheadone ?? 'N/A' }}</h5>
-                    <p style="font-size: large;" class="black pt-4">{{ $aboutUs->aboutsecfourinnerdescone ?? 'N/A' }}</p>
+                    <h5 style="color: #ff7707;" class="fw-bold fs-2">{{ $aboutUs->aboutsecfourinnerheadone ?? 'Heading One' }}</h5>
+                    <p style="font-size: large;" class="black pt-4">{{ $aboutUs->aboutsecfourinnerdescone ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' }}</p>
                 </div>
                 <div class="col-6">
-                    <h5 style="color: #ff7707;" class="fw-bold fs-2">{{ $aboutUs->aboutsecfourinnerheadtwo ?? 'N/A' }}</h5>
-                    <p style="font-size: large;" class="black pt-4">{{ $aboutUs->aboutsecfourinnerdesctwo ?? 'N/A' }}</p>
+                    <h5 style="color: #ff7707;" class="fw-bold fs-2">{{ $aboutUs->aboutsecfourinnerheadtwo ?? 'Heading Two' }}</h5>
+                    <p style="font-size: large;" class="black pt-4">{{ $aboutUs->aboutsecfourinnerdesctwo ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' }}</p>
                 </div>
             </div>
         </section>
@@ -187,7 +187,7 @@ Coach | About us
                                 <div class="auto-container-inner">
                                     <div class="row">
                                         <div class="sec-title">
-                                            <span class="sub-title text-end">{{ $aboutUs->aboutsecfaqtagline ?? 'N/A' }}</span>
+                                            <span class="sub-title text-end">{{ $aboutUs->aboutsecfaqtagline ?? 'Tagline' }}</span>
                                             <h2 class="home-faq-head">Frequently asked questions?</h2>
                                         </div>
                                     </div>
@@ -206,7 +206,7 @@ Coach | About us
                                                                         data-bs-target="#collapseOne"
                                                                         aria-expanded="false"
                                                                         aria-controls="collapseOne">
-                                                                        {{ $aboutUs->aboutsecfaqheadone ?? 'N/A' }}
+                                                                        {{ $aboutUs->aboutsecfaqheadone ?? 'Question One?' }}
                                                                     </button>
                                                                 </h2>
                                                                 <div id="collapseOne"
@@ -214,7 +214,7 @@ Coach | About us
                                                                     aria-labelledby="headingOne"
                                                                     data-bs-parent="#accordionFaq">
                                                                     <div class="accordion-body">
-                                                                        <p>{{ $aboutUs->aboutsecfaqdescone ?? 'N/A' }}</p>
+                                                                        <p>{{ $aboutUs->aboutsecfaqdescone ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' }}</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -225,7 +225,7 @@ Coach | About us
                                                                         data-bs-target="#collapseTwo"
                                                                         aria-expanded="false"
                                                                         aria-controls="collapseTwo">
-                                                                        {{ $aboutUs->aboutsecfaqheadtwo ?? 'N/A' }}
+                                                                        {{ $aboutUs->aboutsecfaqheadtwo ?? 'Question Two?' }}
                                                                     </button>
                                                                 </h2>
                                                                 <div id="collapseTwo"
@@ -233,7 +233,7 @@ Coach | About us
                                                                     aria-labelledby="headingTwo"
                                                                     data-bs-parent="#accordionFaq">
                                                                     <div class="accordion-body">
-                                                                        <p>{{ $aboutUs->aboutsecfaqdesctwo ?? 'N/A' }}</p>
+                                                                        <p>{{ $aboutUs->aboutsecfaqdesctwo ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' }}</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -245,7 +245,7 @@ Coach | About us
                                                                         aria-expanded="false"
                                                                         aria-controls="collapseThree">
 
-                                                                        {{ $aboutUs->aboutsecfaqheadthree ?? 'N/A' }}
+                                                                        {{ $aboutUs->aboutsecfaqheadthree ?? 'Question Three?' }}
                                                                     </button>
                                                                 </h2>
                                                                 <div id="collapseThree"
@@ -253,7 +253,7 @@ Coach | About us
                                                                     aria-labelledby="headingThree"
                                                                     data-bs-parent="#accordionFaq">
                                                                     <div class="accordion-body">
-                                                                        <p>{{ $aboutUs->aboutsecfaqdescthree ?? 'N/A' }}</p>
+                                                                        <p>{{ $aboutUs->aboutsecfaqdescthree ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' }}</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -265,7 +265,7 @@ Coach | About us
                                                                         aria-expanded="false"
                                                                         aria-controls="collapseFour">
 
-                                                                        {{ $aboutUs->aboutsecfaqheadfour ?? 'N/A' }}
+                                                                        {{ $aboutUs->aboutsecfaqheadfour ?? 'Heading Four?' }}
 
                                                                     </button>
                                                                 </h2>
@@ -274,7 +274,7 @@ Coach | About us
                                                                     aria-labelledby="headingFour"
                                                                     data-bs-parent="#accordionFaq">
                                                                     <div class="accordion-body">
-                                                                        <p>{{ $aboutUs->aboutsecfaqdescfour ?? 'N/A' }}</p>
+                                                                        <p>{{ $aboutUs->aboutsecfaqdescfour ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' }}</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
