@@ -31,7 +31,7 @@
 
     <!-- Start main-content -->
     @if($subject_category_id==null)
-    <section class="page-title" style="background-image: url({{asset('assets/images/contact-bnnr.png')}});">
+    <section class="page-title solution-library-cstm-sec-one" style="background-image: url({{asset('assets/images/contact-bnnr.png')}});">
 
         <div class="auto-container">
 
@@ -59,7 +59,7 @@
     <!-- Results Section  -->
 
     <div class="row">
-        <div class="col-9">
+        <div class="col-9 mob-col-9-cstm">
                 
                     <div class="p-5 ">
                         <form action="" method="GET">
@@ -109,7 +109,7 @@
         </div>
 
 
-        <div class="col-3 pe-5 border-start border-3 border-light-subtle">
+        <div class="col-3 pe-5 border-start border-3 border-light-subtle mob-col-3-cstm">
             @if(count($subjectsCategory) > 0)
                 @include('sections.sidebar-subjects',['subjectsCategory'=>$subjectsCategory,'subject_category_id'=>$subject_category_id,'topic_id'=>$topic_id])
             @else

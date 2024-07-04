@@ -174,7 +174,7 @@ Coach | About us
     <!-- Frequently Asked Question  -->
 
     <!-- Do My Assignment Section Three -->
-    <section class="about-section position-relative p-0" style="background-color: #f8f9fa;">
+    <section class="about-section position-relative p-0 about-cstm-sec-five-main" style="background-color: #f8f9fa;">
         <img class="home-faq-img1" src="./assets/images/trial25.png" alt="">
         <img class="home-faq-img2" src="./assets/images/trial24.png" alt="">
         <div class="auto-container">
