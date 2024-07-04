@@ -1226,18 +1226,45 @@
                              @endcan
 
 
-                             @can('Module_List_master')
+                             {{-- @can('Module_List_master')
                                  <li class="nav-item  ">
                                      <a href="{{ route('masters-list') }}" class="nav-link">
                                          <i class="far fa-circle nav-icon"></i>
                                          <p>Master List</p>
                                      </a>
                                  </li>
-                             @endcan
+                             @endcan --}}
 
                          </ul>
                      </li>
                  @endcan
+
+
+                @can('Tasks Management')
+                    <li
+                         class="nav-item {{ in_array(\Request::route()->getName(), ['tasks-create', 'tasks-list', 'tasks-edit','masters-list']) ? ' menu-open' : '' }}">
+                         <a href="#" class="nav-link">
+                             <i class="nav-icon fas fa-circle"></i>
+                             <p>
+                                 Master
+                                 <i class="right fas fa-angle-left"></i>
+                             </p>
+                         </a>
+                         <ul class="nav nav-treeview">
+                           
+                             @can('Module_List_master')
+                                 <li class="nav-item  ">
+                                     <a href="{{ route('masters-list') }}" class="nav-link {{ in_array(\Request::route()->getName(), ['masters-list']) ? ' active' : '' }}">
+                                         <i class="far fa-circle nav-icon"></i>
+                                         <p>List</p>
+                                     </a>
+                                 </li>
+                             @endcan
+
+                         </ul>
+                     </li>
+
+                @endcan
 
 
 

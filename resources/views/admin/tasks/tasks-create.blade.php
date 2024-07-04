@@ -166,34 +166,39 @@
                             </div>
 
 
-                            <div class="form-group">
-                                <label for="course_code">Task Group ID: <span class="text-danger">*</span> </label>
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        <input type="text" name="unique_group_id_1" readonly id="unique_group_id_1"
-                                            value="COC_" class="form-control" />
-                                    </div>-
-                                    <div class="col-md-1">
-                                        <input type="text" name="unique_group_id_2" readonly id="unique_group_id_2"
-                                            class="form-control" />
-                                    </div>-
-                                    <div class="col-md-3">
-                                        <input type="text" name="unique_group_id_3" id="unique_group_id_3" required
-                                            class="form-control" />
-                                    </div>-
+                            
+                                <div class="form-group {{ (!Auth()->guard('admin')->user()->hasRole('Free Lancer'))?'d-block':'d-none' }}">
+                                    <label for="course_code">Task Group ID: <span class="text-danger">*</span> </label>
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <input type="text" name="unique_group_id_1" readonly id="unique_group_id_1"
+                                                value="COC_" class="form-control" />
+                                        </div>-
+                                        <div class="col-md-1">
+                                            <input type="text" name="unique_group_id_2" readonly id="unique_group_id_2"
+                                                class="form-control" />
+                                        </div>-
+                                        <div class="col-md-3">
+                                            <input type="text" name="unique_group_id_3" id="unique_group_id_3" required
+                                                class="form-control" 
+                                                value="{{ (!Auth()->guard('admin')->user()->hasRole('Free Lancer'))?'d-block':rand(10000, 100000) }}"
+                                                />
+                                        </div>-
 
-                                    <div class="col-md-1">
-                                        <input type="text" name="unique_group_id_4" readonly id="unique_group_id_4"
-                                            value="_{{ rand(1, 10) }}_" class="form-control" />
-                                    </div>-
-                                    <div class="col-md-2">
-                                        <input type="text" name="unique_group_id_5" readonly id="unique_group_id_5"
-                                            value="{{ date('d_m_Y') }}" class="form-control" />
+                                        <div class="col-md-1">
+                                            <input type="text" name="unique_group_id_4" readonly id="unique_group_id_4"
+                                                value="_{{ rand(1, 10) }}_" class="form-control" />
+                                        </div>-
+                                        <div class="col-md-2">
+                                            <input type="text" name="unique_group_id_5" readonly id="unique_group_id_5"
+                                                value="{{ date('d_m_Y') }}" class="form-control" />
+                                        </div>
+
                                     </div>
 
                                 </div>
+                            
 
-                            </div>
 
 
                             <div class="form-group">

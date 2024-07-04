@@ -32,8 +32,16 @@ class MastersController extends Controller
     public function indexAajax(Request $request)
     {
 
-         $data = Masters::on();
+        $data = Masters::with('college:id,name','subject:id,subject_name','course:id,category_name','courseCode:id,code');
 
+        if(Auth()->guard('admin')->user()->hasRole('Free Lancer') || Auth()->guard('admin')->user()->hasRole('Employee')){
+            $data =   $data->whereHas('masters',function($query){
+                                $query->where('user_id',Auth()->guard('admin')->user()->id);
+                            });
+        }
+
+        $data = $data->orderBy('emailsubject');
+            
             
             return Datatables::of($data)
                     ->addIndexColumn()
@@ -51,7 +59,11 @@ class MastersController extends Controller
                     })
                     ->addColumn('action', function($row){
 
-                        $btn = '<a href="'.route("masters-edit", $row->id).'" class="edit btn btn-primary btn-sm">Edit</a>';
+                        $btn = '';
+                        if(auth()->user()->can('Module_Edit_master')){
+                            $btn.= '<a href="'.route("masters-edit", $row->id).'" class="edit btn btn-primary btn-sm">Edit</a>';
+                        }
+
                         
                         // <a href="'.route("masters-view", $row->id).'" class="edit btn btn-primary btn-sm">View</a>
                         // <button type="button" id="deleteButton" data-url="'.route('masters-delete', $row->id).'" class="edit btn btn-primary btn-sm deleteButton" data-loading-text="Deleted...." data-rest-text="Delete">Delete</button>
@@ -98,17 +110,17 @@ class MastersController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'emailsubject' => 'required|string|max:255',
-            'url' => 'required|url|max:255',
-            'username' => 'required|string|max:255',
-            'password' => 'required|string|max:255',
-            'collegename' => 'required|string|max:255',
-            'coursecode' => 'required|string|max:255',
-            'coursename' => 'required|string|max:255',
-            'subjectname' => 'required|string|max:255',
-            'startdate' => 'required|date',
-            'enddate' => 'required|date|after_or_equal:startdate',
-            'grade' => 'required|string|max:255',
+            'emailsubject' => 'required|max:255',
+            // 'url' => 'required|url|max:255',
+            // 'username' => 'required|string|max:255',
+            // 'password' => 'required|string|max:255',
+            // 'collegename' => 'required|string|max:255',
+            // 'coursecode' => 'required|string|max:255',
+            // 'coursename' => 'required|string|max:255',
+            // 'subjectname' => 'required|string|max:255',
+            // 'startdate' => 'required|date',
+            // 'enddate' => 'required|date|after_or_equal:startdate',
+            // 'grade' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -118,6 +130,7 @@ class MastersController extends Controller
         $data = $request->all();
 
 
+        if($request->input('coursename')!=""){
         $courses =    SubjectCategory::firstOrCreate(['category_name' => $request->input('coursename')],
                                     [
                                         'category_name' => $request->input('coursename'),
@@ -128,6 +141,12 @@ class MastersController extends Controller
                                         'updated_at'=>date('Y-m-d H:i:s')
                                     ]);
 
+        $data['coursename'] =  $courses->id;
+
+        }
+
+        if($request->input('subjectname')!=""){
+
         $subjects =   Subject::firstOrCreate(['subject_name' => $request->input('subjectname'),'subject_category'=>$courses->id],
                                 [
                                     'subject_name' => $request->input('subjectname'),
@@ -137,25 +156,33 @@ class MastersController extends Controller
                                     'created_at'=>date('Y-m-d H:i:s'),
                                     'updated_at'=>date('Y-m-d H:i:s')
                                     ]);
-                                    
+
+           $data['subjectname'] =  $subjects->id;                          
+        }                        
         
-        $colleges =   Colleges::firstOrCreate(['name' => $request->input('collegename')],
+        if($request->input('collegename')!=""){
+        
+            $colleges =   Colleges::firstOrCreate(['name' => $request->input('collegename')],
                                 [
                                     'name' => $request->input('collegename'),
                                     'status' => 'Y'
                                 ]);
 
+            $data['collegename'] =  $colleges->id;
 
-        $courseCode = CourseCode::firstOrCreate(['code' => $request->input('coursecode')],
+        }
+
+
+        if($request->input('coursecode')!=""){
+        
+            $courseCode = CourseCode::firstOrCreate(['code' => $request->input('coursecode')],
                                 [
                                     'code' => $request->input('coursecode'),
                                     'status' => 'Y'
                                 ]);
-        
-        $data['coursename'] =  $courses->id;
-        $data['subjectname'] =  $subjects->id;
-        $data['collegename'] =  $colleges->id;
-        $data['coursecode'] =  $courseCode->id;
+
+            $data['coursecode'] =  $courseCode->id;
+        }
                           
         $master = Masters::create($data);
 
@@ -246,17 +273,17 @@ class MastersController extends Controller
     {
 
       $validator = Validator::make($request->all(), [
-            'emailsubject' => 'sometimes|required|string|max:255',
-            'url' => 'sometimes|required|url|max:255',
-            'username' => 'sometimes|required|string|max:255',
-            'password' => 'sometimes|required|string|max:255',
-            'collegename' => 'sometimes|required|string|max:255',
-            'coursecode' => 'sometimes|required|string|max:255',
-            'coursename' => 'sometimes|required|string|max:255',
-            'subjectname' => 'sometimes|required|string|max:255',
-            'startdate' => 'sometimes|required|date',
-            'enddate' => 'sometimes|required|date|after_or_equal:startdate',
-            'grade' => 'sometimes|required|string|max:255',
+            'emailsubject' => 'required|max:255',
+            // 'url' => 'sometimes|required|url|max:255',
+            // 'username' => 'sometimes|required|string|max:255',
+            // 'password' => 'sometimes|required|string|max:255',
+            // 'collegename' => 'sometimes|required|string|max:255',
+            // 'coursecode' => 'sometimes|required|string|max:255',
+            // 'coursename' => 'sometimes|required|string|max:255',
+            // 'subjectname' => 'sometimes|required|string|max:255',
+            // 'startdate' => 'sometimes|required|date',
+            // 'enddate' => 'sometimes|required|date|after_or_equal:startdate',
+            // 'grade' => 'sometimes|required|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -265,6 +292,7 @@ class MastersController extends Controller
 
         $data = $request->all();
 
+        if($request->input('coursename')!=""){
         $courses =    SubjectCategory::firstOrCreate(['category_name' => $request->input('coursename')],
                                     [
                                         'category_name' => $request->input('coursename'),
@@ -275,6 +303,12 @@ class MastersController extends Controller
                                         'updated_at'=>date('Y-m-d H:i:s')
                                     ]);
 
+        $data['coursename'] =  $courses->id;
+
+        }
+
+        if($request->input('subjectname')!=""){
+
         $subjects =   Subject::firstOrCreate(['subject_name' => $request->input('subjectname'),'subject_category'=>$courses->id],
                                 [
                                     'subject_name' => $request->input('subjectname'),
@@ -284,25 +318,38 @@ class MastersController extends Controller
                                     'created_at'=>date('Y-m-d H:i:s'),
                                     'updated_at'=>date('Y-m-d H:i:s')
                                     ]);
-                                    
+
+           $data['subjectname'] =  $subjects->id;                          
+        }                        
         
-        $colleges =   Colleges::firstOrCreate(['name' => $request->input('collegename')],
+        if($request->input('collegename')!=""){
+        
+            $colleges =   Colleges::firstOrCreate(['name' => $request->input('collegename')],
                                 [
                                     'name' => $request->input('collegename'),
                                     'status' => 'Y'
                                 ]);
 
+            $data['collegename'] =  $colleges->id;
 
-        $courseCode = CourseCode::firstOrCreate(['code' => $request->input('coursecode')],
+        }
+
+
+        if($request->input('coursecode')!=""){
+        
+            $courseCode = CourseCode::firstOrCreate(['code' => $request->input('coursecode')],
                                 [
                                     'code' => $request->input('coursecode'),
                                     'status' => 'Y'
                                 ]);
+
+            $data['coursecode'] =  $courseCode->id;
+        }
+
         
-        $data['coursename'] =  $courses->id;
-        $data['subjectname'] =  $subjects->id;
-        $data['collegename'] =  $colleges->id;
-        $data['coursecode'] =  $courseCode->id;
+       
+        
+        
 
         \App\Models\MastersUsers::where('master_id',$master->id)->delete();
 

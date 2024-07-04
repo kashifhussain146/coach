@@ -1,12 +1,13 @@
 @extends('admin.layouts.app')
 @section('title')
-    <title>Create Category</title>
+    <title>Master Create</title>
 @stop
 
 @section('inlinecss')
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/scroller/2.0.3/css/scroller.dataTables.min.css">
+        @section('inlinecss')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
         .typeahead {
             width: 100% !important;
@@ -119,48 +120,48 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">URL *</label>
+                            <label class="form-label">URL </label>
                             <input type="url" class="form-control" value="{{ isset($email) ? $email->url : '' }}"
                                 name="url" id="url" placeholder="URL..">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Username *</label>
+                            <label class="form-label">Username </label>
                             <input type="text" class="form-control" value="{{ isset($email) ? $email->username : '' }}"
                                 name="username" id="username" placeholder="Username..">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Password *</label>
+                            <label class="form-label">Password </label>
                             <input type="password" class="form-control" value="{{ isset($email) ? $email->password : '' }}"
                                 name="password" id="password" placeholder="Password..">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">College Name *</label>
+                            <label class="form-label">College Name </label>
                             <input type="text" class="form-control"
-                                value="{{ isset($email) ? $email->college->name : '' }}" name="collegename"
+                                value="{{ isset($email->college) ? $email->college->name : '' }}" name="collegename"
                                 id="collegename" placeholder="College Name..">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Course Name *</label>
+                            <label class="form-label">Course Name </label>
                             <input type="text" class="form-control"
-                                value="{{ isset($email) ? $email->course->category_name : '' }}" name="coursename"
+                                value="{{ isset($email->course) ? $email->course->category_name : '' }}" name="coursename"
                                 id="coursename" placeholder="Course Name..">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Subject Name *</label>
+                            <label class="form-label">Subject Name </label>
                             <input type="text" class="form-control"
-                                value="{{ isset($email) ? $email->subject->subject_name : '' }}" name="subjectname"
+                                value="{{ isset($email->subject) ? $email->subject->subject_name : '' }}" name="subjectname"
                                 id="subjectname" placeholder="Subject Name..">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Course Code *</label>
+                            <label class="form-label">Course Code </label>
                             <input type="text" class="form-control"
-                                value="{{ isset($email) ? $email->courseCode->code : '' }}" name="coursecode"
+                                value="{{ isset($email->courseCode) ? $email->courseCode->code : '' }}" name="coursecode"
                                 id="coursecode" placeholder="Course Code..">
                         </div>
 
@@ -169,21 +170,21 @@
 
 
                         <div class="form-group">
-                            <label class="form-label">Start Date *</label>
+                            <label class="form-label">Start Date </label>
                             <input type="datetime-local" class="form-control"
                                 value="{{ isset($email) ? $email->startdate : '' }}" name="startdate" id="startdate"
                                 placeholder="Start Date..">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">End Date *</label>
+                            <label class="form-label">End Date </label>
                             <input type="datetime-local" class="form-control"
                                 value="{{ isset($email) ? $email->enddate : '' }}" name="enddate" id="enddate"
                                 placeholder="End Date..">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Grade *</label>
+                            <label class="form-label">Grade </label>
                             <input type="text" class="form-control" value="{{ isset($email) ? $email->grade : '' }}"
                                 name="grade" id="grade" placeholder="Grade..">
                         </div>
@@ -214,8 +215,33 @@
         src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
+
+
+        const startDateTimeInput = document.getElementById('startdate');
+        const endDateTimeInput = document.getElementById('enddate');
+
+
+        flatpickr(startDateTimeInput, {
+            enableTime: true,
+            minDate: "{{ date('Y-m-d') }}",
+            dateFormat: 'Y-m-d',
+            minuteIncrement: 1,
+            onChange: function(selectedDates, dateStr, instance) {
+                // Update the end date/time picker's minDate to the selected start date/time
+                endDateTimePicker.set('minDate', dateStr);
+            },
+        });
+
+        // Initialize the end date/time picker
+        const endDateTimePicker = flatpickr(endDateTimeInput, {
+            enableTime: true,
+           
+            dateFormat: 'Y-m-d',
+            minuteIncrement: 1,
+        });
+
         $("#employees").select2();
         $("#freelancers").select2();
 
@@ -226,45 +252,45 @@
                     maxlength: 255
                 },
                 url: {
-                    required: true,
+                    //required: true,
                     // url: true,
-                    maxlength: 255
+                    //maxlength: 255
                 },
                 username: {
-                    required: true,
-                    maxlength: 255
+                    //required: true,
+                    maxlength: 100
                 },
                 password: {
-                    required: true,
-                    maxlength: 255
+                    //required: true,
+                    maxlength: 100
                 },
                 collegename: {
-                    required: true,
+                    //required: true,
                     maxlength: 255
                 },
                 coursecode: {
-                    required: true,
-                    maxlength: 255
+                    //required: true,
+                    maxlength: 150
                 },
                 coursename: {
                     required: true,
-                    maxlength: 255
+                    maxlength: 150
                 },
                 subjectname: {
                     required: true,
-                    maxlength: 255
+                    maxlength: 150
                 },
                 startdate: {
-                    required: true,
+                    //required: true,
                     date: true
                 },
                 enddate: {
-                    required: true,
+                    //required: true,
                     date: true,
                     greaterThan: "#startdate" // Custom rule to ensure enddate is after startdate
                 },
                 grade: {
-                    required: true,
+                    //required: true,
                     maxlength: 255
                 }
             },

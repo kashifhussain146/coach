@@ -129,11 +129,11 @@ Route::group(['middleware' => ['auth:admin']], function() {
     });
 
     Route::group([], function() {
-        Route::get('/masters', [MastersController::class,'index'])->name('masters-list');
+        Route::get('/masters', [MastersController::class,'index'])->name('masters-list')->middleware(['can:Module_List_master']);
         Route::get('/ajax/masters/list', [MastersController::class,'indexAajax'])->name('ajax-masters-list');
-        Route::get('/masters/create', [MastersController::class,'create'])->name('masters-create');
+        Route::get('/masters/create', [MastersController::class,'create'])->name('masters-create')->middleware(['can:Module_Add_master']);
         Route::post('/masters/store', [MastersController::class,'store'])->name('masters-save');
-        Route::get('/masters/edit/{id}', [MastersController::class,'edit'])->name('masters-edit');
+        Route::get('/masters/edit/{id}', [MastersController::class,'edit'])->name('masters-edit')->middleware(['can:Module_Edit_master']);
         Route::post('/masters/update/masters/{master}', [MastersController::class,'update'])->name('masters-update');
         Route::get('/masters/view/{id}', [MastersController::class,'show'])->name('masters-view');
     });

@@ -35,8 +35,12 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
+
+                        @can('Module_Add_master')
                         <a class="float-right btn btn-primary btn-sm" href="{{ route('masters-create') }}"><i
                                 class="fa fa-plus"></i> Add {{ $title }} </a>
+
+                        @endif
                     </div>
 
                     <div class="card-body">
