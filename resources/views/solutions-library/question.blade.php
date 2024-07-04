@@ -13,7 +13,7 @@
 @section('content')
 
     <!-- Start main-content -->
-    <section class="page-title">
+    <section class="page-title inner-solution-main-page-title">
         <div class="sol-pad">
             <div class="text-end mb-5 list-items">
                 <input style="background-color: gainsboro; padding: 0.5rem 1rem;" class="rounded-pill w-25"

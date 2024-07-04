@@ -186,7 +186,7 @@
                     <!-- Logo -->
                     <div class="logo-box">
                         <div class="logo"><a href="https://stage.webshark.in/coc/index.html"><img
-                                    src="assets/images/logo.png" alt="" title="Tronis"></a></div>
+                                    src="{{asset('assets/images/logo.png')}}" alt="" title="Tronis"></a></div>
                     </div>
                     <!--Nav Box-->
                     <div class="nav-outer">

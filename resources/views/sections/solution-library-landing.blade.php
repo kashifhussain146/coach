@@ -1,5 +1,5 @@
 @foreach ($questions as $k1 => $v1)
-    <p class="black fs-2 mt-3 mb-5">{{ $v1['category_name'] }}
+    <p class="black fs-2 mt-3 mb-5 text-p-csmt-mobile-solution-lib">{{ $v1['category_name'] }}
         @if ($subject_category_id != null)
             >
 
@@ -9,7 +9,7 @@
 
     @foreach ($v1['questions'] as $k => $v)
         <div style="box-shadow: rgba(255, 119, 7, 1) 0px 1px 8px, white 0px 1px 2px;" class="py-4 mb-5">
-            <div class="px-4">
+            <div class="px-4 cstm-txt-justify-mob">
 
                 <div class="row w-75">
                     <div class="col-4 w-25">
@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="row mt-3 mb-3">
-                    <ul class="col-6 d-flex">
+                    <ul class="col-6 d-flex mob-cl-12-sol-word-100">
                         <li class="list-items">{{ $v->num_words }} words</li>
                         <li class="ms-3 list-items">{{ $v->views_count }} views</li>
                         <li class="ms-3 list-items">ID {{ $v->id }}</li>
@@ -98,7 +98,7 @@
                             @guest('web')
                                 <button type="button" style="background-color: #ff7707;float:right;margin-right:10px"
                                     data-bs-toggle="modal" data-bs-target="#LoginForm"
-                                    class="fs-6 px-3 fw-bold text-white">Buy this Article for ${{ $v->price }}</button>
+                                    class="fs-6 px-3 fw-bold text-white mobile-cstm-buy-arc-btn">Buy this Article for ${{ $v->price }}</button>
                             @endguest
 
                             @auth('web')
@@ -117,7 +117,7 @@
 
                                     <button class="" type="submit"
                                         style="background-color: #ff7707;color: white;float:right;margin-right:10px;padding-right: 1rem!important;padding-left: 1rem!important;"
-                                        class="fs-6 px-3 fw-bold text-white">Get an Original Solution</button>
+                                        class="fs-6 px-3 fw-bold text-white mobile-cstm-get-sol-btn">Get an Original Solution</button>
 
                                 </form>
                             @endauth
@@ -125,7 +125,7 @@
                             @guest('web')
                                 <button type="button" style="background-color: #ff7707;float:right;margin-right:10px"
                                     data-bs-toggle="modal" data-bs-target="#LoginForm"
-                                    class="fs-6 px-3 fw-bold text-white">Get an Original Solution</button>
+                                    class="fs-6 px-3 fw-bold text-white mobile-cstm-get-sol-btn">Get an Original Solution</button>
                             @endguest
 
                         </div>

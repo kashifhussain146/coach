@@ -64,14 +64,14 @@
                     <div class="p-5 ">
                         <form action="" method="GET">
                             <div class="position-relative">
-                                <input class="w-100 mb-4 py-1 px-4 fs-6" value="{{ (isset($_GET['search']))?$_GET['search']:'' }}" style="border: 2px solid #ff7707;" name="search" id="search" placeholder="Search by name" type="search">
-                                <select style="top: 0.6rem;right: 35rem;color: grey;width: 15%;" class="position-absolute bg-transparent fs-6 " name="subject_category" id="subject_category">
+                                <input class="w-100 mb-4 py-1 px-4 fs-6 input-mob-cstm-solution-name" value="{{ (isset($_GET['search']))?$_GET['search']:'' }}" style="border: 2px solid #ff7707;" name="search" id="search" placeholder="Search by name" type="search">
+                                <select style="top: 0.6rem;right: 35rem;color: grey;width: 15%;" class="position-absolute bg-transparent fs-6 mob-sel-subject-cstm" name="subject_category" id="subject_category">
                                     <option value="">Select Subject</option>
                                     @foreach ($subjectcategory as $item)
                                     <option @if(isset($_GET['subject_category'])) @if($_GET['subject_category']==$item->id) selected @endif @endif value="{{$item->id}}">{{$item->category_name}}</option>
                                     @endforeach
                                 </select>
-                                <select style="top: 0.6rem; right: 22rem;color: grey;width: 17%;" class="position-absolute bg-transparent fs-6" name="subject" id="subject">
+                                <select style="top: 0.6rem; right: 22rem;color: grey;width: 17%;" class="position-absolute bg-transparent fs-6 mob-sel-topic-cstm" name="subject" id="subject">
                                     <option value="">Select Topic</option>
                                     @if(count($topics) > 0)
                                         @foreach ($topics as $item)
@@ -85,7 +85,7 @@
                                 <select style="    top: 0.6rem;
                                 right: 10rem;
                                 color: grey;
-                                width: 15%" class="position-absolute bg-transparent fs-6" name="subject_code" id="subject_code">
+                                width: 15%" class="position-absolute bg-transparent fs-6 mob-cstm-solution-sel-code" name="subject_code" id="subject_code">
                                     <option value="">Select Code</option>
                                     @foreach ($courseCode as $item)
                                     <option value="{{$item->id}}">{{$item->code}}</option>
@@ -93,7 +93,7 @@
                                 </select>
 
 
-                                <button type="submit" style="background-color: #ff7707; padding: 0.35rem 0;" class="fs-6 px-5 searchBtn position-absolute end-0">Search</button>
+                                <button type="submit" style="background-color: #ff7707; padding: 0.35rem 0;" class="fs-6 px-5 searchBtn position-absolute end-0 cstm-solution-search-btn-mob">Search</button>
                             </div>
                         </form>
                         <div id="solutions_library">
@@ -110,11 +110,18 @@
 
 
         <div class="col-3 pe-5 border-start border-3 border-light-subtle mob-col-3-cstm">
-            @if(count($subjectsCategory) > 0)
-                @include('sections.sidebar-subjects',['subjectsCategory'=>$subjectsCategory,'subject_category_id'=>$subject_category_id,'topic_id'=>$topic_id])
-            @else
-                <h2 class="text-center" >No  records found</h2>
-            @endif
+            <div class="mob-filter-solution-btn">
+                <button class="filters-btn-mob">Filters</button>
+            </div>
+            <div class="mob-filter-solution-container">
+                <button class="filters-btn-mob-close">Close</button>
+                @if(count($subjectsCategory) > 0)
+                    @include('sections.sidebar-subjects',['subjectsCategory'=>$subjectsCategory,'subject_category_id'=>$subject_category_id,'topic_id'=>$topic_id])
+                @else
+                    <h2 class="text-center" >No  records found</h2>
+                @endif
+            </div>
+            
         </div>
 
     </div>
@@ -123,6 +130,27 @@
 @endsection
 
 @push('js')
+
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the filter button and the close button
+        var filtersBtnMob = document.querySelector('.filters-btn-mob');
+        var filtersBtnMobClose = document.querySelector('.filters-btn-mob-close');
+        var mobFilterSolutionContainer = document.querySelector('.mob-filter-solution-container');
+
+        // Function to open the filter container
+        filtersBtnMob.addEventListener('click', function() {
+            mobFilterSolutionContainer.style.right = '0%';
+        });
+
+        // Function to close the filter container
+        filtersBtnMobClose.addEventListener('click', function() {
+            mobFilterSolutionContainer.style.right = '-100%';
+        });
+    });
+
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 <script>

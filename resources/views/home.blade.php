@@ -349,7 +349,7 @@
 
     <!-- Form Section -->
 
-    <section class="bg-light pt-5 position-relative">
+    <section class="bg-light pt-5 position-relative mob-cstm-testimonial-home-coc">
         <img class="home-form-img1" src="{{ asset('assets/images/trial11_new.png') }}" alt="">
         <img class="w-100 home-form-img2" src="{{ asset('assets/images/trial12_new.png') }}" alt="">
         <div class="pt-5 home-form">
@@ -388,7 +388,7 @@
 
                         <!--Contact Form-->
                         <form class="rounded-3 shadow-lg" method="post" action="" id="contact-form">
-                            <p class="fs-1 black pb-4 fw-bold pt-4">Quick Form</p>
+                            <p class="fs-1 black pb-4 fw-bold pt-4 home-cstm-form-signup-one-p">Quick Form</p>
                             <div class="form-group">
                                 <input class="mb-3" type="text" name="full_name" placeholder="Name" required>
                             </div>
@@ -426,7 +426,7 @@
             <span class="sub-title">TAGLINE HEADING</span>
             <h2 class="work-section-head">Why Choose Us</h2>
         </div>
-        <div class="row">
+        <div class="row home-why-choose-us-sec-mob-cstm">
             @foreach ($chooseUs as $k=>$item)
             <div class="card col-4" style="border: none;">
                 <div class="card-body {{ ($k%2!=0)?'why-us-card-blk':'why-us-card-org' }}">
@@ -446,7 +446,7 @@
 
     
 
-    <section class="about-section-three position-relative p-0">
+    <section class="about-section-three position-relative p-0 home-faq-section-mob-cstm">
         <img class="home-faq-img1" src="{{asset('/assets/images/trial25.png')}}" alt="">
         <img class="home-faq-img2" src="{{asset('/assets/images/trial24.png')}}" alt="">
         <div class="auto-container">
