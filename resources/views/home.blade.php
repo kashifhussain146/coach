@@ -16,9 +16,11 @@
 
   <!-- Banner Section  -->
 
+
+
     <!-- Start main-content -->
 
-    <section class="page-title banner-bg">
+    <section class="page-title banner-bg home-sec-one-cstm-mob">
         <div id="demo" class="carousel slide" data-bs-ride="carousel">
 
             <!-- Indicators/dots -->
@@ -32,211 +34,38 @@
             <div class="carousel-inner">
 
                 @foreach ($banner as $k=>$item)
-                    <div class="carousel-item {{($k==0)?'active':''}}">
-                        <div class="rev_slider_wrapper fullwidthbanner-container tp-mouseover" id="rev_slider_one_wrapper" data-source="gallery" style="overflow: visible; height: 820px;">
-                            <div class="rev_slider fullwidthabanner revslider-initialised tp-simpleresponsive rev_redraw_on_blurfocus" id="rev_slider_one" data-version="5.4.1" style="margin-top: 0px; margin-bottom: 0px; height: 820px;" data-slideactive="rs-1">
-                                <ul class="tp-revslider-mainul" style="visibility: visible; display: block; overflow: hidden; width: 1519px; height: 100%; max-height: none; left: 0px;">
-
-                                    <!-- Slide 1 -->
-                                    <li data-index="rs-1" data-transition="zoomout"
-                                        class="tp-revslider-slidesli active-revslide"
-                                        style="perspective: 6000px; width: 100%; height: 100%; overflow: hidden; z-index: 20; visibility: inherit; opacity: 1; background-color: rgba(255, 255, 255, 0);">
-                                        <!-- MAIN IMAGE -->
-                                        <div class="slotholder"
-                                            style="position: absolute; top: 0px; left: 0px; z-index: 0; width: 100%; height: 100%; visibility: inherit; opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">
-                                            <!--Runtime Modification - Img tag is Still Available for SEO Goals in Source - <img src="images/main-slider/1.jpg" alt="" class="rev-slidebg defaultimg">-->
-                                            <div class="tp-dottedoverlay on"></div>
-                                            <div class="tp-bgimg defaultimg banner-bg" data-bgcolor="undefined">
-                                            </div>
-                                        </div>
-
-                                        <div class="tp-parallax-wrap tp-parallax-container"
-                                            style="position: absolute; display: block; visibility: visible; left: 869px; top: 83px; z-index: 1; transform: translate3d(0px, 0px, 0px);">
-                                            <div class="tp-loop-wrap" style="position:absolute;display:block;;">
-                                                <div class="tp-mask-wrap"
-                                                    style="position: absolute; display: block; overflow: hidden; transform: matrix(1, 0, 0, 1, 0, 0);">
-                                                    <div class="tp-caption tp-resizeme rs-parallaxlevel-1 big-ipad-hidden"
-                                                        data-paddingbottom="[0,0,0,0]" data-paddingleft="[0,0,0,0]"
-                                                        data-paddingright="[0,0,0,0]" data-paddingtop="[0,0,0,0]"
-                                                        data-responsive_offset="on" data-type="shape" data-height="none"
-                                                        data-whitespace="nowrap" data-width="none"
-                                                        data-hoffset="['-260','-50','0','150']"
-                                                        data-voffset="['-20','120','120','120']"
-                                                        data-x="['right','right','right','right']"
-                                                        data-y="['middle','middle','middle','middle']"
-                                                        data-frames="[{&quot;from&quot;:&quot;y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;&quot;,&quot;mask&quot;:&quot;x:0px;y:0px;s:inherit;e:inherit;&quot;,&quot;speed&quot;:1500,&quot;to&quot;:&quot;o:1;&quot;,&quot;delay&quot;:2000,&quot;ease&quot;:&quot;Power3.easeInOut&quot;},{&quot;delay&quot;:&quot;wait&quot;,&quot;speed&quot;:3000,&quot;to&quot;:&quot;auto:auto;&quot;,&quot;mask&quot;:&quot;x:0;y:0;s:inherit;e:inherit;&quot;,&quot;ease&quot;:&quot;Power3.easeInOut&quot;}]"
-                                                        id="layer-74376833"
-                                                        style="visibility: inherit; transition: none 0s ease 0s; text-align: inherit; line-height: 0px; border-width: 0px; margin: 0px; padding: 0px; letter-spacing: 0px; font-weight: 400; font-size: 18px; white-space: nowrap; min-height: 0px; min-width: 0px; max-height: none; max-width: none; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform-origin: 50% 50% 0px;">
-
-                                                        <figure
-                                                            style="transition: none 0s ease 0s; text-align: inherit; line-height: 0px; border-width: 0px; margin: 0px; padding: 0px; letter-spacing: 0px; font-weight: 400; font-size: 18px;">
-                                                            <img src="{{ asset('assets/images/trial2.png') }}"
-                                                                alt=""
-                                                                style="width: 751px; height: 614px; transition: none 0s ease 0s; text-align: inherit; line-height: 0px; border-width: 0px; margin: 0px; padding: 0px; letter-spacing: 0px; font-weight: 400; font-size: 18px;">
-                                                        </figure>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="tp-parallax-wrap tp-parallax-container"
-                                            style="position: absolute; display: block; visibility: visible; left: -140px; top: 551px; z-index: 1; transform: translate3d(0px, 0px, 0px);">
-                                            <div class="tp-loop-wrap" style="position:absolute;display:block;;">
-                                                <div class="tp-mask-wrap"
-                                                    style="position: absolute; display: block; overflow: hidden; transform: matrix(1, 0, 0, 1, 0, 0);">
-                                                    <div class="tp-caption tp-resizeme rs-parallaxlevel-2 big-ipad-hidden"
-                                                        data-paddingbottom="[0,0,0,0]" data-paddingleft="[0,0,0,0]"
-                                                        data-paddingright="[0,0,0,0]" data-paddingtop="[0,0,0,0]"
-                                                        data-responsive_offset="on" data-type="shape" data-height="none"
-                                                        data-whitespace="nowrap" data-width="none"
-                                                        data-hoffset="['-300','-120','-120','-120']"
-                                                        data-voffset="['200','100','100','100']"
-                                                        data-x="['left','left','left','left']"
-                                                        data-y="['middle','middle','middle','middle']"
-                                                        data-frames="[{&quot;from&quot;:&quot;y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;&quot;,&quot;mask&quot;:&quot;x:0px;y:0px;s:inherit;e:inherit;&quot;,&quot;speed&quot;:1500,&quot;to&quot;:&quot;o:1;&quot;,&quot;delay&quot;:1500,&quot;ease&quot;:&quot;Power3.easeInOut&quot;},{&quot;delay&quot;:&quot;wait&quot;,&quot;speed&quot;:3000,&quot;to&quot;:&quot;auto:auto;&quot;,&quot;mask&quot;:&quot;x:0;y:0;s:inherit;e:inherit;&quot;,&quot;ease&quot;:&quot;Power3.easeInOut&quot;}]"
-                                                        id="layer-392984567"
-                                                        style="visibility: inherit; transition: none 0s ease 0s; text-align: inherit; line-height: 0px; border-width: 0px; margin: 0px; padding: 0px; letter-spacing: 0px; font-weight: 400; font-size: 18px; white-space: nowrap; min-height: 0px; min-width: 0px; max-height: none; max-width: none; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform-origin: 50% 50% 0px;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="tp-parallax-wrap tp-parallax-container"
-                                            style="position: absolute; display: block; visibility: visible; left: 644px; top: 210px; z-index: 1; transform: translate3d(0px, 0px, 0px);">
-                                            <div class="tp-loop-wrap" style="position:absolute;display:block;;">
-                                                <div class="tp-mask-wrap"
-                                                    style="position: absolute; display: block; overflow: hidden; transform: matrix(1, 0, 0, 1, 0, 0);">
-                                                    <div class="tp-caption tp-resizeme rs-parallaxlevel-1 big-ipad-hidden"
-                                                        data-paddingbottom="[0,0,0,0]" data-paddingleft="[0,0,0,0]"
-                                                        data-paddingright="[0,0,0,0]" data-paddingtop="[0,0,0,0]"
-                                                        data-responsive_offset="on" data-type="shape" data-height="none"
-                                                        data-whitespace="nowrap" data-width="none"
-                                                        data-hoffset="['-40','120','120','120']"
-                                                        data-voffset="['-160','100','100','100']"
-                                                        data-x="['center','center','center','center']"
-                                                        data-y="['middle','middle','middle','middle']"
-                                                        data-frames="[{&quot;from&quot;:&quot;y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;&quot;,&quot;mask&quot;:&quot;x:0px;y:0px;s:inherit;e:inherit;&quot;,&quot;speed&quot;:1500,&quot;to&quot;:&quot;o:1;&quot;,&quot;delay&quot;:2000,&quot;ease&quot;:&quot;Power3.easeInOut&quot;},{&quot;delay&quot;:&quot;wait&quot;,&quot;speed&quot;:3000,&quot;to&quot;:&quot;auto:auto;&quot;,&quot;mask&quot;:&quot;x:0;y:0;s:inherit;e:inherit;&quot;,&quot;ease&quot;:&quot;Power3.easeInOut&quot;}]"
-                                                        id="layer-255729462"
-                                                        style="visibility: inherit; transition: none 0s ease 0s; text-align: inherit; line-height: 0px; border-width: 0px; margin: 0px; padding: 0px; letter-spacing: 0px; font-weight: 400; font-size: 18px; white-space: nowrap; min-height: 0px; min-width: 0px; max-height: none; max-width: none; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform-origin: 50% 50% 0px;">
-                                                        s
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="tp-parallax-wrap"
-                                            style="position: absolute; display: block; visibility: visible; left: 891px; top: 123px; z-index: 1;">
-                                            <div class="tp-loop-wrap" style="position:absolute;display:block;;">
-                                                <div class="tp-mask-wrap"
-                                                    style="position: absolute; display: block; overflow: hidden; transform: matrix(1, 0, 0, 1, 0, 0);">
-                                                    <div class="tp-caption tp-resizeme" data-paddingbottom="[0,0,0,0]"
-                                                        data-paddingleft="[0,0,0,0]" data-paddingright="[0,0,0,0]"
-                                                        data-paddingtop="[0,0,0,0]" data-responsive_offset="on"
-                                                        data-type="shape" data-height="none" data-whitespace="nowrap"
-                                                        data-width="none" data-hoffset="['-160','-70','-250','-450']"
-                                                        data-voffset="['70','40','60','60']"
-                                                        data-x="['right','right','right','right']"
-                                                        data-y="['bottom','bottom','bottom','bottom']"
-                                                        data-frames="[{&quot;from&quot;:&quot;y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;&quot;,&quot;mask&quot;:&quot;x:0px;y:0px;s:inherit;e:inherit;&quot;,&quot;speed&quot;:1500,&quot;to&quot;:&quot;o:1;&quot;,&quot;delay&quot;:1000,&quot;ease&quot;:&quot;Power3.easeInOut&quot;},{&quot;delay&quot;:&quot;wait&quot;,&quot;speed&quot;:3000,&quot;to&quot;:&quot;auto:auto;&quot;,&quot;mask&quot;:&quot;x:0;y:0;s:inherit;e:inherit;&quot;,&quot;ease&quot;:&quot;Power3.easeInOut&quot;}]"
-                                                        id="layer-863373395"
-                                                        style="visibility: inherit; transition: none 0s ease 0s; text-align: inherit; line-height: 0px; border-width: 0px; margin: 0px; padding: 0px; letter-spacing: 0px; font-weight: 400; font-size: 18px; white-space: nowrap; min-height: 0px; min-width: 0px; max-height: none; max-width: none; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform-origin: 50% 50% 0px;">
-                                                        <figure class="main-image"
-                                                            style="transition: none 0s ease 0s; text-align: inherit; line-height: 0px; border-width: 0px; margin: 0px; padding: 30px; letter-spacing: 0px; font-weight: 400; font-size: 18px;">
-                                                            <img src="{{ asset('images/'.$item->image) }}"
-                                                                alt=""
-                                                                style="width: 569px; height: 567px; transition: none 0s ease 0s; text-align: inherit; line-height: 0px; border-width: 9px; margin: 0px; padding: 0px; letter-spacing: 0px; font-weight: 400; font-size: 18px;">
-                                                        </figure>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="tp-parallax-wrap tp-parallax-container"
-                                            style="position: absolute; display: block; visibility: visible; left: 750px; top: 491px; z-index: 1; transform: translate3d(0px, 0px, 0px);">
-                                            <div class="tp-loop-wrap" style="position:absolute;display:block;;">
-                                                <div class="tp-mask-wrap"
-                                                    style="position: absolute; display: block; overflow: hidden; transform: matrix(1, 0, 0, 1, 0, 0);">
-                                                    <div class="tp-caption tp-resizeme rs-parallaxlevel-1 ipad-hidden big-ipad-hidden"
-                                                        data-paddingbottom="[0,0,0,0]" data-paddingleft="[0,0,0,0]"
-                                                        data-paddingright="[0,0,0,0]" data-paddingtop="[0,0,0,0]"
-                                                        data-responsive_offset="on" data-type="shape" data-height="none"
-                                                        data-whitespace="nowrap" data-width="none"
-                                                        data-hoffset="['100','-50','0','150']"
-                                                        data-voffset="['210','120','120','120']"
-                                                        data-x="['center','center','center','center']"
-                                                        data-y="['middle','middle','middle','middle']"
-                                                        data-frames="[{&quot;from&quot;:&quot;y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;&quot;,&quot;mask&quot;:&quot;x:0px;y:0px;s:inherit;e:inherit;&quot;,&quot;speed&quot;:1500,&quot;to&quot;:&quot;o:1;&quot;,&quot;delay&quot;:2000,&quot;ease&quot;:&quot;Power3.easeInOut&quot;},{&quot;delay&quot;:&quot;wait&quot;,&quot;speed&quot;:3000,&quot;to&quot;:&quot;auto:auto;&quot;,&quot;mask&quot;:&quot;x:0;y:0;s:inherit;e:inherit;&quot;,&quot;ease&quot;:&quot;Power3.easeInOut&quot;}]"
-                                                        id="layer-785642782"
-                                                        style="visibility: inherit; transition: none 0s ease 0s; text-align: inherit; line-height: 0px; border-width: 0px; margin: 0px; padding: 0px; letter-spacing: 0px; font-weight: 400; font-size: 18px; white-space: nowrap; min-height: 0px; min-width: 0px; max-height: none; max-width: none; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform-origin: 50% 50% 0px;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="tp-parallax-wrap tp-parallax-container"
-                                            style="position: absolute; display: block; visibility: visible; left: 1427px; top: 585px; z-index: 1; transform: translate3d(0px, 0px, 0px);">
-                                            <div class="tp-loop-wrap" style="position:absolute;display:block;;">
-                                                <div class="tp-mask-wrap"
-                                                    style="position: absolute; display: block; overflow: hidden; transform: matrix(1, 0, 0, 1, 0, 0);">
-                                                    <div class="tp-caption tp-shape tp-shapewrapper tp-resizeme big-ipad-hidden rs-parallaxlevel-1"
-                                                        data-paddingbottom="[0,0,0,0]" data-paddingleft="[0,0,0,0]"
-                                                        data-paddingright="[0,0,0,0]" data-paddingtop="[0,0,0,0]"
-                                                        data-responsive_offset="on" data-type="shape" data-height="auto"
-                                                        data-whitespace="nowrap" data-width="none"
-                                                        data-hoffset="['-195','-100','-100','-100']"
-                                                        data-voffset="['250','-190','-190','-190']"
-                                                        data-x="['right','right','right','right']"
-                                                        data-y="['middle','middle','middle','middle']"
-                                                        data-frames="[{&quot;from&quot;:&quot;x:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;&quot;,&quot;mask&quot;:&quot;x:0px;y:0px;s:inherit;e:inherit;&quot;,&quot;speed&quot;:1500,&quot;to&quot;:&quot;o:1;&quot;,&quot;delay&quot;:1000,&quot;ease&quot;:&quot;Power3.easeInOut&quot;},{&quot;delay&quot;:&quot;wait&quot;,&quot;speed&quot;:1000,&quot;to&quot;:&quot;auto:auto;&quot;,&quot;mask&quot;:&quot;x:0;y:0;s:inherit;e:inherit;&quot;,&quot;ease&quot;:&quot;Power3.easeInOut&quot;}]"
-                                                        id="layer-402173572"
-                                                        style="visibility: inherit; transition: none 0s ease 0s; text-align: inherit; line-height: 0px; border-width: 0px; margin: 0px; padding: 0px; letter-spacing: 0px; font-weight: 400; font-size: 18px; white-space: nowrap; min-height: 0px; min-width: 0px; max-height: none; max-width: none; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform-origin: 50% 50% 0px;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="tp-parallax-wrap"
-                                            style="position: absolute; display: block; visibility: visible; left: 160px; top: 216px; z-index: 1;">
-                                            <div class="tp-loop-wrap" style="position:absolute;display:block;;">
-                                                <div class="tp-mask-wrap"
-                                                    style="position: absolute; display: block; overflow: hidden; transform: matrix(1, 0, 0, 1, 0, 0);">
-                                                    <div class="tp-caption" data-paddingbottom="[15,15,15,15]"
-                                                        data-paddingleft="[15,15,15,15]" data-paddingright="[15,15,15,15]"
-                                                        data-paddingtop="[0,0,0,0]" data-responsive_offset="on"
-                                                        data-type="text" data-height="none"
-                                                        data-width="['750','750','750','650']" data-whitespace="normal"
-                                                        data-hoffset="['0','0','0','0']"
-                                                        data-voffset="['-60','-50','-50','-80']"
-                                                        data-x="['left','left','left','left']"
-                                                        data-y="['middle','middle','middle','middle']"
-                                                        data-textalign="['top','top','top','top']"
-                                                        data-frames="[{&quot;delay&quot;:1000,&quot;speed&quot;:1500,&quot;frame&quot;:&quot;0&quot;,&quot;from&quot;:&quot;y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;&quot;,&quot;mask&quot;:&quot;x:0px;y:0px;s:inherit;e:inherit;&quot;,&quot;to&quot;:&quot;o:1;&quot;,&quot;ease&quot;:&quot;Power3.easeInOut&quot;},{&quot;delay&quot;:&quot;wait&quot;,&quot;speed&quot;:300,&quot;frame&quot;:&quot;999&quot;,&quot;to&quot;:&quot;auto:auto;&quot;,&quot;ease&quot;:&quot;Power3.easeInOut&quot;}]"
-                                                        id="layer-800952837"
-                                                        style="visibility: inherit; transition: none 0s ease 0s; line-height: 30px; border-width: 0px; margin: 0px; padding: 0px 15px 15px; letter-spacing: 0px; font-weight: 400; font-size: 18px; white-space: normal; min-height: 0px; min-width: 750px; max-height: none; max-width: 750px; opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); transform-origin: 50% 50% 0px;">
-                                                        <h1>
-                                                            <span style="font-size: 96% !important;" class="black">{{$item->title}}</span>
-                                                        </h1>
-                                                        <p class="text-black-50 ntext mt-5 mb-4">
-                                                            {!! $item->description !!}
-                                                        </p>
-                                                       <a target="_blank" href="{{ ($item->extra_field_2!='')?$item->extra_field_2:'#'}}">
-                                                        <button class="home-button theme-btn btn-style-one bg-theme-color4 bg-dark" type="submit" name="submit-form">{{$item->extra_field_1}}</button>
-                                                       </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-
-
-
-
-
+                <div class="carousel-item {{($k==0)?'active':''}}">
+                    <div class="pt-3 pb-5 carousel-home">
+                        <div class="row pt-3 pb-5 row-align-item-center-cstm">
+                            <div class="col-md-6 cor-elm-one justify-content-end">
+                                <div class="title-outer">
+                                    <h1 class="title mb-5 banner-head-txt">{{$item->title}}</h1>
+                                        <p class="text-black-50 ntext mt-5 mb-4">
+                                                {!! $item->description !!}
+                                        </p>
+                                        <a target="_blank" href="{{ ($item->extra_field_2!='')?$item->extra_field_2:'#'}}">
+                                            <button class="home-button theme-btn btn-style-one bg-theme-color4 bg-dark" type="submit" name="submit-form">{{$item->extra_field_1}}</button>
+                                        </a>
+                                    <!-- <ul class="page-breadcrumb">
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="#">Pages</a></li>
+                                <li>About</li>
+                            </ul> -->
+                                </div>
+                            </div>
+                            <div class="col-md-6 position-relative">
+                                <figure class="image overlay-anim wow bounce-x animated"><img class="banner-img1"
+                                        src="./assets/images/trial11_new.png" alt="">
+                                </figure>
+                                <!-- Sign Form -->
+                                <div class="position-relative py-4">
+                                    <img class="banner-img2" src="{{ asset('images/'.$item->image) }}" alt="">
+                                </div>
+                                <!--End Contact Form -->
                             </div>
                         </div>
                     </div>
+                </div>
                 @endforeach
             </div>
 
@@ -444,7 +273,37 @@
     </div>
 
 
-    
+    <!--stats section-->
+
+    <div class="pt-4 home-stats-section-cstm">
+        <ul class="orange-section-bg row text-white position-relative">
+            <div class="d-flex col-6 col-sm-12 col-lg-3">
+                <img class="orange-icons" src="{{ asset('assets/images/orange_icon1.png') }}" alt="">
+                <li class="position-relative orange-section"><span class="fw-bolder fs-2">3000+</span><br> Qualified
+                    Tutors</li>
+            </div>
+            <div class="d-flex col-6 col-sm-12 col-lg-3">
+                <img class="orange-icons" src="{{ asset('assets/images/orange_icon2.png') }}" alt="">
+                <li class="position-relative orange-section"><span class="fw-bolder fs-2">4000+</span><br> Student
+                    Enrolled</li>
+            </div>
+            <div class="d-flex col-6 col-sm-12 col-lg-3">
+                <img class="orange-icons" src="{{ asset('assets/images/orange_icon3.png') }}" alt="">
+                <li class="position-relative orange-section"><span class="fw-bolder fs-2">10000+</span><br> Order
+                    Fulfilled</li>
+            </div>
+            <div class="d-flex col-6 col-sm-12 col-lg-3">
+                <img class="orange-icons" src="{{ asset('assets/images/orange_icon4.png') }}" alt="">
+                <li class="position-relative orange-section"><span class="fw-bolder fs-2">55+</span><br>Subjects
+                    Solved
+                    by us</li>
+            </div>
+
+        </ul>
+        <!-- <img class="w-full" src="trial27.png')}}" alt=""> -->
+    </div>
+
+    <!--ends stats section-->
 
     <section class="about-section-three position-relative p-0 home-faq-section-mob-cstm">
         <img class="home-faq-img1" src="{{asset('/assets/images/trial25.png')}}" alt="">
@@ -513,7 +372,7 @@
                 <div class="image-column col-lg-6 col-md-12">
                     <div class="inner-column wow fadeInLeft">
                         <figure class="image overlay-anim wow fadeInUp"><img class="w-100"
-                                src="assets/images/trial23.png" alt="">
+                                src="assets/images/faq-home.png" alt="">
                         </figure>
 
                     </div>
@@ -527,38 +386,12 @@
    
 
 
-    <div class="pt-4">
-        <ul class="orange-section-bg row text-white position-relative">
-            <div class="d-flex col-6 col-sm-12 col-lg-3">
-                <img class="orange-icons" src="{{ asset('assets/images/orange_icon1.png') }}" alt="">
-                <li class="position-relative orange-section"><span class="fw-bolder fs-2">3000+</span><br> Qualified
-                    Tutors</li>
-            </div>
-            <div class="d-flex col-6 col-sm-12 col-lg-3">
-                <img class="orange-icons" src="{{ asset('assets/images/orange_icon2.png') }}" alt="">
-                <li class="position-relative orange-section"><span class="fw-bolder fs-2">4000+</span><br> Student
-                    Enrolled</li>
-            </div>
-            <div class="d-flex col-6 col-sm-12 col-lg-3">
-                <img class="orange-icons" src="{{ asset('assets/images/orange_icon3.png') }}" alt="">
-                <li class="position-relative orange-section"><span class="fw-bolder fs-2">10000+</span><br> Order
-                    Fulfilled</li>
-            </div>
-            <div class="d-flex col-6 col-sm-12 col-lg-3">
-                <img class="orange-icons" src="{{ asset('assets/images/orange_icon4.png') }}" alt="">
-                <li class="position-relative orange-section"><span class="fw-bolder fs-2">55+</span><br>Subjects
-                    Solved
-                    by us</li>
-            </div>
-
-        </ul>
-        <!-- <img class="w-full" src="trial27.png')}}" alt=""> -->
-    </div>
+    
 
 
 
     <div class="w-100">
-        <video class="w-100" src="{{ asset('assets/images/1067634035-preview.mp4') }}" autoplay></video>
+        <video class="w-100" src="{{ asset('assets/images/indexvideo.mp4') }}" autoplay muted></video>
     </div>
 
 @endsection

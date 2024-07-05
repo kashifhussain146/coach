@@ -185,11 +185,11 @@
                 <div class="main-box">
                     <!-- Logo -->
                     <div class="logo-box">
-                        <div class="logo"><a href="https://stage.webshark.in/coc/index.html"><img
+                        <div class="logo"><a href=""><img
                                     src="{{asset('assets/images/logo.png')}}" alt="" title="Tronis"></a></div>
                     </div>
                     <!--Nav Box-->
-                    <div class="nav-outer">
+                    <div class="nav-outer tab-dis-none">
 
                         <nav class="nav main-menu">
                             <ul class="navigation">
@@ -242,11 +242,31 @@
                             class="home-button-header theme-btn btn-style-one bg-theme-color4 bg-dark">Get a Quote</a>
                     </div>
                     <!-- End Get a quote button -->
+                    <a id="toggle-btn-phone-cstm" href="javascript:void(0);" style="font-size:36px;" class="icon"
+                    onclick="myToggleFunction()">&#9776;</a>
                 </div>
                 <!-- End Main Box -->
             </div>
         </div>
         <!-- Header Lower -->
+
+        <!--Mobile Menu-->
+
+        <div class="mob-tab-offset-nav">
+            <div class="mob-tab-offset-nav-inner">
+                <div class="close-btn-nav-cstm"><button>Close</button></div>
+                <a href="{{route('about-us')}}">About Us</a>
+                <a href="{{route('solutions.library')}}">Solution Library</a>
+                <a href="{{route('assignment.help')}}">Assignment Help</a>
+                <a href="{{route('take.my.online.class')}}">Take My Online Class</a>
+                <a href="{{route('services')}}">Services</a>
+                <a href="{{route('get-a-quote')}}">Get A Quote</a>
+            </div>
+        </div>
+
+
+
+        <!--Ends Mobile Menu-->
 
 
         <!-- New Mobile Menu -->
@@ -716,6 +736,56 @@
     <script src="{{ asset('assets/js/script.js') }}"></script>
     @stack('js')
 </body>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the filter button and the close button
+        var mobNavBtnMob = document.querySelector('#toggle-btn-phone-cstm');
+        var mobNavBtnMobClose = document.querySelector('.close-btn-nav-cstm button');
+        var mobNavSolutionContainer = document.querySelector('.mob-tab-offset-nav');
+
+        // Function to open the filter container
+        mobNavBtnMob.addEventListener('click', function() {
+            mobNavSolutionContainer.style.right = '0%';
+        });
+
+        // Function to close the filter container
+        function closeNav() {
+            mobNavSolutionContainer.style.right = '-100%';
+        }
+
+        mobNavBtnMobClose.addEventListener('click', closeNav);
+
+        // Function to close the container when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!mobNavSolutionContainer.contains(event.target) && !mobNavBtnMob.contains(event.target)) {
+                closeNav();
+            }
+        });
+    });
+</script>
+
+
+<!-- <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the filter button and the close button
+        var mobNavBtnMob = document.querySelector('#toggle-btn-phone-cstm');
+        var mobNavBtnMobClose = document.querySelector('.close-btn-nav-cstm button');
+        var mobNavSolutionContainer = document.querySelector('.mob-tab-offset-nav');
+
+        // Function to open the filter container
+        mobNavBtnMob.addEventListener('click', function() {
+            mobNavSolutionContainer.style.right = '0%';
+        });
+
+        // Function to close the filter container
+        mobNavBtnMobClose.addEventListener('click', function() {
+            mobNavSolutionContainer.style.right = '-100%';
+        });
+    });
+
+</script> -->
+
 <script>
     $('#registerForm').validate({
         rules: {
