@@ -14,7 +14,7 @@ Coach | Get a Quote
 
 
     <!-- Start main-content -->
-    <section class="page-title" style="background-image: url(assets/images/contact-bnnr.png); min-height: unset !important; padding-bottom: 0 !important;">
+    <section class="page-title contact-us-cstm-sec-one" style="background-image: url(assets/images/contact-bnnr.png);">
         <div class="auto-container text-center d-flex">
 
             <div class="title-outer title-for-banner-get-quote-page text-start " style="position: relative;">
@@ -26,7 +26,7 @@ Coach | Get a Quote
     </section>
     <!-- end main-content -->
     <!-- Query Form  -->
-    <div class="signup-form-two wow fadeInLeft mx-auto signup-form-get-quote ">
+    <div class="signup-form-two wow fadeInLeft mx-auto signup-form-get-quote">
         <!--Contact Form-->
             <form class="rounded-3 shadow-sm text-start get-a-quote-form" method="post" action="" id="contact-form">
                 <span style="border-bottom: 3px solid #FF7707 !important;" class="border-bottom py-2 border-dark text-black fs-6 fw-bold">GET A QUOTE</span>
@@ -275,7 +275,7 @@ Coach | Get a Quote
 
 
     <!-- Have an online Class  -->
-    <div style="background-color: #ff7707;" class="py-4 text-center position-relative">
+    <div style="background-color: #ff7707;" class="py-4 text-center position-relative contact-us-sec-last">
         <img  style="position: absolute; left: -3rem; top: 9rem; width: 8rem;" src="./assets/images/quoteig.png" alt="">
         <img style="position: absolute; right: -2rem; top: 0rem;" src="./assets/images/trailquot2.png" alt="">
         <p class="text-white fs-1 fw-bold pt-5">{{ $contactUs->contactlasthead }}</p>

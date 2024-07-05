@@ -1913,6 +1913,68 @@ div#myTopnav {
   .home-faq-section-mob-cstm{
     padding-top: 30px !important;
   }
+  .terms-condition-head-section{
+    padding: 130px 30px 0px 30px !important;
+  }
+  .terms-condition-head-section .auto-container{
+    padding-inline: 0px !important;
+  }
+  .terms-condition-head-section .title{
+    color:  black !important;
+    text-align: left;
+    font-size: 40px !important;
+  }
+  .privacy-text-cstm{
+    width: 100%;
+    max-width: 100%;
+    padding: 10px 30px !important;
+  }
+  .privacy-text-cstm p{
+    font-size: 16px !important;
+    text-align: justify;
+    line-height: 26px !important;
+  }
+  .privacy-text-cstm li{
+    font-size: 16px !important;
+    text-align: justify;
+    line-height: 26px !important;
+    padding-left: 20px !important;
+    position: relative;
+  }
+  .privacy-text-cstm li::before{
+    content: '';
+    position: absolute;
+    left: 0px;
+    top: 10px;
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 100%;
+  }
+  .contact-us-cstm-sec-one{
+    padding: 160px 0px 70px;
+    min-height: unset !important;
+  }
+  .contact-us-cstm-sec-one .auto-container{
+    padding-inline: 30px !important;
+  }
+  .contact-us-cstm-sec-one .title{
+    font-size: 55px !important;
+  }
+  .contact-us-cstm-sec-one .ntext.w-50{
+    width: 100% !important;
+    text-align: justify;
+  }
+  .signup-form-get-quote{
+    padding: 30px 30px !important;
+  }
+  .signup-form-get-quote form{
+    padding: 30px 20px !important;
+  }
+  .signup-form-get-quote form #subject{
+    right: unset !important;
+  }
+  
 }
 
 .filters-btn-mob{
@@ -2695,5 +2757,81 @@ div#myTopnav {
   .banner-carousel-button-left i::before{
     font-size: 24px !important;
     line-height: 24px !important;
+  }
+  /* Terms & Condition Page */
+  .terms-condition-head-section{
+    padding: 130px 20px 0px 20px !important;
+  }
+  .terms-condition-head-section .auto-container{
+    padding-inline: 0px !important;
+  }
+  .terms-condition-head-section .title{
+    color:  black !important;
+    text-align: center;
+    font-size: 34px !important;
+  }
+  .privacy-text-cstm{
+    width: 100%;
+    max-width: 100%;
+    padding: 5px 20px !important;
+  }
+  .privacy-text-cstm p{
+    font-size: 16px !important;
+    text-align: justify;
+    line-height: 26px !important;
+  }
+  .privacy-text-cstm li{
+    font-size: 16px !important;
+    text-align: justify;
+    line-height: 26px !important;
+    padding-left: 15px !important;
+    position: relative;
+  }
+  .privacy-text-cstm li::before{
+    content: '';
+    position: absolute;
+    left: 0px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 100%;
+  }
+  .signup-form-get-quote{
+    margin: 3rem 1.5rem !important;
+  }
+  .signup-form-get-quote .form-head{
+    font-size: 26px !important;
+  }
+  .contact-us-cstm-sec-one{
+    padding: 150px 0px 50px;
+  }
+  .contact-us-cstm-sec-one .auto-container{
+    padding: 0px 20px !important;
+  }
+  .contact-us-cstm-sec-one .title-outer{
+    text-align: center !important;
+  }
+  .contact-us-cstm-sec-one .title{
+    font-size: 34px !important;
+    text-align: center;
+  }
+  .contact-us-cstm-sec-one p.ntext{
+    font-size: 16px !important;
+    line-height: 24px !important;
+    text-align: justify !important;
+    width: 100% !important;
+  }
+  .contact-us-sec-last p{
+    font-size: 16px !important;
+    line-height: 24px !important;
+    text-align: justify !important;
+  }
+  .contact-us-sec-last p.fs-1{
+    font-size: 26px !important;
+    text-align: center !important;
+  }
+  .contact-us-sec-last p.w-75{
+    width: 90% !important;
   }
 }

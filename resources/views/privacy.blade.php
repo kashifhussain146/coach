@@ -19,8 +19,8 @@
 @section('content')
 
     <!-- Start main-content -->
-    <section class="page-title"
-        style="background-image: url({{asset('assets/images/contact-bnnr.png')}}); padding: 0 70px !important; min-height: auto !important;">
+    <section class="page-title terms-condition-head-section"
+        style="padding: 0 70px; min-height: auto !important;">
         <div class="auto-container text-center">
 
             <div class="title-outer">
@@ -32,7 +32,7 @@
 
 
     <!-- Content  -->
-    <div class="container py-5 privacy-text">
+    <div class="container py-5 privacy-text-cstm">
         {!! $privacypolicy->description !!}
     </div>
 
