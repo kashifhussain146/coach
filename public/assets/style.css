@@ -459,6 +459,9 @@ body {
   margin: 1rem 0;
 }
 
+#toggle-btn-phone-cstm{
+  display: none;
+}
 
 
 .carousel-img {
@@ -2894,4 +2897,6 @@ div#myTopnav {
     line-height: 24px !important;
     text-align: justify !important;
   }
+
 }
+
