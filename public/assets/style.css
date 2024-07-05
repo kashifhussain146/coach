@@ -1974,6 +1974,23 @@ div#myTopnav {
   .signup-form-get-quote form #subject{
     right: unset !important;
   }
+  .faq-main-section-sec-one-cstm .auto-container{
+    padding: 0px 30px !important;
+  }
+  .faq-main-section-sec-one-cstm .auto-container .row{
+    align-items: center;
+  }
+  .faq-main-section-sec-two-cstm .auto-container{
+    padding: 0px 30px !important;
+  }
+  .faq-main-section-sec-two-cstm .tabs-listing ul.help-tabs{
+    display: block !important;
+  }
+  .faq-main-section-sec-two-cstm .tabs-listing ul.help-tabs li{
+    width: 49.5% !important;
+    display: inline-block;
+    margin-bottom: 10px !important;
+  }
   
 }
 
@@ -2833,5 +2850,48 @@ div#myTopnav {
   }
   .contact-us-sec-last p.w-75{
     width: 90% !important;
+  }
+  .faq-main-section-sec-one-cstm .auto-container{
+    padding: 0px 30px !important;
+  }
+  .faq-main-section-sec-two-cstm .auto-container{
+    padding: 0px 30px !important;
+  }
+  .faq-main-section-sec-two-cstm .tabs-listing ul.help-tabs{
+    display: block !important;
+  }
+  .faq-main-section-sec-two-cstm .tabs-listing ul.help-tabs.d-none{
+    display: block !important;
+  }
+  .faq-main-section-sec-two-cstm .tabs-listing ul.help-tabs li{
+    width: 100% !important;
+    display: inline-block;
+    margin-bottom: 10px !important;
+  }
+  .faq-main-section-sec-two-cstm .help-tabs li a{
+    margin-right: 0px !important;
+    padding: 12px 12px !important;
+  }
+  .faq-main-section-sec-two-cstm .accordion-header{
+    font-size: 16px !important;
+    line-height: 24px !important;
+    font-weight: 600 !important;
+  }
+  .faq-main-section-sec-two-cstm .tabs-listing .tab-container h3.tabs-ac-style{
+    display: none;
+  }
+  .faq-main-section-sec-two-cstm .accordion-body{
+    font-size: 16px !important;
+    line-height: 24px !important;
+    text-align: justify !important;
+  }
+  .faq-main-section-sec-one-cstm h1.title{
+    font-size: 34px !important;
+    text-align: center !important;
+  }
+  .faq-main-section-sec-one-cstm .ntext{
+    font-size: 16px !important;
+    line-height: 24px !important;
+    text-align: justify !important;
   }
 }

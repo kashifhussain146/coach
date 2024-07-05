@@ -18,7 +18,7 @@
 
 @section('content')
 
-<section class="page-title" style="background-image: url({{asset('assets/images/banner-about.jpg')}});">
+<section class="page-title faq-main-section-sec-one-cstm" style="background-image: url({{asset('assets/images/banner-about.jpg')}});">
     <div class="auto-container">
         <div class="row">
             <div class="col-md-7">
@@ -68,7 +68,7 @@
     </div>
 </section>
 
-<div class="section-paddding">
+<div class="section-paddding faq-main-section-sec-two-cstm">
     <div class="auto-container">
         <div class="row">
             <div class="sec-title text-center">
