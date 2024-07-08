@@ -23,6 +23,7 @@ use App\Services\DocxReaderService;
 use App\Services\XlsxReaderService;
 use App\Services\PPTReaderService;
 use App\Models\Masters;
+use App\Models\TaskHistory;
 
 
 class TasksController extends Controller
@@ -153,7 +154,7 @@ class TasksController extends Controller
                         ->freelancers()
                         ->where('role',30)
                         ->where('user_id', $authUser->id)
-                        ->whereIn('status', [Proposals::STATUS_ASSIGNED])
+                        ->whereIn('status', [Proposals::STATUS_ASSIGNED,Proposals::STATUS_REASSIGNED])
                         ->count() > 0  && $row->status != Proposals::STATUS_COMPLETED) {
                     $actions .= "<a href=\"" . route('tasks-start-work', ['task' => $row->id]) . "\" class=\"btn-xs btn btn-warning \"> <i class='fa fa-edit'></i> Start work </a>&nbsp;&nbsp;";
                 }
@@ -244,7 +245,7 @@ class TasksController extends Controller
 
     $masterList = $masterList->orderBy('emailsubject')->get();
 
-        // dd($subjects,$colleges,$courses,$courseCode);
+
         return view('admin.tasks.tasks-create', compact('employees', 'title', 'subjects', 'colleges', 'courses', 'courseCode','masterList'));
     }
 
@@ -346,39 +347,9 @@ class TasksController extends Controller
                 $data['questions_file'] = $questions_file;
             }
 
-            //$data['question'] = $this->convertedData($request->file('questions_file'));
 
             $task = Task::create($data);
 
-            // if ($request->input_type == 'file' && $request->hasFile('questions_file')) {
-            //     // $extension = $request->file('questions_file')->extension();
-            //     // if($extension=='csv'){
-
-            //     //     $file = $request->file('questions_file');
-            //     //     $filePath = $file->getRealPath();
-            //     //     $csvData = array_map('str_getcsv', file($filePath));
-            //     //     $headers = array_shift($csvData);
-
-            //     //     foreach ($csvData as $row) {
-            //     //         $rowData = array_combine($headers, $row);
-
-            //     //         TaskDetail::create([
-            //     //             'task_id' => $task->id,
-            //     //             'questions' => strip_tags(json_decode(json_encode($rowData['Question']), True)),
-            //     //             //'answers' => $rowData['Answer'],
-            //     //         ]);
-            //     //     }
-
-            //     // }
-            // } else {
-            //     foreach ($request->questions as $k => $row) {
-            //         TaskDetail::create([
-            //             'task_id' => $task->id,
-            //             'questions' => $row,
-            //             //'answers' => $request->answers[$k],
-            //         ]);
-            //     }
-            // }
 
             if (isset($request->freelancers)) {
                 if (count($request->freelancers) > 0) {
@@ -435,16 +406,7 @@ class TasksController extends Controller
     public function show($id)
     {
         $task = Task::findOrFail($id);
-
         $user = Admins::find($task->created_by);
-
-        // if(in_array("Free Lancer",Auth()->guard('admin')->user()->getRoleNames()->toArray()) && $user->roles()->first()->name != 'Free Lancer' ){
-        //     $check = Proposals::where(['task_id'=>$id,'user_id'=>Auth()->guard('admin')->user()->id,'status'=>Proposals::STATUS_ASSIGNED])->count();
-        //     if(!$check){
-        //         abort(403);
-        //     }
-        // }
-
         $title = 'Tasks View';
         return view('admin.tasks.tasks-show', compact('task', 'title'));
     }
@@ -458,18 +420,6 @@ class TasksController extends Controller
     public function edit($id)
     {
         $task = Task::findOrFail($id);
-
-        //$user = Admins::find($task->created_by);
-
-        // if(in_array("Free Lancer",Auth()->guard('admin')->user()->getRoleNames()->toArray()) && $user->roles()->first()->name != 'Free Lancer' ){
-
-        //     Proposals::where(['task_id'=>$id,'user_id'=>Auth()->guard('admin')->user()->id,'status'=>Proposals::STATUS_ASSIGNED])->update(['is_read'=>1]);
-        //     $check = Proposals::where(['task_id'=>$id,'user_id'=>Auth()->guard('admin')->user()->id,'status'=>Proposals::STATUS_ASSIGNED])->count();
-        //     if(!$check){
-        //         abort(403);
-        //     }
-        // }
-
         $subjects =   Subject::select('id','subject_name as title')->where('status','Y')->pluck('title')->toArray();
         $colleges =   Colleges::select('id','name as title')->where('status','Y')->pluck('title')->toArray();
         $courses =    SubjectCategory::select('id','category_name as title')->where('status','Y')->pluck('title')->toArray();
@@ -498,15 +448,11 @@ class TasksController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                //'start_date_time' => 'required|date',
-                //'end_date_time' => 'required|date',
                 'college_id' => 'required|string',
                 'subject_id' => 'required|string',
                 'course_id' => 'required|string',
                 'course_code_id' => 'required|string',
-                //'deadline_date_time'=>'required|date',
                 'task_type' => 'required|in:assignment_homework,discussion_initial_post,quiz_exam,peer_responses',
-
                 'questions_file' => 'nullable', // Example for essay_upload
             ],
             [
@@ -521,8 +467,8 @@ class TasksController extends Controller
             ]);
         }
 
-        // try {
-        //     DB::beginTransaction();
+        try {
+            DB::beginTransaction();
 
             $data = $request->except('_token');
 
@@ -539,39 +485,6 @@ class TasksController extends Controller
                 $request->answers_file->move(public_path('/uploads/answers'), $answers_file);
                 $data['answers_file'] = $answers_file;
             }
-
-
-            // $data['question'] = $this->convertedData($request->file('questions_file'));
-            // $data   = $this->convertedData($request->file('answers_file'));
-            // dd($data);
-            // if ($request->input_type == 'file' && $request->hasFile('questions_file')) {
-            //     // $task->details()->delete();
-
-            //     // $file = $request->file('questions_file');
-            //     // $filePath = $file->getRealPath();
-
-            //     // $csvData = array_map('str_getcsv', file($filePath));
-            //     // $headers = array_shift($csvData);
-
-            //     // foreach ($csvData as $row) {
-            //     //     $rowData = array_combine($headers, $row);
-            //     //     TaskDetail::create([
-            //     //         'task_id' => $task->id,
-            //     //         'questions' => json_decode(json_encode($rowData['Question']), True),
-            //     //         'answers' => json_decode(json_encode($rowData['Answer']), True),
-            //     //     ]);
-            //     // }
-            // } elseif ($request->input_type == 'multiple') {
-            //     $task->details()->delete();
-
-            //     foreach ($request->questions as $k => $row) {
-            //         TaskDetail::create([
-            //             'task_id' => $task->id,
-            //             'questions' => mb_convert_encoding($row, 'UTF-8', 'auto'),
-            //             'answers' => mb_convert_encoding($request->answers[$k], 'UTF-8', 'auto'),
-            //         ]);
-            //     }
-            // }
 
             $courses =    SubjectCategory::firstOrCreate(['category_name' => $request->input('course_id')],
                                     [
@@ -723,15 +636,15 @@ class TasksController extends Controller
                 }
             }
 
-            //DB::commit();
+            DB::commit();
             return response()->json(['success' => 'Task updated successfully', 'route' => route('tasks-list')]);
-        // } catch (\Exception $e) {
-        //     DB::rollback();
-        //     return response()->json([
-        //         'status' => false,
-        //         'msg' => $e->getMessage(),
-        //     ]);
-        // }
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json([
+                'status' => false,
+                'msg' => $e->getMessage(),
+            ]);
+        }
     }
 
     /**
@@ -768,7 +681,6 @@ class TasksController extends Controller
 
             return redirect()->back()->with('success', 'Task status update successfully');
         } catch (\Exception $e) {
-            dd($e->getMessage());
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -802,17 +714,12 @@ class TasksController extends Controller
 
         $task = Task::find($task_id);
 
-        // $Proposals = $task->freelancers()->whereIn('status',[Proposals::STATUS_ACCEPTED,Proposals::STATUS_ASSIGNED])->pluck('user_id')->toArray();
-
-        // $freeLancers =  Admins::select('id','name','last_name')->whereIn('id',$Proposals)->where('status','active')->get();
-
         $freelancers = Admins::select('id', 'name', 'last_name')
             ->whereHas('roles', function ($query) {
                 $query->where('name', 'Free Lancer');
             })
             ->whereHas('proposalsMany', function ($query) use ($task) {
-                // $query->whereIn('status', [Proposals::STATUS_ACCEPTED, Proposals::STATUS_ASSIGNED]);
-                                $query->where('task_id',$task->id)->whereIn('status', [Proposals::STATUS_ACCEPTED])->where('role',30);
+                $query->where('task_id',$task->id)->whereIn('status', [Proposals::STATUS_ACCEPTED])->where('role',30);
             })
             ->where('status', 'active')
             ->get();
@@ -824,7 +731,7 @@ class TasksController extends Controller
     {
         $title = 'Start Work';
 
-        Proposals::where(['task_id' => $task->id, 'user_id' => Auth()->guard('admin')->user()->id, 'status' => Proposals::STATUS_ASSIGNED])->update(['is_read' => 1]);
+        Proposals::where(['task_id' => $task->id, 'user_id' => Auth()->guard('admin')->user()->id])->update(['is_read' => 1]);
 
         return view('admin.tasks.start-work', compact('task', 'title'));
     }
@@ -922,27 +829,11 @@ class TasksController extends Controller
        $request->validate([
             'start_date_time' => [
                 'required',
-                'date',
-                // function ($attribute, $value, $fail) use ($task) {
-                //     // Check if start date is after or equal to deadline date
-                //     if (strtotime($value) > strtotime($task->deadline_date_time)) {
-                //         $fail('The '.$attribute.' must be before the deadline date.');
-                //     }
-                // },
+                'date'
             ],
             'end_date_time' => [
                 'nullable',
-                'date',
-                // function ($attribute, $value, $fail) use ($task) {
-                //     // Check if end date is after or equal to deadline date
-                //     if ($value && strtotime($value) > strtotime($task->deadline_date_time)) {
-                //         $fail('The '.$attribute.' must be before the deadline date.');
-                //     }
-                //     // Check if end date is after start date
-                //     if ($value && strtotime($value) < strtotime($task->start_date_time)) {
-                //         $fail('The '.$attribute.' must be after the start date.');
-                //     }
-                // },
+                'date'
             ],
         ], [
             'questions_file.mimes' => 'Please enter a valid file extension eg..csv,pdf,docx',
@@ -951,6 +842,8 @@ class TasksController extends Controller
         try {
             DB::beginTransaction();
 
+            Proposals::where(['task_id' => $task->id])->where('status','!=',Task::STATUS_REASSIGNED)->where('status','!=',Task::STATUS_ASSIGNED)->delete();
+
             $data = $request->except('_token');
             $message = 'Task started successfully Now you can add questions';
             $route = route('tasks-start-work', $id);
@@ -958,47 +851,27 @@ class TasksController extends Controller
                 $route = route('tasks-list');
 
                 $message = 'Task completed successfully';
-
-                //if ($task->input_type == 'file' && $request->hasFile('answers_file') && $request->file('answers_file')->isValid()) {
-                    // $task->details()->delete();
-                    // Import the CSV file
-                    // Excel::import(new TaskDetailsImport($task->id), $request->file('answers_file'));
                 $task->answer = $this->convertedData($request);
                 if($task->questions_file!="" && \File::exists(public_path('/uploads/questions/' . $task->questions_file))){
                     $task->question = $this->convertedDataFullPath(public_path('/uploads/questions/' . $task->questions_file));
                 }
-               // } 
-                
-                // elseif ($task->input_type == 'multiple') {
-                //     $task->details()->delete();
-
-                //     foreach ($request->questions as $k => $row) {
-                //         TaskDetail::create([
-                //             'task_id' => $task->id,
-                //             'questions' => mb_convert_encoding($row, 'UTF-8', 'auto'),
-                //             'answers' => mb_convert_encoding($request->answers[$k], 'UTF-8', 'auto'),
-                //         ]);
-                //     }
-                // }
 
                 if ($request->hasFile('answers_file')) {
                     $answers_file = 'answers_' . time() . '.' . $request->answers_file->extension();
                     $request->answers_file->move(public_path('/uploads/answers'), $answers_file);
-                    //$answers_file = "/uploads/answers/".$answers_file;
                     $data['answers_file'] = $answers_file;
                 }
 
                 $task->status = Task::STATUS_COMPLETED;
 
-               
-
                 $data['isDeadlineMet'] =  strtotime($request->end_date_time) > strtotime($task->deadline_date_time) ? 1 : 0;
 
+                Proposals::where(['task_id' => $task->id])->where('status','=',Task::STATUS_ASSIGNED)->update(['status'=>Task::STATUS_COMPLETED]);
             }
 
             $task->update($data);
 
-            Proposals::where(['task_id' => $task->id])->where('status','!=',Task::STATUS_ASSIGNED)->delete();
+            
 
 
             DB::commit();
@@ -1040,39 +913,7 @@ class TasksController extends Controller
 
         try {
             DB::beginTransaction();
-            $data = [];
-
-            // foreach ($task->details as $k => $v) {
-            //     $question = [];
-
-            //     $question['question'] = $v->questions;
-            //     $question['collegeid'] = $task->college_id;
-            //     $question['coursesid'] = $task->course_code_id;
-            //     $question['score'] = $task->score != '' ? $task->score : 0;
-            //     $question['type'] = $this->getType($task->task_type);
-            //     $question['startdatetime'] = $task->start_date_time;
-            //     $question['enddatetime'] = $task->end_date_time;
-            //     $question['num_words'] = ($task->word_count!="")?$task->word_count:0;
-            //     $question['answer'] = $v->answers;
-            //     $question['price'] = 100;
-            //     $question['subject_category'] = $task->course_id;
-            //     $question['subject'] = $task->subject_id;
-            //     $question['file_name'] = $task->questions_file;
-            //     $question['answer_file'] = $task->answers_file;
-            //     $question['addedby'] = $task->created_by;
-            //     $question['answerstatus'] = 'N';
-            //     $question['status'] = 'Y';
-            //     $question['visiblity'] = 'N';
-            //     $question['added_date'] = $task->created_at->format('Y-m-d');
-            //     $question['expiry_date'] = $task->expiry_date;
-            //     $question['created_at'] = date('Y-m-d H:i:s');
-            //     $question['updated_at'] = date('Y-m-d H:i:s');
-
-            //     $data[] = $question;
-            // }
-
             $question = [];
-
             $question['question'] = $task->question;
             $question['collegeid'] = $task->college_id;
             $question['coursesid'] = $task->course_code_id;
@@ -1098,6 +939,12 @@ class TasksController extends Controller
             
             Questions::insert($question);
 
+
+            TaskHistory::where('user_id','=',$task->proposals->user_id)->where('task_id',$task->id)->update([
+                'is_current'=>0
+            ]);
+
+
             DB::commit();
 
             return redirect()->route('tasks-list')->withSuccess('Task published successfully');
@@ -1108,6 +955,46 @@ class TasksController extends Controller
         }
     }
 
+
+    public function reAssigned(Request $request,Task $task){
+
+         try {
+
+            DB::beginTransaction();
+                      
+            TaskHistory::where('task_id',$task->id)->where('user_id',$task->proposals->user_id)->update(['is_current'=>0]);
+             
+            $history = new TaskHistory;
+            $history->user_id = $task->proposals->user_id;
+            $history->task_id = $task->id;
+            $history->reason = $request->reason;
+            $history->status =TaskHistory::STATUS_REASSIGNED;
+            $history->is_current = 1;
+            $history->save();
+
+
+            $task->status = Task::STATUS_REASSIGNED;
+            $task->save();  
+
+
+           
+            $proposal = Proposals::where(['task_id' => $task->id])->where('user_id','=',$task->proposals->user_id)->first();
+             
+            if($proposal){
+                $proposal->status = Proposals::STATUS_REASSIGNED;
+                $proposal->is_read = 0;
+                $proposal->save();
+            }
+
+            DB::commit(); 
+
+            return redirect()->route('tasks-list')->withSuccess('Task Re-assigned successfully');
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return redirect()->route('tasks-list')->withError($e->getMessage());
+        }
+    }
 
     public function getSubjects(Request $request){
 
@@ -1125,7 +1012,7 @@ class TasksController extends Controller
                         $query->where('category_name','=',$course);
                     })->pluck('subject_name')->toArray();
                     
-        // dd($subjects);
+
         return response()->json($subjects);
     }
 

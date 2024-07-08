@@ -48,11 +48,11 @@ if (! function_exists('getNotifications')) {
 
         return \App\Models\Task::with(['freelancers'=>function($query) use ($authUser){
             
-            $query->where('user_id',$authUser->id)->where('is_read',0)->whereIn('status',[\App\Models\Proposals::STATUS_PREVIEW,\App\Models\Proposals::STATUS_ASSIGNED]);
+            $query->where('user_id',$authUser->id)->where('is_read',0)->whereIn('status',[\App\Models\Proposals::STATUS_PREVIEW,\App\Models\Proposals::STATUS_ASSIGNED,\App\Models\Proposals::STATUS_REASSIGNED]);
 
         }])->whereHas('freelancers',function($query) use ($authUser){
         
-            $query->where('user_id',$authUser->id)->where('is_read',0)->whereIn('status',[\App\Models\Proposals::STATUS_PREVIEW,\App\Models\Proposals::STATUS_ASSIGNED]);
+            $query->where('user_id',$authUser->id)->where('is_read',0)->whereIn('status',[\App\Models\Proposals::STATUS_PREVIEW,\App\Models\Proposals::STATUS_ASSIGNED,\App\Models\Proposals::STATUS_REASSIGNED]);
         })
         ->get();
 

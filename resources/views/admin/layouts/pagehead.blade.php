@@ -143,12 +143,25 @@
                                       </div>
                                   </li>
                                   <hr />
-                              @elseif($item->freelancers->first()->status == \App\Models\Proposals::STATUS_ASSIGNED)
+                              @elseif(in_array($item->freelancers->first()->status, [
+                                      \App\Models\Proposals::STATUS_ASSIGNED,
+                                      \App\Models\Proposals::STATUS_REASSIGNED,
+                                  ]))
                                   <li>
                                       <a href="{{ route('tasks-start-work', ['task' => $item->id]) }}"
                                           class="top-text-block">
-                                          <div class="top-text-heading">New task assigned <br /> Task ID : <b>
-                                                  {{ $item->unique_group_id }} </b> </div>
+
+                                          @if ($item->freelancers->first()->status == \App\Models\Proposals::STATUS_ASSIGNED)
+                                              <div class="top-text-heading">New Task assigned <br /> Task ID : <b>
+                                                      {{ $item->unique_group_id }} </b>
+                                              </div>
+                                          @else
+                                              <div class="top-text-heading">Task has been Re-Assigned <br /> Task ID :
+                                                  <b>
+                                                      {{ $item->unique_group_id }} </b>
+                                              </div>
+                                          @endif
+
                                           <div class="top-text-light">Task Deadline :
                                               {{ date('d/m/Y H:i', strtotime($item->deadline_date_time)) }} </div>
                                       </a>

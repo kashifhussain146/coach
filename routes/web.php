@@ -155,6 +155,7 @@ Route::group(['middleware' => ['auth:admin']], function() {
         Route::post('/tasks/update/start-work/{id}', [TasksController::class,'updateStartWork'])->name('update-start-work')->middleware(['can:Edit Tasks']);
         
         Route::post('/tasks/publish/{task}', [TasksController::class,'publish'])->name('task-publish')->middleware(['can:Edit Tasks']);
+        Route::post('/tasks/re-assigned/{task}', [TasksController::class,'reAssigned'])->name('task-re-assigned')->middleware(['can:Edit Tasks']);
 
         Route::get('/tasks/getSubjects', [TasksController::class, 'getSubjects'])->name('tasks.get.subjects');
 

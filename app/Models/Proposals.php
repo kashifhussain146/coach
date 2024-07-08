@@ -22,7 +22,7 @@ class Proposals extends Model
     const STATUS_PENDING = 'PENDING';
     const STATUS_ASSIGNED = 'ASSIGNED';
     const STATUS_COMPLETED = 'COMPLETED';
-    const STATUS_RETIRE = 'RETIRE';
+    const STATUS_REASSIGNED = 'REASSIGNED';
 
     public function scopeStatus($query,$status){
         return  $query->where('status',$status);

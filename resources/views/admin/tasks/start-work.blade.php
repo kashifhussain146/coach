@@ -242,6 +242,17 @@
                             @endif
 
 
+                            @php
+                                $history = $task->history()->where('is_current', 1);
+
+                            @endphp
+                            @if ($history->count() > 0)
+                                <h2 class="mb-3 mt-5 text-danger">Current feedbacks </h2>
+                                <div class="col-md-12 card" style="overflow: hidden">
+                                    {!! $history->first()->reason !!}
+                                </div>
+                            @endif
+
 
                             <div class="col-md-12">
 
@@ -259,6 +270,22 @@
                                 @endif
                             </div>
 
+
+
+
+
+                            {{-- @if ($task->history->count() > 0)
+
+                                <h2 class="mb-3 mt-5 text-danger">Feedbacks History </h2>
+                                @foreach ($task->history as $key => $item)
+                                    <div class="col-md-12 border card">
+                                        <span> <strong> S.no {{ ++$key }} </strong></span> <br />
+                                        {!! $item->reason !!}
+                                    </div>
+                                @endforeach
+
+
+                            @endif --}}
 
                     </div>
 

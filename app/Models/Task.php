@@ -19,7 +19,7 @@ class Task extends Model
     const STATUS_PENDING = 'PENDING';
     const STATUS_ASSIGNED = 'ASSIGNED';
     const STATUS_COMPLETED = 'COMPLETED';
-    const STATUS_RETIRE = 'RETIRE';
+    const STATUS_REASSIGNED = 'REASSIGNED';
     
     protected $fillable = [
         'master_id',
@@ -108,5 +108,11 @@ class Task extends Model
     {
         return $this->hasMany(MastersUsers::class, 'master_id', 'master_id');
     }
+
+    public function history()
+    {
+        return $this->hasMany(TaskHistory::class, 'task_id', 'id');
+    }
+
 }
 
