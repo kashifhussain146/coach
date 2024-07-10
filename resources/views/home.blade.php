@@ -86,7 +86,7 @@
 
     <!-- Services Section -->
 
-    <div class="bg-light row pt-4 px-lg-5 position-relative">
+    <div class="bg-light row pt-4 px-lg-5 position-relative cstm-home-services-sec-main">
         <div class="sec-title text-center">
             <span class="sub-title">TAGLINE HEADING</span>
             <h2 class="home-service">Our Services</h2>
@@ -114,6 +114,10 @@
                 </div>
             </div>
             @endforeach
+        </div>
+        <div class="btn-box z-ind text-center mt-5 cstm-home-service-see-more-btn">
+            <!-- <a class="home-service-button rounded-pill bg-dark fw-bold" href="page-about.html"><span>SEE MORE</span></a> -->
+            <a class="home-button theme-btn btn-style-one bg-theme-color4 bg-dark" href="{{ route('services') }}"><span>SEE MORE</span></a>
         </div>
 
     </div>
@@ -143,7 +147,7 @@
                                 tempore dicta?</p>
 
                             <button class="home-work-button1 theme-btn btn-style-one bg-theme-color4 bg-dark"
-                                type="submit" name="submit-form">Get a Free Quote</button>
+                                type="submit" name="submit-form" onclick="window.location.href='{{ route('get-a-quote') }}'">Get a Free Quote</button>
 
                         </div>
                     </div>
@@ -166,7 +170,7 @@
                                 obcaecati.
                             </p>
                             <button
-                                class="home-work-button2 theme-btn btn-style-one bg-theme-color4 bg-white mb-5 mx-5">Get
+                                class="home-work-button2 theme-btn btn-style-one bg-theme-color4 bg-white mb-5 mx-5" onclick="window.location.href='{{ route('get-a-quote') }}'">Get
                                 a Free Quote</button>
                         </div>
                     </div>
@@ -262,10 +266,10 @@
                     <img class="mb-4" src="{{asset('images/'.$item->image)}}" alt="{{$item->title}}">
                     <h5 class="card-title fw-bold text-white fs-2 pb-3">{{$item->title}}</h5>
                     <p class="home-work-card-txt card-text text-white pb-4">{!! strip_tags($item->description) !!}</p>
-                    <div class="btn-box pb-3">
+                    <!-- <div class="btn-box pb-3">
                         <a href="page-about.html" class="px-4 py-2 rounded-pill bg-white"><span
                                 class="fs-6 black fw-bold">KNOW MORE</span></a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             @endforeach

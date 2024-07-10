@@ -1439,6 +1439,29 @@ div#myTopnav {
   padding-top: 0px !important;
 }
 
+
+.cstm-main-header-sticky-effect{
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.page-title{
+  margin-top: 80px;
+}
+.current-page-class a {
+  color: #FF7707 !important;
+}
+.cstm-home-service-see-more-btn{
+  margin-top: 2rem !important;
+}
+.cstm-home-services-sec-main .sec-title{
+  margin-bottom: 20px !important;
+}
+
+
+
+
+
 @media only screen and (min-width: 767.5px) and (max-width: 1024px) {
   .testimonial-section-two .auto-container{
     padding: 0px 20px;

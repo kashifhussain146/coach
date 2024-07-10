@@ -115,7 +115,7 @@
 
 
     <!-- New Main Header -->
-    <header class="main-header header-style-two">
+    <header class="main-header header-style-two cstm-main-header-sticky-effect">
 
         <!-- Header Upper -->
         <div class="header-upper">
@@ -185,7 +185,7 @@
                 <div class="main-box">
                     <!-- Logo -->
                     <div class="logo-box">
-                        <div class="logo"><a href=""><img
+                        <div class="logo"><a href="{{ route('home') }}"><img
                                     src="{{asset('assets/images/logo.png')}}" alt="" title="Tronis"></a></div>
                     </div>
                     <!--Nav Box-->
@@ -195,10 +195,10 @@
                             <ul class="navigation">
                                 <!-- <li class="current"><a href="https://stage.webshark.in/coc">Home</a>
                                 </li> -->
-                                <li class=""><a style="color: #FF7707;" href="{{ route('about-us') }}">About
+                                <li class="{{ Request::is('about-us') ? 'current-page-class' : '' }}"><a href="{{ route('about-us') }}">About
                                         Us</a>
                                 </li>
-                                <li class="dropdown d-flex"><a id="assignmentDrop" class="assign-help"
+                                <li class="dropdown d-flex {{ Request::is('assignment-help') ? 'current-page-class' : '' }}"><a id="assignmentDrop" class="assign-help"
                                         href="{{ route('assignment.help') }}">Assignment Help</a>
                                     <!--<a onclick="dropAssignment()"><i style="font-size: 13px;" class="fa fa-angle-down px-1 my-auto dropvtnassign"></i></a>-->
                                     <!--<ul id="dropElement" class="dropdown-assignment">-->
@@ -218,10 +218,10 @@
                                     <!--          <li><a href="https://stage.webshark.in/coc/assignment-help-marketing.html">Marketing</a></li>-->
                                     <!--    </ul>-->
                                 </li>
-                                <li class=""><a href="{{ route('take.my.online.class') }}">Take My Online
+                                <li class="{{ Request::is('take-my-online-class') ? 'current-page-class' : '' }}"><a href="{{ route('take.my.online.class') }}">Take My Online
                                         Class</a></li>
                                 <!-- <li class=""><a href="https://stage.webshark.in/coc/solution-library.html">Solution Library</a></li> -->
-                                <li class="dropdown d-flex"><a href="{{ route('services') }}">Services</a>
+                                <li class="dropdown d-flex {{ Request::is('services') ? 'current-page-class' : '' }}"><a href="{{ route('services') }}">Services</a>
                                     <!--    <a onclick="dropServices()"><i style="font-size: 13px;" class="fa fa-angle-down px-1 my-auto dropbtnservices"></i></a>-->
                                     <!--<ul id="dropElementServices" class="dropdown-services">-->
                                     <!--        <li><a href="https://stage.webshark.in/coc/discussion-board.html">Discussion Board</a></li>-->
