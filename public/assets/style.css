@@ -1457,7 +1457,36 @@ div#myTopnav {
 .cstm-home-services-sec-main .sec-title{
   margin-bottom: 20px !important;
 }
-
+.page-title-sec-one-assignment .row{
+  align-items: center;
+}
+.page-assignment-sec-two .sec-title{
+  margin-block: 20px 5px;
+}
+.about-section .experience .count {
+  position: absolute;
+  left: 105px;
+  top: 30px;
+  font-size: 60px;
+  line-height: 1em;
+  font-weight: 700;
+}
+.about-section .experience{
+  padding: 10px !important;
+  text-align: center !important;
+}
+.assignment-sec-three-main-cstm .sec-title{
+  margin-block: 10px 40px;
+}
+.categories-section-current .sec-title{
+  margin-block: 50px 20px;
+}
+.clients-section .clients-carousel.owl-carousel{
+  padding: 50px 0px;
+}
+.mobile-container-faq{
+  padding-block: 20px 20px !important;
+}
 
 
 

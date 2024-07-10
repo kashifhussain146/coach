@@ -117,7 +117,7 @@
         </div>
         <div class="btn-box z-ind text-center mt-5 cstm-home-service-see-more-btn">
             <!-- <a class="home-service-button rounded-pill bg-dark fw-bold" href="page-about.html"><span>SEE MORE</span></a> -->
-            <a class="home-button theme-btn btn-style-one bg-theme-color4 bg-dark" href="{{ route('services') }}"><span>SEE MORE</span></a>
+            <a class="home-button theme-btn btn-style-one bg-theme-color4 bg-dark" href="{{ route('services') }}"><span>KNOW MORE</span></a>
         </div>
 
     </div>
