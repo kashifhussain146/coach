@@ -347,20 +347,37 @@ class TasksController extends Controller
                 $data['questions_file'] = $questions_file;
             }
 
+            $freelancer = $request->freelancers;
+            $employees = $request->employees;
+            
+            $status = Proposals::STATUS_PREVIEW;
+            
+            if(Auth()->user()->hasRole('Free Lancer')){
+                $freelancer[] = Auth()->user()->id;
+                $status = Proposals::STATUS_ASSIGNED;
+            }
+            
+            if(Auth()->user()->hasRole('Employee')){
+                $employees[] = Auth()->user()->id;
+                $status = Proposals::STATUS_ASSIGNED;
+            }
+            
+            $data['status'] = $status;
+            
 
             $task = Task::create($data);
 
 
-            if (isset($request->freelancers)) {
-                if (count($request->freelancers) > 0) {
-                    $freeLancers = Admins::whereIn('id', $request->freelancers)
+            if (isset($freelancer)) {
+                if (count($freelancer) > 0) {
+                    $freeLancers = Admins::whereIn('id', $freelancer)
                         ->whereHas('roles', function ($query) {
                             $query->where('name', 'Free Lancer');
                         })
                         ->where('status', 'active')
                         ->pluck('id')
-                        ->map(function ($item) use ($task) {
-                            return ['user_id' => $item, 'task_id' => $task->id, 'role' => 30, 'status' => 'PREVIEW'];
+                        ->map(function ($item) use ($task,$status) {
+                            return ['user_id' => $item, 'task_id' => $task->id, 'role' => 30, 'status' => $status];
                         })
                         ->toArray();
 
@@ -368,16 +385,16 @@ class TasksController extends Controller
                 }
             }
 
-            if (isset($request->employees)) {
-                if (count($request->employees) > 0) {
-                    $employees = Admins::whereIn('id', $request->employees)
+            if (isset($employees)) {
+                if (count($employees) > 0) {
+                    $employees = Admins::whereIn('id', $employees)
                         ->whereHas('roles', function ($query) {
                             $query->where('name', 'Employee');
                         })
                         ->where('status', 'active')
                         ->pluck('id')
-                        ->map(function ($item) use ($task) {
-                            return ['user_id' => $item, 'task_id' => $task->id, 'role' => 26, 'status' => 'ASSIGNED'];
+                        ->map(function ($item) use ($task,$status) {
+                            return ['user_id' => $item, 'task_id' => $task->id, 'role' => 26, 'status' => Proposals::STATUS_ASSIGNED];
                         })
                         ->toArray();
 
@@ -719,7 +736,7 @@ class TasksController extends Controller
                 $query->where('name', 'Free Lancer');
             })
             ->whereHas('proposalsMany', function ($query) use ($task) {
-                $query->where('task_id',$task->id)->whereIn('status', [Proposals::STATUS_ACCEPTED])->where('role',30);
+                $query->where('task_id',$task->id)->whereIn('status', [Proposals::STATUS_ACCEPTED,Proposals::STATUS_ASSIGNED])->where('role',30);
             })
             ->where('status', 'active')
             ->get();

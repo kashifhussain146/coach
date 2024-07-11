@@ -37,6 +37,7 @@ class Task extends Model
         'question',
         'answer',
         'word_count',
+        'status',
         'actual_length',
         'words_written',
         'score',
