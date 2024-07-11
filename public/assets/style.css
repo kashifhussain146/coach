@@ -1415,7 +1415,8 @@ div#myTopnav {
 }
 
 .accordion-box .block .acc-btn.active .icon:before {
-  content: "\f107" !important;
+  /* content: "\f107" !important; */
+  content: "\f068" !important;
   color: white !important;
 }
 
@@ -1456,9 +1457,19 @@ div#myTopnav {
 }
 .cstm-home-services-sec-main .sec-title{
   margin-bottom: 20px !important;
+  margin-top: 30px !important;
 }
 .page-title-sec-one-assignment .row{
   align-items: center;
+}
+.home-service-img2{
+  top: 4.5rem !important;
+  left: -6.5rem !important;
+  width: 12rem !important;
+}
+.orange-section {
+  top: 5rem !important;
+  font-size: 1.2rem !important;
 }
 .page-assignment-sec-two .sec-title{
   margin-block: 20px 5px;
@@ -1487,6 +1498,90 @@ div#myTopnav {
 .mobile-container-faq{
   padding-block: 20px 20px !important;
 }
+.home-faq-section-mob-cstm .content-column .inner-column .sec-title{
+  margin-block: 0px;
+}
+.home-faq-section-mob-cstm .content-column .inner-column .sec-title .home-faq-head {
+  font-size: 3rem !important;
+}
+.cstm-pay-someone-sec-main{
+  padding-top: 0px !important;
+}
+.take-my-online-class-sec-cstm-main-three section.bg-light.py-5{
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+}
+.take-my-online-class-sec-cstm-main-five{
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+}
+.take-my-online-class-sec-cstm-main-five .sec-title{
+  margin-bottom: 20px !important;
+}
+.services-page-cstm-sec-two{
+  padding-top: 1px !important;
+  padding-bottom: 1px !important;
+}
+.services-page-cstm-sec-two .sec-title{
+  margin-bottom: -50px !important;
+}
+.mobile-container-faq .sec-title{
+  margin-top: 0px !important;
+  margin-bottom: 25px !important;
+}
+.about-cstm-sec-two-main{
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+.about-cstm-sec-two-main .sec-title{
+  margin-bottom: 20px !important;
+}
+.about-cstm-sec-three-main{
+  padding-top: 0px !important;
+}
+.about-cstm-sec-three-main .sec-title{
+  margin-bottom: 20px !important;
+}
+.about-cstm-sec-four-main{
+  padding-top: 40px !important;
+  padding-bottom: 20px !important;
+}
+.about-cstm-sec-four-main .sec-title{
+  margin-bottom: 20px !important;
+}
+.about-section .content-column .inner-column{
+  padding-top: 0px !important;
+}
+.testimonial-section-two{
+  padding-top: 0px !important;
+}
+.faq-main-section-sec-one-cstm .row{
+  align-items: center;
+}
+.faq-main-section-sec-two-cstm{
+  padding-top: 0px !important;
+}
+.faq-main-section-sec-two-cstm .sec-title{
+  margin-bottom: 20px !important;
+}
+.border-light-subtle.mob-col-3-cstm .mob-filter-solution-container .filters-btn-mob-close{
+  display: none;
+}
+.acc-title {
+  padding: 00px 0 !important;
+}
+.about-cstm-sec-one-main {
+  padding-top: 130px !important;
+}
+.about-cstm-sec-one-main .row{
+  align-items: center;
+}
+.about-cstm-sec-five-main .image-column .inner-column figure{
+  margin-top: 0px !important;
+}
+.about-cstm-sec-five-main .content-column .sec-title{
+  margin-top: 30px !important;
+}
 
 
 
@@ -1494,6 +1589,9 @@ div#myTopnav {
 @media only screen and (min-width: 767.5px) and (max-width: 1024px) {
   .testimonial-section-two .auto-container{
     padding: 0px 20px;
+  }
+  .border-light-subtle.mob-col-3-cstm .mob-filter-solution-container .filters-btn-mob-close{
+    display: block;
   }
   .testimonial-block-two .inner-box .quote-icon{
     width: 35px;
@@ -2122,7 +2220,7 @@ div#myTopnav {
   }
 
   .signup-form-two {
-    margin: 0rem 1.5rem !important;
+    margin: 0rem 0.5rem !important;
   }
 
   .py-5 {
@@ -2949,6 +3047,54 @@ div#myTopnav {
     line-height: 24px !important;
     text-align: justify !important;
   }
-
+  .border-light-subtle.mob-col-3-cstm .mob-filter-solution-container .filters-btn-mob-close{
+    display: block;
+  }
+  .take-my-online-class-sec-cstm-main-three div{
+    padding: 30px 30px !important;
+  }
+  .take-my-online-class-sec-cstm-main-three div.row{
+    padding: 0px !important;
+  }
+  .take-my-online-class-sec-cstm-main-three div .col-6{
+    width: 100% !important;
+    padding: 5px 30px !important;
+  }
+  .take-my-online-class-sec-cstm-main-three .sec-title.text-center{
+    margin-bottom: 0px !important;
+  }
+  .take-my-online-class-sec-cstm-main-three .sec-title.text-center h2{
+    font-size: 34px !important;
+  }
+  .take-my-online-class-sec-cstm-main-three div.row .col-4{
+    width: 100% !important;
+    padding-inline: 5px !important;
+  }
+  .take-my-online-class-sec-cstm-main-three div .col-6 p.pt-4{
+    padding-top: 1.5rem !important;
+    text-align: justify;
+    font-size: 16px !important;
+    line-height: 24px !important;
+  }
+  .take-my-online-class-sec-cstm-main-three div p.fw-bold.text-center.fs-2{
+    font-size: 34px !important;
+  }
+  .take-my-online-class-sec-cstm-main-three div.row .col-4 p{
+    padding-top: 0.5rem !important;
+    margin-bottom: 10px !important;
+  }
+  .page-title-take-my-online-class{
+    padding-top: 70px !important;
+  }
+  .page-title.page-title-services{
+    padding-top: 70px !important;
+  }
+  .services-page-cstm-sec-two {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  } 
+  .services-page-cstm-sec-two .sec-title {
+    margin-bottom: 0px !important;
+  }
 }
 

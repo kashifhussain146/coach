@@ -13,6 +13,12 @@
     .section-paddding{
         padding: 50px 0!important;
     }
+    .faq-main-section-sec-two-cstm{
+        padding-top: 0px !important;
+    }
+    .tab-content h3.acc-heading{
+        margin-bottom: 0px !important;
+    }
 </style>
 @endpush
 

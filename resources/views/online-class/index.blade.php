@@ -53,7 +53,7 @@
 
 
 <!-- Pay Someone To Do My Online Class -->
-<section class="py-5">
+<section class="py-5 cstm-pay-someone-sec-main">
     <div style="margin-bottom: 1rem !important;" class="sec-title text-center">
         <span class="sub-title">TAGLINE HEADING</span>
         <h2 class="fs-1 pb-4">{{$category->extra_field_1}}</h2>
@@ -73,7 +73,7 @@
         <img style="position: absolute; top: 6rem; right: -3rem; width: 8rem;" src="./assets/images/trial25.png" alt="">
         <div style="width: 35%;" class="col-6 position-relative cstm-left">
             <img style="position: relative; z-index: 10;" class="rounded-3 mx-auto" src="./assets/images/online_class1.png" alt="">
-            <img style="position: absolute; bottom: -3.5rem; right: -5.5rem; z-index: 20; width: 45%;" src="./assets/images/online_class2.png" alt="" class="mob-sec-two-toc-img-two">
+            <img style="position: absolute; bottom: -2rem; right: -5.5rem; z-index: 20; width: 45%;" src="./assets/images/online_class2.png" alt="" class="mob-sec-two-toc-img-two">
             <img style="position: absolute; bottom: -3rem; left: -3.5rem; z-index: 0;" src="./assets/images/new_trial11.png" alt="">
         </div>
         <div style="width: 58%;padding-left: 70px;" class="col-6">
@@ -130,7 +130,7 @@
 
 <!-- Take My Online Class  -->
 
-
+<div class="take-my-online-class-sec-cstm-main-three">
 
 @php 
 
@@ -152,9 +152,11 @@ $customData = [
 @endphp
 @include('sections.headings',['is_circle'=>0,'data'=>$works,'title'=>$category->title,'customData'=>$customData])
 
+</div>
+
 <!-- Why use  -->
 
-<section class="py-5 position-relative">
+<section class="py-5 position-relative take-my-online-class-sec-cstm-main-five">
     <div class="sec-title text-center">
         <span class="sub-title">TAGLINE HEADING</span>
         <h2 class="fs-1 pb-4">Why Use CoachOnCouch Online Class Help Service</h2>

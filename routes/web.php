@@ -33,6 +33,7 @@ use App\Http\Controllers\Backend\EmailTemplatesController;
 use App\Http\Controllers\Backend\MastersController;
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\GetAQuoteController;
+use App\Http\Controllers\QuoteController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,6 +55,7 @@ Route::get('/blog/{id}', [HomeController::class, 'blogDetail'])->name('blog.deta
 Route::get('/about-us', [HomeController::class, 'aboutUsView'])->name('about-us');
 Route::get('/services', [HomeController::class, 'servicesView'])->name('services');
 Route::get('/get-a-quote', [HomeController::class, 'contactView'])->name('get-a-quote');
+Route::post('/submit-quote', [QuoteController::class, 'submitQuote'])->name('submit.quote');
 
 
 
