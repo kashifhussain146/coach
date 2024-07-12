@@ -149,10 +149,9 @@
                                     <ul class="useful-links" style="display: inline-block;">
                                         <li>
                                             <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                data-bs-target="#LoginForm" class="btn login-btn">Login
-                                                Customer</a>
+                                                data-bs-target="#LoginForm" class="btn login-btn">Login / Register</a>
                                             <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                data-bs-target="#LoginFreeLancerForm" class="btn login-btn">Login
+                                                data-bs-target="#LoginFreeLancerForm" class="btn login-btn cstm-login-freelancer-mobile-hidden">Login
                                                 Freelancer</a>
                                         </li>
                                     </ul>
@@ -254,7 +253,7 @@
 
         <div class="mob-tab-offset-nav">
             <div class="mob-tab-offset-nav-inner">
-                <div class="close-btn-nav-cstm"><button>Close</button></div>
+                <div class="close-btn-nav-cstm"><button>X</button></div>
                 <a href="{{route('about-us')}}">About Us</a>
                 <a href="{{route('solutions.library')}}">Solution Library</a>
                 <a href="{{route('assignment.help')}}">Assignment Help</a>

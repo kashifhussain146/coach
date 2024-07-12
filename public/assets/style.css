@@ -1582,6 +1582,22 @@ div#myTopnav {
 .about-cstm-sec-five-main .content-column .sec-title{
   margin-top: 30px !important;
 }
+.blog-pad1{
+  padding: 0rem 20px 0 0rem !important;
+}
+.blog-pad2 {
+  padding: 0rem 0 5rem 0 !important;
+}
+.blog-sec2-wid {
+  width: 49% !important;
+  padding: 0 !important;
+}
+.carousel-home {
+  padding: 0 6rem 2rem 6rem !important;
+}
+.blog-cstm-sec-one{
+  padding: 100px 0px 40px !important;
+}
 
 
 
@@ -3095,6 +3111,54 @@ div#myTopnav {
   } 
   .services-page-cstm-sec-two .sec-title {
     margin-bottom: 0px !important;
+  }
+  .blog-cstm-sec-one .title{
+    font-size: 45px;
+    text-align: center;
+  }
+  .blog-cstm-sec-one ul.nav{
+    justify-content: center;
+  }
+  .cstmm-blog-col-8-main{
+    width: 100%;
+  }
+  .blog-pad1 {
+    padding: 0rem 0.5rem 0 0.5rem !important;
+  }
+  .cstmm-blog-col-4-main{
+    width: 100%;
+  }
+  .blog-pad2 {
+    padding: 2rem 10px 0rem 10px !important;
+  }
+  .cstmm-blog-col-8-main .card.col-6{
+    width: 100% !important;
+  }
+  .cstmm-blog-col-8-main .card .card-img-top {
+    max-height: 200px;
+    min-height: 200px;
+  }
+  .cstmm-blog-col-8-main .card .card-body{
+    padding: 10px 0px !important;
+  }
+  .blog-sec2-txt {
+    padding-top: 0.5rem !important;
+    margin-bottom: 5px !important;
+  }
+  .cstmm-blog-col-8-main .card .card-body h5{
+    margin-bottom: 10px !important;
+  }
+  .cstmm-blog-col-8-main .card.blog-sec2-wid{
+    margin-bottom: 1.5rem !important;
+  }
+  .cstm-login-freelancer-mobile-hidden{
+    display: none;
+  }
+  .inner-container .contact-info-outer li.info-list-header{
+    display: block !important;
+  }
+  .home-faq-section-mob-cstm .content-column .inner-column .sec-title .home-faq-head {
+    font-size: 2rem !important;
   }
 }
 

@@ -111,10 +111,10 @@
 
         <div class="col-3 pe-5 border-start border-3 border-light-subtle mob-col-3-cstm">
             <div class="mob-filter-solution-btn">
-                <button class="filters-btn-mob">Filters</button>
+                <button class="filters-btn-mob">Subject Filters</button>
             </div>
             <div class="mob-filter-solution-container">
-                <button class="filters-btn-mob-close">Close</button>
+                <button class="filters-btn-mob-close">X</button>
                 @if(count($subjectsCategory) > 0)
                     @include('sections.sidebar-subjects',['subjectsCategory'=>$subjectsCategory,'subject_category_id'=>$subject_category_id,'topic_id'=>$topic_id])
                 @else
