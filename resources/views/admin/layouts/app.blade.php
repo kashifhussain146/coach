@@ -38,6 +38,11 @@
     .nav-sidebar>.nav-item{
       font-size: 14px;
     }
+
+    #cke_notifications_area_description{
+
+      display: none!important;
+    }
   </style>
 @stack('css')
 

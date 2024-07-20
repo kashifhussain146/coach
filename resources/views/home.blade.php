@@ -43,7 +43,7 @@
                                         <p class="text-black-50 ntext mt-5 mb-4">
                                                 {!! $item->description !!}
                                         </p>
-                                        <a target="_blank" href="{{ ($item->extra_field_2!='')?$item->extra_field_2:'#'}}">
+                                        <a target="_blank" href="{{route('get-a-quote')}}">
                                             <button class="home-button theme-btn btn-style-one bg-theme-color4 bg-dark" type="submit" name="submit-form">{{$item->extra_field_1}}</button>
                                         </a>
                                     <!-- <ul class="page-breadcrumb">

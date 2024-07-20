@@ -60,8 +60,11 @@ class HomeController extends Controller
         $array = $categopry->pluck('id')->toArray();
         $faqData = DB::table('modules_data')->whereIn('category',$array)->get();
         $categopry = $categopry->get();
-        //dd($categopry);
-        return view('faq',compact('faqData','categopry'));
+        $banner =  \App\Models\Widgets::with('widget_data')->findorFail(20);
+       
+
+        // dd($banner);
+        return view('faq',compact('faqData','banner','categopry'));
     }
 
     public function privacypolicy(Request $request){

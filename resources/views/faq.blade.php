@@ -24,20 +24,13 @@
 
 @section('content')
 
-<section class="page-title faq-main-section-sec-one-cstm" style="background-image: url({{asset('assets/images/banner-about.jpg')}});">
+<section class="page-title faq-main-section-sec-one-cstm" style="background-image: url({{asset('images/'.$banner->widget_data->extra_image_1)}});">
     <div class="auto-container">
         <div class="row">
             <div class="col-md-7">
                 <div class="title-outer">
-                    <h1 class="title">Still have questions ?</h1>
-                    <p class="text-white ntext">Lorem Ipsum is simply dummy text of the printing and typese
-                        tting industry. Lorem Ipsum has been the industry's standard dummy text ever since the
-                        1500s, when an unknown printer.</p>
-                    <!-- <ul class="page-breadcrumb">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="#">Pages</a></li>
-            <li>About</li>
-        </ul> -->
+                    <h1 class="title">{{$banner->widget_data->extra_field_1}}</h1>
+                    <p class="text-white ntext">{{$banner->widget_data->extra_field_2}}</p>
                 </div>
             </div>
             <div class="col-md-5">

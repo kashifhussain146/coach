@@ -34,7 +34,7 @@
 
                  @can('Home Page Module')
                      <li
-                         class="nav-item {{ in_array(\Request::route()->getName(), [
+                         class="nav-item {{ \Request::route()->named('admin.widgets_data') && \Request::route()->parameter('page') == 'faq-banner' ? 'menu-open' : '' }} {{ in_array(\Request::route()->getName(), [
                              'category-create',
                              'category-list',
                              'questions-list',
@@ -168,8 +168,8 @@
 
 
                              @can('Module_Master_home-page-faqs')
-                                 <li class="nav-item">
-                                     <a href="#" class="nav-link">
+                                 <li class="nav-item {{ \Request::route()->named('admin.widgets_data') && \Request::route()->parameter('page') == 'faq-banner' ? 'menu-open' : '' }}">
+                                     <a href="#" class="nav-link {{ \Request::route()->named('admin.widgets_data') && \Request::route()->parameter('page') == 'faq-banner' ? 'active' : '' }}">
 
                                          <p>
                                              Faq
@@ -197,6 +197,15 @@
                                                      <p>List Faq</p>
                                                  </a>
                                              </li>
+
+                                             <li class="nav-item">
+                                                 <a href="{{ route('admin.widgets_data', ['page' => 'faq-banner']) }}"
+                                                     class="nav-link {{ \Request::route()->named('admin.widgets_data') && \Request::route()->parameter('page') == 'faq-banner' ? 'active' : '' }}">
+                                                     <i class="far fa-circle nav-icon"></i>
+                                                     <p>Faq Banner</p>
+                                                 </a>
+                                             </li>
+                                             
                                          @endcan
                                      </ul>
                                  </li>
