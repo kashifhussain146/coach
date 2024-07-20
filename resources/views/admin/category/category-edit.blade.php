@@ -55,7 +55,7 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-10 ">
-                                                    <input id="image" type="file" class="form-control align-middle custom-file-input" name="image" onchange="readURL(this, 'FileImg');">
+                                                    <input style="margin-top: 20px;" id="image" type="file" class="form-control align-middle custom-file-input" name="image" onchange="readURL(this, 'FileImg');">
                                                     <label class="text-dark mt-4 ml-2 custom-file-label" for="value">Choose file</label>
                                               </div>
                                                 <div class="col-md-2 ">
