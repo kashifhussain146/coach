@@ -59,12 +59,12 @@ Coach | Get a Quote
                             <label for="helpRequire">Help You Require<span style="color: red;">*</span></label>
                             <select style="color: grey;" name="help_require" id="helpRequire">
                                 <option value="">What Type of Help You Need?</option>
-                                <option value="domyhomework">Do My Homework</option>
-                                <option value="takemyonlineclass">Take My Online Class</option>
-                                <option value="takemyonlinetest">Take My Online Test</option>
-                                <option value="writemypaper">Write My Paper/ Thesis / Dissertation / Essay</option>
-                                <option value="takemymathlab">Take My MyMathLab Quiz</option>
-                                <option value="domydiscussionboards">Do My Discussion Boards</option>
+                                <option value="Do My Homework">Do My Homework</option>
+                                <option value="Take My Online Class">Take My Online Class</option>
+                                <option value="Take My Online Test">Take My Online Test</option>
+                                <option value="Write My Paper">Write My Paper/ Thesis / Dissertation / Essay</option>
+                                <option value="Take My Mathlab">Take My MyMathLab Quiz</option>
+                                <option value="Do My Discussion Boards">Do My Discussion Boards</option>
                             </select>
                         </div>
                         <!-- Additional Fields Here -->
@@ -107,9 +107,9 @@ Coach | Get a Quote
                                 <label for="academicLevelSelect">Academic Level of Paper<span style="color: red;">*</span></label>
                                 <select style="color: grey;" name="academic_level" id="academicLevelSelect">
                                     <option value="">Please Select Academic Level of Paper</option>
-                                    <option value="highschool">Highschool</option>
-                                    <option value="undergraduate">Undergraduate</option>
-                                    <option value="phd">PhD</option>
+                                    <option value="High School">Highschool</option>
+                                    <option value="Undergraduate">Undergraduate</option>
+                                    <option value="PhD">PhD</option>
                                 </select>
                             </div>
                             <div id="mmlDetailsSection" class="form-group col-12" style="display: none;">
@@ -325,23 +325,23 @@ Coach | Get a Quote
             discountCodeSection.style.display = 'block';
 
             switch (selectedOption) {
-                case 'takemyonlineclass':
+                case 'Take My Online Class':
                     classDuration.style.display = 'block';
                     break;
-                case 'takemyonlinetest':
+                case 'Take My Online Test':
                     onlineTestBox.style.display = 'block';
                     break;
-                case 'domyhomework':
+                case 'Do My Homework':
                     fileAndInstruction.style.display = 'block';
                     break;
-                case 'writemypaper':
+                case 'Write My Paper':
                     fileAndInstruction.style.display = 'block';
                     academicLevel.style.display = 'block';
                     break;
-                case 'takemymathlab':
+                case 'Take My Mathlab':
                     mmlDetailsSection.style.display = 'block';
                     break;
-                case 'domydiscussionboards':
+                case 'Do My Discussion Boards':
                     discussionBoardSection.style.display = 'block';
                     break;
                 default:
