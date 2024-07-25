@@ -1598,6 +1598,9 @@ div#myTopnav {
 .blog-cstm-sec-one{
   padding: 100px 0px 40px !important;
 }
+.page-title-services .row{
+  align-items: center;
+}
 
 
 

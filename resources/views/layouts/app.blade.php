@@ -150,9 +150,9 @@
                                         <li>
                                             <a href="javascript:void(0)" data-bs-toggle="modal"
                                                 data-bs-target="#LoginForm" class="btn login-btn">Login / Register</a>
-                                            <a href="javascript:void(0)" data-bs-toggle="modal"
+                                            <!-- <a href="javascript:void(0)" data-bs-toggle="modal"
                                                 data-bs-target="#LoginFreeLancerForm" class="btn login-btn cstm-login-freelancer-mobile-hidden">Login
-                                                Freelancer</a>
+                                                Freelancer</a> -->
                                         </li>
                                     </ul>
                                 @elseif(Auth()->guard('admin')->user())
@@ -230,6 +230,9 @@
                                     <!--           <li><a href="https://stage.webshark.in/coc/take-my-online-exam.html">Take My Online Exam</a></li>-->
                                     <!--    </ul>-->
                                 </li>
+                                <li class="{{ Request::is('pages/faq') ? 'current-page-class' : '' }}"><a href="{{ route('pages.faq') }}">FAQ
+                                        </a>
+                                </li>
                             </ul>
                         </nav>
                         <!-- Main Menu End-->
@@ -259,6 +262,7 @@
                 <a href="{{route('assignment.help')}}">Assignment Help</a>
                 <a href="{{route('take.my.online.class')}}">Take My Online Class</a>
                 <a href="{{route('services')}}">Services</a>
+                <a href="{{route('pages.faq')}}">FAQs</a>
                 <a href="{{route('get-a-quote')}}">Get A Quote</a>
             </div>
         </div>
