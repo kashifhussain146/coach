@@ -260,7 +260,7 @@
                   <a class="btn btn-primary" href="#"
                       onclick="event.preventDefault();document.getElementById('logout-form').submit();"> Yes </a>
 
-                  @if (Auth()->guard('admin')->user()->roles()->first()->name == 'Free Lancer')
+                  @if (Auth()->user()->roles()->first()->name == 'Free Lancer')
                       <form id="logout-form" action="{{ route('freelancer.post.logout') }}" method="POST"
                           style="display: none;">
                       @else

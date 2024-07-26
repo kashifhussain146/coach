@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('title')
-    <title>CoconCoach |Assignment Category</title>
+    <title>CoconCoach | Master List</title>
 @stop
 
 @section('inlinecss')
@@ -86,6 +86,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+
 
     <script type="text/javascript">
         $(function() {
@@ -158,6 +160,33 @@
                         orderable: false,
                         searchable: false
                     },
+                ],
+                "deferRender": true,
+                "columnDefs": [{
+                        "targets": 'no-sort',
+                        "orderable": false,
+                    },
+                    {
+                        "targets": 12,
+                        "data": "created_at",
+                        "render": function (data, type, full, meta) {
+                            return moment(data).format('DD/MM/YYYY HH:mm');
+                        }
+                    },
+                    {
+                        "targets": 10,
+                        "data": "startdate",
+                        "render": function (data, type, full, meta) {
+                            return moment(data).format('DD/MM/YYYY');
+                        }
+                    }, 
+                    {
+                        "targets": 9,
+                        "data": "enddate",
+                        "render": function (data, type, full, meta) {
+                            return moment(data).format('DD/MM/YYYY');
+                        }
+                    }, 
                 ],
             });
 

@@ -40,7 +40,7 @@ class MastersController extends Controller
                             });
         }
 
-        $data = $data->orderBy('emailsubject');
+        $data = $data->orderBy('id','DESC');
             
             
             return Datatables::of($data)
