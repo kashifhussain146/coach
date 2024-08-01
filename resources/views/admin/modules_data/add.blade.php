@@ -51,7 +51,11 @@
                @include('admin.modules_data.inc.form')
                <div class="row">
                   <div class="col-md-5"></div>
-                  <div class="col-md-4"><button type="submit" class="btn btn-primary">{{__('Create')}}</button></div>
+                  <div class="col-md-4">
+                      
+                    <a href="{{url()->previous()}}">  <button type="button" class="btn btn-warning">{{__('Back')}}</button></a>&nbsp;&nbsp;
+                        
+                      <button type="submit" class="btn btn-primary">{{__('Create')}}</button></div>
                </div>
    
             </div>   

@@ -149,10 +149,10 @@
                                     <ul class="useful-links" style="display: inline-block;">
                                         <li>
                                             <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                data-bs-target="#LoginForm" class="btn login-btn">Login / Register</a>
-                                            <!-- <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                data-bs-target="#LoginFreeLancerForm" class="btn login-btn cstm-login-freelancer-mobile-hidden">Login
-                                                Freelancer</a> -->
+                                                data-bs-target="#LoginForm" class="btn login-btn">Login/Register</a>
+                                            <!--<a href="javascript:void(0)" data-bs-toggle="modal"-->
+                                            <!--    data-bs-target="#LoginFreeLancerForm" class="btn login-btn">Login-->
+                                            <!--    Freelancer</a>-->
                                         </li>
                                     </ul>
                                 @elseif(Auth()->guard('admin')->user())
@@ -230,8 +230,7 @@
                                     <!--           <li><a href="https://stage.webshark.in/coc/take-my-online-exam.html">Take My Online Exam</a></li>-->
                                     <!--    </ul>-->
                                 </li>
-                                <li class="{{ Request::is('pages/faq') ? 'current-page-class' : '' }}"><a href="{{ route('pages.faq') }}">FAQ
-                                        </a>
+                                <li class="{{ Request::is('pages/faq') ? 'current-page-class' : '' }}"><a href="{{ route('pages.faq') }}">FAQs</a>
                                 </li>
                             </ul>
                         </nav>
@@ -256,7 +255,7 @@
 
         <div class="mob-tab-offset-nav">
             <div class="mob-tab-offset-nav-inner">
-                <div class="close-btn-nav-cstm"><button>X</button></div>
+                <div class="close-btn-nav-cstm"><button>Close</button></div>
                 <a href="{{route('about-us')}}">About Us</a>
                 <a href="{{route('solutions.library')}}">Solution Library</a>
                 <a href="{{route('assignment.help')}}">Assignment Help</a>
@@ -396,14 +395,13 @@
                     <!--Footer Column-->
                     <div class="footer-column col-xl-2 col-lg-4 col-md-6 col-sm-12 footer-cstm-tab-two">
                         <div class="footer-widget">
-                            <h4 class="widget-title">Subjects</h4>
+                            <h4 class="widget-title">Services</h4>
                             <ul class="user-links">
-                                <li><a href="#">Gallery</a></li>
-                                <li><a href="#">News & Articles</a></li>
-                                <li><a href="{{ route('pages.faq') }}">FAQ's</a></li>
-                                <li><a href="#">Sign In/Registration</a></li>
-                                <li><a href="#">Coming Soon</a></li>
-                                <li><a href="#">Contacts</a></li>
+                                <li><a href="#">Discussion Board</a></li>
+                                <li><a href="#">Do My Online Quiz</a></li>
+                                <li><a href="#">Do My Research Paper</a></li>
+                                <li><a href="#">Do My Project</a></li>
+                                <li><a href="#">Take My Online Exam</a></li>
                             </ul>
                         </div>
                     </div>
@@ -413,11 +411,10 @@
                         <div class="footer-widget">
                             <h4 class="widget-title">Quick Links</h4>
                             <ul class="user-links">
-                                <li><a href="#">About</a></li>
-                                <li><a href="#">Courses</a></li>
-                                <li><a href="#">Instructor</a></li>
-                                <li><a href="#">Events</a></li>
-                                <li><a href="#">Instructor Profile</a></li>
+                                <li><a href="{{ route('about-us') }}">About</a></li>
+                                <li><a href="{{ route('pages.faq') }}">FAQ</a></li>
+                                <li><a href="{{ route('blogs') }}">Blog</a></li>
+                                <li><a href="{{ route('get-a-quote') }}">Contact Us</a></li>
                             </ul>
                         </div>
                     </div>

@@ -113,7 +113,7 @@
 							</ul>
 
 							<div class="btn-box">
-								<a href="{{ route('get-a-quote') }}" class="theme-btn btn-style-one"><span
+								<a href="page-about.html" class="theme-btn btn-style-one"><span
 										class="btn-title">Contact Experts</span></a>
 							</div>
 						</div>
@@ -171,7 +171,7 @@
 									ornare felis non, eleifend molestie metus pharetra eleifend.</div>
 							</div>
 							<div class="btn-box">
-								<a href="{{ route('get-a-quote') }}" class="theme-btn btn-style-one"><span class="btn-title">Discover
+								<a href="" class="theme-btn btn-style-one"><span class="btn-title">Discover
 										more</span></a>
 								<span class="float-icon icon-arrow"></span>
 							</div>

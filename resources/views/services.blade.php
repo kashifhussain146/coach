@@ -64,7 +64,7 @@
 
     <!-- Services Section  -->
 
-    <div class="pt-5 services-page-cstm-sec-two">
+    <div class="pt-5">
         <div class="sec-title text-center service-service-sec">
             <span class="sub-title">TAGLINE HEADING</span>
             <h2 class="fs-1 pb-4">Our Services</h2>

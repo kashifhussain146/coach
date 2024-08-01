@@ -40,8 +40,7 @@ class RolePermissionController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-                        $btn = '<a href="'.route("roles-edit", $row->id).'" class="edit btn btn-primary btn-sm">Edit</a>
-                        <button type="button" data-url="'.route('roles-view', $row->id).'" class="edit btn btn-primary btn-sm viewDetail">View</a>';
+                        $btn = '<a href="'.route("roles-edit", $row->id).'" class="edit btn btn-primary btn-sm">Edit</a>';
 
                         return $btn;
                     })

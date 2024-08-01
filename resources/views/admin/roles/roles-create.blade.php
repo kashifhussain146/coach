@@ -138,6 +138,7 @@
                             </div>
 
                             <div class="card-footer"></div>
+                            <a href="{{url()->previous()}}">  <button type="button" class="btn btn-warning">{{__('Back')}}</button></a>&nbsp;&nbsp;
                             <button type="submit" id="submitButton" class="btn btn-primary float-right"
                                 data-loading-text="<i class='fa fa-spinner fa-spin '></i> Sending..."
                                 data-rest-text="Create">Create</button>

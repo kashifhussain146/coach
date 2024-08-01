@@ -58,7 +58,7 @@
                         <td>@if(!empty($val->created_at)){{$val->created_at}}@endif</td>
                         <td  class="text-left">
                             <a href="{{route("roles-edit", $val->id)}}" class="edit btn btn-primary btn-sm">Edit</a>
-                            <button type="button" data-url="{{route('roles-view', $val->id)}}" class="edit btn btn-primary btn-sm viewDetail">View</button>
+                            
                         </td>
                     </tr>
                     @endforeach

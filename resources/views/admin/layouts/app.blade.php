@@ -43,6 +43,10 @@
 
       display: none!important;
     }
+    .cke_notifications_area{
+      display: none!important;        
+        
+    }
   </style>
 @stack('css')
 

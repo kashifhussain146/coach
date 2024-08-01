@@ -153,6 +153,8 @@
                                 <a class="btn btn-primary btn-sm" id="uncheckAll">Uncheck All</a>
 
                             </div>
+                            
+                            <a href="{{url()->previous()}}">  <button type="button" class="btn btn-warning">{{__('Back')}}</button></a>&nbsp;&nbsp;
                             <button type="submit" id="submitButton" class="btn btn-primary float-right"
                                 data-loading-text="<i class='fa fa-spinner fa-spin '></i> Sending..."
                                 data-rest-text="Update">Update</button>

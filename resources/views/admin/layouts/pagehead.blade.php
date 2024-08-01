@@ -187,13 +187,13 @@
               <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
                   @if (!empty($authUser->profile_image))
-                      <img src="{{ asset('backend/images/' . $authUser->profile_image) }}" alt="user"
+                      <img src="{{asset('images/'.$authUser->profile_image)}}" alt="user"
                           class="rounded-circle" width="30" height="30">
                   @else
                       <img src="#" alt="user" class="rounded-circle" width="30" height="30">
                   @endif
 
-                  <span class="m-l-5 font-medium d-none d-sm-inline-block"> {{ $authUser->firstname }} <i
+                  <span class="m-l-5 font-medium d-none d-sm-inline-block"> {{ $authUser->name }} <i
                           class="mdi mdi-chevron-down"></i></span>
               </a>
               <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
@@ -203,14 +203,14 @@
                   <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
                       <div class="">
                           @if (!empty($authUser->profile_image))
-                              <img src="{{ asset('backend/images/' . $authUser->profile_image) }}" alt="user"
+                              <img src="{{asset('images/'.$authUser->profile_image)}}" alt="user"
                                   class="rounded-circle" width="30" height="30">
                           @else
                               <img src="#" alt="user" class="rounded-circle" width="30" height="30">
                           @endif
                       </div>
                       <div class="m-l-10">
-                          <h4 class="m-b-0">{{ $authUser->firstname }}</h4>
+                          <h4 class="m-b-0">{{ $authUser->name }}</h4>
                           <p class=" m-b-0">{{ $authUser->email }}</p>
                       </div>
                   </div>

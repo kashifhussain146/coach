@@ -104,11 +104,11 @@ Route::post('/admin/logout', [AdminLoginController::class,'logout'])->name('admi
 Route::group(['middleware' => ['auth:admin']], function() {
     //Banner Master
     Route::get('/admin/dashboard', [DashboardController::class,'index'])->name('admin.dashboard');
-    Route::get('/admin/profile', [DashboardController::class,'index'])->name('admin.profile');
+    Route::get('/admin/profile', [DashboardController::class,'profile'])->name('admin.profile');
 
     Route::get('/free-lancer/dashboard', [DashboardController::class,'index'])->name('free.lancer.dashboard');
-    Route::get('/free-lancer/profile', [DashboardController::class,'index'])->name('free.lancer.profile');
-
+    Route::get('/free-lancer/profile', [DashboardController::class,'profile'])->name('free.lancer.profile');
+    Route::post('/updateprofile', [DashboardController::class, 'updateprofile'])->name('admin.updateprofile');
 
     Route::get('/roles-list', [RolePermissionController::class,'roles'])->name('roles-list');
     Route::get('/roles/create', [RolePermissionController::class,'create'])->name('roles-create');

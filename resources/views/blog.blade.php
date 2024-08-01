@@ -44,7 +44,7 @@
     <!-- Blog Section  -->
 
     <!-- Start main-content -->
-    <section class="page-title blog-cstm-sec-one" style="min-height: 0px;">
+    <section class="page-title" style="min-height: 0px;">
         <div class="auto-container">
             <div class="col-md-7">
                 <div class="title-outer">
@@ -63,7 +63,7 @@
     </section>
     <!-- end main-content -->
     <section class="row carousel-home" >
-        <div class="col-8  justify-content-evenly cstmm-blog-col-8-main">
+        <div class="col-8  justify-content-evenly ">
             <div class="row  blog-pad1" style="justify-content: space-between;">
                 @if($blogs->count() > 0)
                     @foreach ($blogs as $item)
@@ -99,7 +99,7 @@
             </div>
             {{ $blogs->links() }}
         </div>
-        <div class="col-4 pe-5 blog-pad2 cstmm-blog-col-4-main">
+        <div class="col-4 pe-5 blog-pad2">
             <div class="bg-light rounded-3">
                 <p class="ps-4 pt-5 black fs-4 fw-bold">Search Here</p>
                 <hr class="mx-4 mb-4">

@@ -16,11 +16,11 @@
          <!-- Sidebar user panel (optional) -->
          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
              <div class="image">
-                 <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
+                 <img src="{{asset('images/'.auth()->guard('admin')->user()->profile_image)}}" class="img-circle elevation-2"
                      alt="User Image">
              </div>
              <div class="info">
-                 <a href="#" class="d-block">{{ auth()->guard('admin')->user()->name }}</a>
+                 <a href="#" class="d-block">{{ auth()->guard('admin')->user()->name.' '.auth()->guard('admin')->user()->last_name }}</a>
              </div>
          </div>
 
