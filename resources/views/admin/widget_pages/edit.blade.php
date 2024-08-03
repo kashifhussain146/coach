@@ -21,6 +21,8 @@
                      <div class="row">
                      
                         <div class="col-md-5"></div>
+
+                        <a href="{{url()->previous()}}">  <button type="button" class="btn btn-warning">{{__('Back')}}</button></a>&nbsp;&nbsp;
                      
                         <div class="col-md-4"><button type="submit" class="btn btn-primary">{{__('Update')}}</button></div>
                      

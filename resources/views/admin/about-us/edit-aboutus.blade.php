@@ -182,6 +182,8 @@
                                 <input type="text" placeholder="Enter FAQ Answer Four" class="form-control" name="aboutsecfaqdescfour" value="{{ $aboutUs->aboutsecfaqdescfour ?? '' }}">
                             </div>
 
+                            <a href="{{url()->previous()}}">  <button type="button" class="btn btn-warning">{{__('Back')}}</button></a>&nbsp;&nbsp;
+
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                         

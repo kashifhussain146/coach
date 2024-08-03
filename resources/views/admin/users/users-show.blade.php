@@ -109,8 +109,12 @@
                                 </tr>
                             </tbody>
                         </table>
-
+                        <div style="text-align: center; margin-top: 20px;">
+                            <a href="{{url()->previous()}}">  <button type="button" class="btn btn-warning">{{__('Back')}}</button></a>&nbsp;&nbsp;
+                        </div>
+                        
                     </div>
+                    
 
                 </div>
             </div>

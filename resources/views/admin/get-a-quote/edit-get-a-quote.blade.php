@@ -79,7 +79,7 @@
                             <div class="form-group">
                                 <input type="text" placeholder="Enter Heading One" class="form-control" name="contactlastmail" value="{{ $contactUs->contactlastmail ?? '' }}">
                             </div>
-
+                            <a href="{{url()->previous()}}">  <button type="button" class="btn btn-warning">{{__('Back')}}</button></a>&nbsp;&nbsp;
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                         
